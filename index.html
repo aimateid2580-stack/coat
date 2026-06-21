@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#ffffff">
-<title>코팅반 모바일</title>
+<title>코팅반 Mobile</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -183,11 +183,14 @@ main{
   <div class="topbar-inner">
     <div class="topbar-left">
       <div class="topbar-title">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a65ac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="6" y="2" width="12" height="20" rx="2"></rect>
-          <line x1="11" y1="18" x2="13" y2="18"></line>
+        <svg width="40" height="40" viewBox="0 0 200 200">
+          <rect x="40" y="30" width="100" height="150" rx="15" fill="none" stroke="#1A73E8" stroke-width="12" />
+          <rect x="85" y="162" width="10" height="6" rx="3" fill="#1A73E8" />
+          <circle cx="115" cy="100" r="48" fill="#FFFFFF" />
+          <circle cx="115" cy="100" r="42" fill="none" stroke="#1A73E8" stroke-width="14" />
+          <path d="M 92 100 L 108 115 L 142 80" fill="none" stroke="#1A73E8" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        코팅반 모바일
+        코팅반 Mobile
       </div>
       <div class="topbar-sub" id="syncLabel">연결 중...</div>
     </div>
@@ -520,4 +523,3 @@ setInterval(renderSchedulePanels, 60000); // 1분마다 날짜만 재계산 (자
 setInterval(()=>refetchData(true), 30 * 60000); // 30분마다 안전망 재동기화 (실시간 연결이 끊겼을 경우 대비)
 </script>
 </body></html>
-
