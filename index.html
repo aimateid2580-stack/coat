@@ -1,1 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff">
+<title>코팅반 모바일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+
+:root{
+  --bg:#eef0f5; --bg2:#f5f6fa; --bg3:#e2e5ee;
+  --surface:#ffffff; --border:#dde1eb; --border2:#c4c9d8;
+  --text:#1a2035; --text2:#56617a; --text3:#98a0b8;
+  --blue:#3a65ac; --blue-lt:#4d7bc5; --blue-dim:rgba(58,101,172,0.10);
+  --red:#b03c3c; --green:#4e8a70;
+  --tr-eq:#dd6b20; --tr-sol:#3182ce; --tr-proc:#38a169;
+  --topbar-h:52px; --tabbar-h:66px;
+}
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px;}
+
+html,body{height:100%;}
+body{
+  font-family:'Noto Sans KR',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:none;
+}
+
+/* ════ TOPBAR ════ */
+.topbar{
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding-top:env(safe-area-inset-top);
+  background:rgba(255,255,255,0.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.topbar-inner{
+  height:var(--topbar-h); display:flex; align-items:center; justify-content:space-between;
+  padding:0 16px;
+}
+.topbar-left{display:flex; align-items:baseline; gap:10px; min-width:0;}
+.topbar-title{
+  font-family:'Malgun Gothic','맑은 고딕','Noto Sans KR',sans-serif; font-size:16px; font-weight:700;
+  letter-spacing:0.1px; flex-shrink:0; display:flex; align-items:center; gap:6px;
+}
+.topbar-title svg{flex-shrink:0;}
+.topbar-sub{font-size:10px; color:var(--text3); font-weight:400; white-space:nowrap;}
+.sync-wrap{display:flex; align-items:center; gap:8px;}
+.sync-dot{width:7px; height:7px; border-radius:50%; background:var(--text3); flex-shrink:0;}
+.sync-dot.on{background:var(--tr-proc); box-shadow:0 0 0 3px rgba(56,161,105,0.18);}
+.sync-dot.off{background:var(--red);}
+
+/* ════ MAIN ════ */
+main{
+  padding-top:calc(var(--topbar-h) + var(--tabbar-h) + env(safe-area-inset-top) + 12px);
+  padding-bottom:calc(env(safe-area-inset-bottom) + 18px);
+  padding-left:14px; padding-right:14px;
+  min-height:100vh;
+}
+.view{display:none;}
+.view.active{display:block; animation:fadeUp 0.22s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ════ TROUBLE: SEARCH PANEL ════ */
+.search-panel{
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:14px; margin-bottom:12px; display:flex; flex-direction:column; gap:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.04);
+}
+.search-row{display:flex; gap:8px;}
+.m-input,.m-select{
+  width:100%; min-height:42px; padding:9px 12px; background:var(--bg2);
+  border:1px solid var(--border2); border-radius:9px; color:var(--text);
+  font-family:inherit; font-size:14px; appearance:none;
+}
+.m-select{flex:1;}
+.m-input:focus,.m-select:focus{outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-dim);}
+.reset-btn{
+  flex-shrink:0; padding:0 14px; min-height:42px; border-radius:9px; border:1px solid var(--border2);
+  background:var(--bg2); color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap;
+}
+.reset-btn:active{background:var(--bg3);}
+
+.stat-strip{
+  display:flex; gap:7px; overflow-x:auto; padding-bottom:2px; margin-bottom:10px;
+  scrollbar-width:none;
+}
+.stat-strip::-webkit-scrollbar{display:none;}
+.stat-pill{
+  flex-shrink:0; display:flex; align-items:center; gap:6px;
+  background:var(--surface); border:1px solid var(--border); border-radius:18px;
+  padding:7px 13px; font-size:12px; color:var(--text2); white-space:nowrap;
+}
+.stat-dot{width:7px; height:7px; border-radius:50%;}
+.stat-cnt{font-family:'JetBrains Mono'; font-weight:700; font-size:13px; color:var(--text);}
+
+.result-count{font-size:12px; color:var(--text3); text-align:right; margin-bottom:8px;}
+
+/* ════ TROUBLE CARDS ════ */
+.tr-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:15px; margin-bottom:11px; box-shadow:0 1px 3px rgba(0,0,0,0.04);
+}
+.tr-top{display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-bottom:10px;}
+.tr-badge{
+  display:inline-flex; align-items:center; gap:4px; padding:4px 9px; border-radius:6px;
+  font-size:11.5px; font-weight:600; flex-shrink:0;
+}
+.badge-eq{background:rgba(221,107,32,0.12); color:#c05a10;}
+.badge-sol{background:rgba(49,130,206,0.12); color:#2e5090;}
+.badge-proc{background:rgba(56,161,105,0.12); color:#2a7048;}
+.tr-date{font-size:12px; color:var(--text2); font-weight:600;}
+.tr-unit{font-size:11px; color:var(--text3); background:var(--bg2); padding:2px 7px; border-radius:5px;}
+.tr-product{font-size:13.5px; font-weight:700; color:var(--text); margin-bottom:10px; word-break:break-word;}
+.tr-block{margin-bottom:9px;}
+.tr-block:last-child{margin-bottom:0;}
+.tr-label{font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text3); margin-bottom:4px;}
+.tr-text{font-size:13px; line-height:1.55; color:var(--text); white-space:pre-wrap; word-break:break-word;}
+.tr-action .tr-label{color:var(--tr-sol);}
+
+.empty-state{padding:50px 20px; text-align:center; color:var(--text3);}
+.empty-icon{font-size:36px; margin-bottom:10px;}
+
+/* ════ CALENDAR ════ */
+.today-panel{
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:14px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04);
+}
+.today-label{font-size:13.5px; font-weight:700; color:var(--text); margin-bottom:10px; display:flex; align-items:center; gap:6px;}
+.today-events{display:flex; flex-direction:column; gap:6px;}
+.event-chip{
+  padding:8px 11px; border-radius:8px; font-size:12.5px; color:var(--text); line-height:1.4;
+  border-left:3px solid; background:var(--bg2);
+}
+.no-events{font-size:12.5px; color:var(--text3);}
+
+/* ════ TOP TAB BAR ════ */
+.tabbar{
+  position:fixed; top:calc(var(--topbar-h) + env(safe-area-inset-top)); left:0; right:0; z-index:199;
+  background:rgba(255,255,255,0.96); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  display:flex; gap:6px; padding:8px 10px;
+}
+.tab-btn{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:3px; background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  color:var(--text2); font-family:inherit; padding:8px 4px; transition:background 0.15s, border-color 0.15s;
+}
+.tab-btn .tab-icon{font-size:18px; line-height:1;}
+.tab-btn .tab-label{font-size:10px; font-weight:600;}
+.tab-btn.active{background:var(--surface); border-color:var(--border);}
+.tab-btn.active .tab-label{color:var(--blue);}
+.tab-btn:active{background:var(--bg3);}
+.restore-btn{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:3px; background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  color:var(--text2); font-family:inherit; padding:8px 4px; transition:background 0.15s;
+}
+.restore-btn .tab-icon{font-size:18px; line-height:1; display:inline-block; transition:transform 0.4s;}
+.restore-btn .tab-label{font-size:10px; font-weight:600;}
+.restore-btn:active{background:var(--bg3);}
+.restore-btn.spinning .tab-icon{transform:rotate(360deg);}
+
+#toast-wrap{
+  position:fixed; left:14px; right:14px; z-index:9999;
+  bottom:calc(env(safe-area-inset-bottom) + 12px);
+  display:flex; flex-direction:column; gap:8px; pointer-events:none; align-items:center;
+}
+.toast{
+  padding:10px 16px; border-radius:9px; font-size:12.5px; font-weight:500;
+  background:#1a2035; color:#fff; box-shadow:0 4px 16px rgba(0,0,0,0.18);
+  max-width:100%;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <div class="topbar-title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a65ac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="2" width="12" height="20" rx="2"></rect>
+          <line x1="11" y1="18" x2="13" y2="18"></line>
+        </svg>
+        코팅반 모바일
+      </div>
+      <div class="topbar-sub" id="syncLabel">연결 중...</div>
+    </div>
+    <div class="sync-wrap">
+      <div class="sync-dot" id="syncDot"></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabbar">
+  <button class="tab-btn active" id="tab-trouble" onclick="switchView('trouble')">
+    <span class="tab-icon">⚠️</span><span class="tab-label">트러블 내역</span>
+  </button>
+  <button class="tab-btn" id="tab-calendar" onclick="switchView('calendar')">
+    <span class="tab-icon">📆</span><span class="tab-label">근태/일정 달력</span>
+  </button>
+  <button class="restore-btn" id="refreshTabBtn" onclick="manualRefresh()">
+    <span class="tab-icon">🔄</span><span class="tab-label">새로고침</span>
+  </button>
+</div>
+
+<main>
+  <!-- ════ TROUBLE VIEW ════ -->
+  <div class="view active" id="view-trouble">
+    <div class="search-panel">
+      <input type="text" class="m-input" id="srch-product" placeholder="🔍 품명 검색" oninput="applyFilters()">
+      <div class="search-row">
+        <select class="m-select" id="srch-unit" onchange="applyFilters()">
+          <option value="">전체 호기</option>
+          <option value="A-0">A-0</option>
+          <option value="A-1">A-1</option>
+          <option value="A-2">A-2</option>
+          <option value="A-3">A-3</option>
+          <option value="A-4">A-4</option>
+          <option value="A-5">A-5</option>
+          <option value="A-6">A-6</option>
+          <option value="고기능성레진">고기능성레진</option>
+        </select>
+        <button class="reset-btn" onclick="resetFilters()">검색 초기화</button>
+      </div>
+      <input type="text" class="m-input" id="srch-keyword" placeholder="내용 키워드 검색" oninput="applyFilters()">
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-pill"><div class="stat-dot" style="background:var(--tr-eq);"></div>설비 <span class="stat-cnt" id="cnt-eq">0</span></div>
+      <div class="stat-pill"><div class="stat-dot" style="background:var(--tr-sol);"></div>조액 <span class="stat-cnt" id="cnt-sol">0</span></div>
+      <div class="stat-pill"><div class="stat-dot" style="background:var(--tr-proc);"></div>공정 <span class="stat-cnt" id="cnt-proc">0</span></div>
+      <div class="stat-pill">전체 <span class="stat-cnt" id="cnt-total">0</span></div>
+    </div>
+
+    <div class="result-count" id="resultCount">0건</div>
+    <div id="troubleList"></div>
+  </div>
+
+  <!-- ════ CALENDAR VIEW ════ -->
+  <div class="view" id="view-calendar">
+    <div class="today-panel">
+      <div class="today-label" id="selDateLabel">📅 오늘</div>
+      <div class="today-events" id="selDateEvents"></div>
+    </div>
+    <div class="today-panel">
+      <div class="today-label" id="tmrDateLabel">📅 내일</div>
+      <div class="today-events" id="tmrDateEvents"></div>
+    </div>
+  </div>
+</main>
+
+<div id="toast-wrap"></div>
+
+<!-- Firebase: 데스크탑 코팅반_통합관리.html과 동일한 데이터를 실시간으로 읽어옵니다 (읽기전용) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBbm0hy_qz_85UCSu2uLUCUN6zYhs-sAqo",
+  authDomain: "hoho-a270e.firebaseapp.com",
+  databaseURL: "https://hoho-a270e-default-rtdb.firebaseio.com",
+  projectId: "hoho-a270e",
+  storageBucket: "hoho-a270e.firebasestorage.app",
+  messagingSenderId: "240112645938",
+  appId: "1:240112645938:web:7bc00ffa220c07327ec92b"
+};
+firebase.initializeApp(firebaseConfig);
+const fbDB = firebase.database();
+const FB_PATH = '코팅반_통합관리';
+
+let attData = [];
+let schData = [];
+let trData = [];
+let currentView = 'trouble';
+
+function getTodayKR(){
+  return new Intl.DateTimeFormat('en-CA', {timeZone: 'Asia/Seoul'}).format(new Date());
+}
+
+function addDaysToDateStr(dateStr, days){
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m-1, d));
+  dt.setUTCDate(dt.getUTCDate() + days);
+  return dt.toISOString().slice(0,10);
+}
+
+// ════ VIEW SWITCH ════
+function switchView(v){
+  currentView = v;
+  document.getElementById('view-trouble').classList.toggle('active', v==='trouble');
+  document.getElementById('view-calendar').classList.toggle('active', v==='calendar');
+  document.getElementById('tab-trouble').classList.toggle('active', v==='trouble');
+  document.getElementById('tab-calendar').classList.toggle('active', v==='calendar');
+}
+
+// ════ TOAST ════
+function showToast(msg){
+  const wrap = document.getElementById('toast-wrap');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(()=>t.remove(), 2200);
+}
+
+// ════ FIREBASE SYNC ════
+function setSyncStatus(on, label){
+  document.getElementById('syncDot').className = 'sync-dot ' + (on ? 'on' : 'off');
+  document.getElementById('syncLabel').textContent = label;
+}
+
+function renderAll(){
+  document.getElementById('cnt-eq').textContent = trData.filter(r=>r.type==='설비').length;
+  document.getElementById('cnt-sol').textContent = trData.filter(r=>r.type==='조액').length;
+  document.getElementById('cnt-proc').textContent = trData.filter(r=>r.type==='공정').length;
+  document.getElementById('cnt-total').textContent = trData.length;
+  applyFilters();
+  renderSchedulePanels();
+}
+
+fbDB.ref(FB_PATH).on('value', (snapshot)=>{
+  const data = snapshot.val();
+  if(data){
+    attData = data.att || [];
+    schData = data.sch || [];
+    trData = data.tr || [];
+  }
+  const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Asia/Seoul'}));
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  setSyncStatus(true, `실시간 동기화 · ${hh}:${mm} 업데이트`);
+  renderAll();
+}, (error)=>{
+  console.error('Firebase 연결 실패:', error);
+  setSyncStatus(false, '연결 실패 · 오프라인');
+  showToast('클라우드 연결에 실패했습니다');
+});
+
+function refetchData(silent){
+  return fbDB.ref(FB_PATH).once('value').then(snapshot=>{
+    const data = snapshot.val();
+    if(data){
+      attData = data.att || [];
+      schData = data.sch || [];
+      trData = data.tr || [];
+    }
+    renderAll();
+    if(!silent) showToast('최신 데이터로 업데이트되었습니다');
+  }).catch(()=>{
+    if(!silent) showToast('새로고침에 실패했습니다');
+  });
+}
+
+function manualRefresh(){
+  const btn = document.getElementById('refreshTabBtn');
+  if(btn){
+    btn.classList.remove('spinning');
+    void btn.offsetWidth; // restart animation
+    btn.classList.add('spinning');
+  }
+  showToast('새로고침 중...');
+  refetchData(false);
+}
+
+// ════ JSON 데이터 업데이트(복구) ════
+function handleJsonRestore(event){
+  const file = event.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      // 코팅반_통합관리 데이터 구조({att, sch, tr}) 또는 그 내부 값만 들어있는 경우 모두 지원
+      const payload = data[FB_PATH] ? data[FB_PATH] : data;
+
+      if(!payload || typeof payload !== 'object'){
+        showToast('JSON 형식을 확인해주세요');
+        return;
+      }
+
+      attData = Array.isArray(payload.att) ? payload.att : attData;
+      schData = Array.isArray(payload.sch) ? payload.sch : schData;
+      trData = Array.isArray(payload.tr) ? payload.tr : trData;
+
+      renderAll();
+      showToast('클라우드에 저장 중...');
+
+      // 화면만 갱신하고 끝나면 새로고침 시 다시 예전 데이터로 돌아오므로, Firebase에도 같이 반영
+      fbDB.ref(FB_PATH).set({att: attData, sch: schData, tr: trData}).then(()=>{
+        setSyncStatus(true, '클라우드 저장 완료');
+        showToast('클라우드에 저장되었습니다 (다른 기기에도 반영됨)');
+      }).catch(err=>{
+        console.error('클라우드 저장 실패:', err);
+        showToast('클라우드 저장 실패: 화면에만 임시 반영됨');
+      });
+    }catch(err){
+      console.error('JSON 복구 실패:', err);
+      showToast('JSON 파일을 읽는 중 오류가 발생했습니다');
+    }finally{
+      event.target.value = '';
+    }
+  };
+  reader.onerror = ()=>{
+    showToast('파일을 읽을 수 없습니다');
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+// ════ TROUBLE LIST ════
+function applyFilters(){
+  const sp = document.getElementById('srch-product').value.toLowerCase();
+  const su = document.getElementById('srch-unit').value;
+  const sk = document.getElementById('srch-keyword').value.toLowerCase();
+  const filtered = trData.filter(r=>{
+    if(sp && !(r.product||'').toLowerCase().includes(sp)) return false;
+    if(su && r.unit !== su) return false;
+    if(sk && !(r.trouble||'').toLowerCase().includes(sk) && !(r.action||'').toLowerCase().includes(sk)) return false;
+    return true;
+  });
+  renderTroubleList(filtered);
+  document.getElementById('resultCount').textContent =
+    filtered.length === trData.length ? `전체 ${trData.length}건` : `${filtered.length}건 / 전체 ${trData.length}건`;
+}
+
+function resetFilters(){
+  document.getElementById('srch-product').value = '';
+  document.getElementById('srch-unit').value = '';
+  document.getElementById('srch-keyword').value = '';
+  applyFilters();
+}
+
+function renderTroubleList(list){
+  const el = document.getElementById('troubleList');
+  if(!list.length){
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div>해당하는 트러블 기록이 없습니다.</div>`;
+    return;
+  }
+  const icons = {'설비':'⚙️','조액':'🧪','공정':'📊'};
+  const badgeClass = {'설비':'badge-eq','조액':'badge-sol','공정':'badge-proc'};
+  const sorted = [...list].sort((a,b)=>b.date.localeCompare(a.date));
+  el.innerHTML = sorted.map(r=>`
+    <div class="tr-card">
+      <div class="tr-top">
+        <span class="tr-badge ${badgeClass[r.type]||''}">${icons[r.type]||''} ${r.type||''}</span>
+        <span class="tr-date">${r.date||''}</span>
+        <span class="tr-unit">${r.unit||''}</span>
+      </div>
+      <div class="tr-product">${r.product||''}</div>
+      <div class="tr-block">
+        <div class="tr-label">트러블 내용</div>
+        <div class="tr-text">${r.trouble||''}</div>
+      </div>
+      <div class="tr-block tr-action">
+        <div class="tr-label">조치 사항</div>
+        <div class="tr-text">${r.action||'—'}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ════ CALENDAR ════
+const CATEGORY_COLORS = {'교육':'#3b82f6','면담':'#f59e0b','일정':'#22c55e','기타':'#a78bfa'};
+
+function eventsForDate(date){
+  const att = attData.filter(r=>{
+    const start = r.startDate || r.date;
+    const end = r.endDate || r.date;
+    return date >= start && date <= end;
+  });
+  const sch = schData.filter(r=>r.date===date);
+  return {att, sch};
+}
+
+function renderDateBlock(date, labelElId, eventsElId, isToday){
+  const {att, sch} = eventsForDate(date);
+  const d = new Date(date + 'T00:00:00');
+  const dayNames = ['일','월','화','수','목','금','토'];
+  const prefix = isToday ? '오늘' : '내일';
+  const label = `${prefix} · ${d.getMonth()+1}월 ${d.getDate()}일 (${dayNames[d.getDay()]})`;
+  document.getElementById(labelElId).textContent = `📅 ${label}`;
+
+  let html = '';
+  att.forEach(e=>{
+    html += `<div class="event-chip" style="border-left-color:#ec4899;">👤 [근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}</div>`;
+  });
+  sch.forEach(e=>{
+    const c = CATEGORY_COLORS[e.category] || '#a78bfa';
+    html += `<div class="event-chip" style="border-left-color:${c};">[${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}</div>`;
+  });
+  document.getElementById(eventsElId).innerHTML = html || `<div class="no-events">일정이 없습니다.</div>`;
+}
+
+function renderSchedulePanels(){
+  const todayStr = getTodayKR();
+  const tomorrowStr = addDaysToDateStr(todayStr, 1);
+
+  renderDateBlock(todayStr, 'selDateLabel', 'selDateEvents', true);
+  renderDateBlock(tomorrowStr, 'tmrDateLabel', 'tmrDateEvents', false);
+}
+
+// 아이폰 PWA(홈 화면 추가)는 백그라운드에 있다가 복귀해도 페이지가 새로고침되지 않는 경우가 있고,
+// 오래 백그라운드에 있으면 실시간 연결(웹소켓)이 끊길 수 있음 -> 화면이 다시 보일 때마다 조용히 강제 재동기화
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState === 'visible'){
+    renderSchedulePanels();
+    refetchData(true);
+  }
+});
+window.addEventListener('pageshow', ()=>{ renderSchedulePanels(); refetchData(true); });
+window.addEventListener('focus', ()=>{ renderSchedulePanels(); refetchData(true); });
+setInterval(renderSchedulePanels, 60000); // 1분마다 날짜만 재계산 (자정 넘어가도 자동 반영)
+setInterval(()=>refetchData(true), 30 * 60000); // 30분마다 안전망 재동기화 (실시간 연결이 끊겼을 경우 대비)
+</script>
+</body></html>
 
