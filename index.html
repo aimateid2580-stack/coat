@@ -299,23 +299,54 @@ main{
 
   <!-- ════ CALENDAR VIEW ════ -->
   <div class="view" id="view-calendar">
-    <!-- 오늘 패널 -->
-    <div class="today-panel">
-      <div class="today-label" id="selDateLabel">📅 오늘</div>
-      <div class="today-events" id="selDateEvents"></div>
+
+    <!-- 기본 모드: 오늘 + 내일 (2패널) -->
+    <div id="mode-default">
+      <div class="today-panel">
+        <div class="today-label" id="selDateLabel">📅 오늘</div>
+        <div class="today-events" id="selDateEvents"></div>
+      </div>
+      <div class="today-panel">
+        <div class="today-label" id="tmrDateLabel">📅 내일</div>
+        <div class="today-events" id="tmrDateEvents"></div>
+      </div>
     </div>
-    <!-- 내일 패널 -->
-    <div class="today-panel">
-      <div class="today-label" id="tmrDateLabel">📅 내일</div>
-      <div class="today-events" id="tmrDateEvents"></div>
+
+    <!-- 날짜 선택 모드: 선택 날짜 1패널 + 복귀 안내 -->
+    <div id="mode-selected" style="display:none;">
+      <div class="today-panel">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+          <div class="today-label" id="selectedDateLabel" style="margin-bottom:0;">📅</div>
+          <div id="autoResetBadge" style="font-size:11px; color:var(--text3); flex-shrink:0;"></div>
+        </div>
+        <div class="today-events" id="selectedDateEvents"></div>
+      </div>
     </div>
 
     <!-- 미니 달력 -->
     <div class="cal-panel">
       <div class="cal-header">
-        <button class="cal-nav" id="calPrev" onclick="calMove(-1)">‹</button>
+        <button class="cal-nav" onclick="calMove(-1)">‹</button>
         <div class="cal-title" id="calTitle"></div>
-        <button class="cal-nav" id="calNext" onclick="calMove(1)">›</button>
+        <button class="cal-nav" onclick="calMove(1)">›</button>
+      </div>
+      <!-- 범례 -->
+      <div style="display:flex; flex-wrap:wrap; gap:8px 14px; margin-bottom:10px; padding:8px 4px; border-bottom:1px solid var(--border);">
+        <div style="display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text3);">
+          <div style="width:7px;height:7px;border-radius:50%;background:#ec4899;flex-shrink:0;"></div>근태
+        </div>
+        <div style="display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text3);">
+          <div style="width:7px;height:7px;border-radius:50%;background:#3b82f6;flex-shrink:0;"></div>교육
+        </div>
+        <div style="display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text3);">
+          <div style="width:7px;height:7px;border-radius:50%;background:#f59e0b;flex-shrink:0;"></div>면담
+        </div>
+        <div style="display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text3);">
+          <div style="width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;"></div>일정
+        </div>
+        <div style="display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text3);">
+          <div style="width:7px;height:7px;border-radius:50%;background:#a78bfa;flex-shrink:0;"></div>기타
+        </div>
       </div>
       <table class="cal-grid">
         <thead>
@@ -323,12 +354,6 @@ main{
         </thead>
         <tbody id="calBody"></tbody>
       </table>
-    </div>
-
-    <!-- 선택 날짜 일정 패널 (날짜 선택 시만 노출) -->
-    <div class="sel-panel" id="selPanel" style="display:none;">
-      <div class="sel-panel-label" id="selPanelLabel">📅</div>
-      <div class="sel-events" id="selPanelEvents"></div>
     </div>
   </div>
 </main>
@@ -465,14 +490,7 @@ function refetchData(silent){
 }
 
 function manualRefresh(){
-  const btn = document.getElementById('refreshTabBtn');
-  if(btn){
-    btn.classList.remove('spinning');
-    void btn.offsetWidth;
-    btn.classList.add('spinning');
-  }
-  showToast('새로고침 중...');
-  refetchData(false);
+  location.reload();
 }
 
 // ════ JSON 데이터 업데이트(복구) ════
@@ -576,16 +594,19 @@ function renderTroubleList(list){
 // ════ CALENDAR ════
 const CATEGORY_COLORS = {'교육':'#3b82f6','면담':'#f59e0b','일정':'#22c55e','기타':'#a78bfa'};
 
-// 달력 상태
 let calYear = 0, calMonth = 0, calSelected = null;
+let autoResetTimer = null;       // 10분 자동복귀 타이머
+let autoResetInterval = null;    // 카운트다운 표시 인터벌
+let autoResetAt = null;          // 복귀 예정 시각 (ms)
 
+// ── 이벤트 조회 ──
 function eventsForDate(date){
   const att = attData.filter(r=>{
     const start = r.startDate || r.date;
-    const end = r.endDate || r.date;
+    const end   = r.endDate   || r.date;
     return date >= start && date <= end;
   });
-  const sch = schData.filter(r=>r.date===date);
+  const sch = schData.filter(r => r.date === date);
   return {att, sch};
 }
 
@@ -594,71 +615,135 @@ function hasEvents(date){
   return att.length > 0 || sch.length > 0;
 }
 
-// 날짜 → "YYYY-MM-DD"
 function dateToStr(y, m, d){
   return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 }
 
-function renderDateBlock(date, labelElId, eventsElId, isToday){
-  const {att, sch} = eventsForDate(date);
-  const d = new Date(date + 'T00:00:00');
-  const dayNames = ['일','월','화','수','목','금','토'];
-  const prefix = isToday ? '오늘' : '내일';
-  const label = `${prefix} · ${d.getMonth()+1}월 ${d.getDate()}일 (${dayNames[d.getDay()]})`;
-  document.getElementById(labelElId).textContent = `📅 ${label}`;
-
+// ── 이벤트 HTML 생성 ──
+function buildEventsHtml(att, sch){
   let html = '';
   att.forEach(e=>{
-    html += `<div class="event-chip" style="border-left-color:#ec4899;">👤 [근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}</div>`;
+    html += `<div class="event-chip" style="border-left-color:#ec4899;">👤 [근태] ${e.name} - ${e.type}${e.content?' ('+e.content+')':''}</div>`;
   });
   sch.forEach(e=>{
     const c = CATEGORY_COLORS[e.category] || '#a78bfa';
-    html += `<div class="event-chip" style="border-left-color:${c};">[${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}</div>`;
+    html += `<div class="event-chip" style="border-left-color:${c};">[${e.category}] ${e.name}${e.content?' - '+e.content:''}</div>`;
   });
-  document.getElementById(eventsElId).innerHTML = html || `<div class="no-events">일정이 없습니다.</div>`;
+  return html || '<div class="no-events">일정이 없습니다.</div>';
 }
 
-function renderSchedulePanels(){
-  const todayStr = getTodayKR();
+// ── 날짜 레이블 텍스트 ──
+function buildDateLabel(dateStr){
+  const todayStr    = getTodayKR();
   const tomorrowStr = addDaysToDateStr(todayStr, 1);
-  renderDateBlock(todayStr, 'selDateLabel', 'selDateEvents', true);
-  renderDateBlock(tomorrowStr, 'tmrDateLabel', 'tmrDateEvents', false);
-  renderCalendar(); // 달력도 함께 갱신 (점 표시 최신화)
+  const d = new Date(dateStr + 'T00:00:00');
+  const dayNames = ['일','월','화','수','목','금','토'];
+  const base = `${d.getMonth()+1}월 ${d.getDate()}일 (${dayNames[d.getDay()]})`;
+  if(dateStr === todayStr)    return `오늘 · ${base}`;
+  if(dateStr === tomorrowStr) return `내일 · ${base}`;
+  return base;
 }
 
-// ════ MINI CALENDAR ════
+// ── 기본 모드 (오늘 + 내일 2패널) ──
+function showDefaultMode(){
+  clearAutoReset();
+  calSelected = null;
+  document.getElementById('mode-default').style.display  = '';
+  document.getElementById('mode-selected').style.display = 'none';
+  renderCalendar();
+
+  const todayStr    = getTodayKR();
+  const tomorrowStr = addDaysToDateStr(todayStr, 1);
+
+  // 오늘
+  const {att:a1, sch:s1} = eventsForDate(todayStr);
+  document.getElementById('selDateLabel').textContent  = `📅 ${buildDateLabel(todayStr)}`;
+  document.getElementById('selDateEvents').innerHTML   = buildEventsHtml(a1, s1);
+
+  // 내일
+  const {att:a2, sch:s2} = eventsForDate(tomorrowStr);
+  document.getElementById('tmrDateLabel').textContent  = `📅 ${buildDateLabel(tomorrowStr)}`;
+  document.getElementById('tmrDateEvents').innerHTML   = buildEventsHtml(a2, s2);
+}
+
+// ── 선택 모드 (1패널) — 데이터 갱신만, 타이머는 건드리지 않음 ──
+function showSelectedMode(dateStr){
+  document.getElementById('mode-default').style.display  = 'none';
+  document.getElementById('mode-selected').style.display = '';
+
+  const {att, sch} = eventsForDate(dateStr);
+  document.getElementById('selectedDateLabel').textContent = `📅 ${buildDateLabel(dateStr)}`;
+  document.getElementById('selectedDateEvents').innerHTML  = buildEventsHtml(att, sch);
+}
+
+// ── 10분 자동복귀 타이머 ──
+function startAutoReset(){
+  clearAutoReset();
+  autoResetAt = Date.now() + 10 * 60 * 1000; // 10분 후
+
+  autoResetTimer = setTimeout(()=>{
+    showDefaultMode();
+    showToast('오늘/내일 일정으로 돌아왔습니다');
+  }, 10 * 60 * 1000);
+
+  // 카운트다운 배지 1초마다 갱신
+  updateResetBadge();
+  autoResetInterval = setInterval(updateResetBadge, 1000);
+}
+
+function updateResetBadge(){
+  const badge = document.getElementById('autoResetBadge');
+  if(!badge || !autoResetAt) return;
+  const remain = Math.max(0, Math.round((autoResetAt - Date.now()) / 1000));
+  const m = Math.floor(remain / 60);
+  const s = remain % 60;
+  badge.textContent = `${m}분 ${String(s).padStart(2,'0')}초 후 오늘/내일로 복귀`;
+}
+
+function clearAutoReset(){
+  if(autoResetTimer)   { clearTimeout(autoResetTimer);   autoResetTimer   = null; }
+  if(autoResetInterval){ clearInterval(autoResetInterval); autoResetInterval = null; }
+  autoResetAt = null;
+}
+
+// ── renderSchedulePanels (외부에서 호출) ──
+function renderSchedulePanels(){
+  if(calSelected){
+    // 선택 모드 유지 (데이터만 갱신)
+    showSelectedMode(calSelected);
+  } else {
+    showDefaultMode();
+  }
+}
+
+// ── 달력 이동 ──
 function calMove(dir){
   calMonth += dir;
-  if(calMonth < 0){ calMonth = 11; calYear--; }
-  if(calMonth > 11){ calMonth = 0; calYear++; }
+  if(calMonth < 0) { calMonth = 11; calYear--; }
+  if(calMonth > 11){ calMonth = 0;  calYear++; }
   renderCalendar();
 }
 
+// ── 달력 렌더링 ──
 function renderCalendar(){
   const todayStr = getTodayKR();
-  const today = new Date(todayStr + 'T00:00:00');
+  const today    = new Date(todayStr + 'T00:00:00');
 
-  // 초기값 설정
   if(calYear === 0 && calMonth === 0){
-    calYear = today.getFullYear();
+    calYear  = today.getFullYear();
     calMonth = today.getMonth();
   }
 
   document.getElementById('calTitle').textContent = `${calYear}년 ${calMonth+1}월`;
 
-  const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=일
-  const lastDate = new Date(calYear, calMonth+1, 0).getDate();
+  const firstDay    = new Date(calYear, calMonth, 1).getDay();
+  const lastDate    = new Date(calYear, calMonth+1, 0).getDate();
+  const prevLastDate= new Date(calYear, calMonth, 0).getDate();
+  const totalCells  = Math.ceil((firstDay + lastDate) / 7) * 7;
 
-  // 이전달 마지막 날짜
-  const prevLastDate = new Date(calYear, calMonth, 0).getDate();
+  let rows = '<tr>';
+  let day = 1, nextDay = 1;
 
-  let rows = '';
-  let day = 1;
-  let nextDay = 1;
-  let cellCount = 0;
-  const totalCells = Math.ceil((firstDay + lastDate) / 7) * 7;
-
-  rows += '<tr>';
   for(let i = 0; i < totalCells; i++){
     const col = i % 7;
     if(i > 0 && col === 0) rows += '</tr><tr>';
@@ -666,88 +751,59 @@ function renderCalendar(){
     let dateStr, cls = '', dayNum;
 
     if(i < firstDay){
-      // 이전달
       dayNum = prevLastDate - firstDay + i + 1;
-      const prevMonth = calMonth === 0 ? 11 : calMonth - 1;
-      const prevYear  = calMonth === 0 ? calYear - 1 : calYear;
-      dateStr = dateToStr(prevYear, prevMonth, dayNum);
+      const pm = calMonth === 0 ? 11 : calMonth - 1;
+      const py = calMonth === 0 ? calYear - 1 : calYear;
+      dateStr = dateToStr(py, pm, dayNum);
       cls = 'other-month';
     } else if(day > lastDate){
-      // 다음달
       dayNum = nextDay++;
-      const nextMonth = calMonth === 11 ? 0 : calMonth + 1;
-      const nextYear  = calMonth === 11 ? calYear + 1 : calYear;
-      dateStr = dateToStr(nextYear, nextMonth, dayNum);
+      const nm = calMonth === 11 ? 0 : calMonth + 1;
+      const ny = calMonth === 11 ? calYear + 1 : calYear;
+      dateStr = dateToStr(ny, nm, dayNum);
       cls = 'other-month';
     } else {
-      dayNum = day++;
+      dayNum  = day++;
       dateStr = dateToStr(calYear, calMonth, dayNum);
     }
 
-    if(col === 0 && !cls) cls += ' is-sun';
-    if(col === 6 && !cls) cls += ' is-sat';
-    if(col === 0 && cls === 'other-month') cls += ' is-sun';
-    if(col === 6 && cls === 'other-month') cls += ' is-sat';
-
-    if(dateStr === todayStr) cls += ' is-today';
+    if(col === 0) cls += (cls ? ' ' : '') + 'is-sun';
+    if(col === 6) cls += (cls ? ' ' : '') + 'is-sat';
+    if(dateStr === todayStr)   cls += ' is-today';
     if(dateStr === calSelected && dateStr !== todayStr) cls += ' selected';
 
     // 점 표시
-    let dots = '';
+    let dots = '<div class="cal-dot-row"></div>';
     if(hasEvents(dateStr)){
       const {att, sch} = eventsForDate(dateStr);
       const colors = [];
       if(att.length) colors.push('#ec4899');
-      sch.forEach(e=>{ const c=CATEGORY_COLORS[e.category]||'#a78bfa'; if(!colors.includes(c)) colors.push(c); });
-      const shown = colors.slice(0,3);
-      dots = `<div class="cal-dot-row">${shown.map(c=>`<div class="cal-dot" style="background:${c};"></div>`).join('')}</div>`;
-    } else {
-      dots = `<div class="cal-dot-row"></div>`;
+      sch.forEach(e=>{ const c = CATEGORY_COLORS[e.category]||'#a78bfa'; if(!colors.includes(c)) colors.push(c); });
+      dots = `<div class="cal-dot-row">${colors.slice(0,3).map(c=>`<div class="cal-dot" style="background:${c};"></div>`).join('')}</div>`;
     }
 
     rows += `<td onclick="selectCalDate('${dateStr}')">
       <div class="cal-cell">
-        <div class="cal-day ${cls}">${dayNum}</div>
+        <div class="cal-day ${cls.trim()}">${dayNum}</div>
         ${dots}
       </div>
     </td>`;
   }
+
   rows += '</tr>';
   document.getElementById('calBody').innerHTML = rows;
 }
 
+// ── 날짜 선택 ──
 function selectCalDate(dateStr){
   calSelected = dateStr;
-  renderCalendar(); // 선택 표시 갱신
-
-  const {att, sch} = eventsForDate(dateStr);
-  const d = new Date(dateStr + 'T00:00:00');
-  const dayNames = ['일','월','화','수','목','금','토'];
-  const todayStr = getTodayKR();
-  const tomorrowStr = addDaysToDateStr(todayStr, 1);
-
-  let prefix = '';
-  if(dateStr === todayStr) prefix = '오늘 · ';
-  else if(dateStr === tomorrowStr) prefix = '내일 · ';
-
-  const label = `${prefix}${d.getMonth()+1}월 ${d.getDate()}일 (${dayNames[d.getDay()]})`;
-  document.getElementById('selPanelLabel').textContent = `📅 ${label}`;
-
-  let html = '';
-  att.forEach(e=>{
-    html += `<div class="event-chip" style="border-left-color:#ec4899;">👤 [근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}</div>`;
-  });
-  sch.forEach(e=>{
-    const c = CATEGORY_COLORS[e.category] || '#a78bfa';
-    html += `<div class="event-chip" style="border-left-color:${c};">[${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}</div>`;
-  });
-  document.getElementById('selPanelEvents').innerHTML = html || `<div class="no-events">일정이 없습니다.</div>`;
-  document.getElementById('selPanel').style.display = '';
-
-  // 선택 패널로 부드럽게 스크롤
+  renderCalendar();
+  showSelectedMode(dateStr);
+  startAutoReset(); // 10분 타이머 (재선택 시 리셋)
+  // 패널 상단으로 스크롤
   setTimeout(()=>{
-    document.getElementById('selPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
-  }, 80);
+    document.getElementById('mode-selected').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 60);
 }
 
 // 아이폰 PWA(홈 화면 추가)는 백그라운드에 있다가 복귀해도 페이지가 새로고침되지 않는 경우가 있고,
