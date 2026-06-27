@@ -56,6 +56,2020 @@ body {
   overflow-y: auto;
 }
 .sb-top {
+  padding: 22px 10px 0;
+  display: flex; flex-direction: column; gap: 2px;
+  flex: 1;
+}
+.sb-logo {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  padding: 18px 18px; margin-bottom: 22px;
+  background: #1a283f; border: 2.25px solid #B4B2A9; border-radius: 10px;
+}
+.sb-logo-text { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+.sb-logo-title { font-size: 14px; font-weight: 700; color: #e8edf5; letter-spacing: 0.2px; white-space: nowrap; }
+.sb-logo-subtitle { font-size: 10px; color: #9aabc4; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
+.sb-logo-mark {
+  width: 34px; height: 34px; border-radius: 7px;
+  background: var(--blue); display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.sb-section {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+  color: var(--sb-muted); padding: 12px 14px 8px;
+  margin: 12px 0 8px; border-top: 1.5px solid var(--sb-line);
+}
+.nav-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 14px; border-radius: 10px;
+  border: 2.25px solid #B4B2A9; background: transparent; color: var(--sb-text);
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; text-align: left; width: 100%;
+  transition: background 0.15s, color 0.15s;
+  margin-bottom: 10px;
+}
+.nav-btn .nav-icon { font-size: 17px; width: 22px; text-align: center; flex-shrink: 0; }
+.nav-btn:hover { background: var(--sb-hover); color: #fff; }
+.nav-btn.active { background: transparent; color: #fff; font-weight: 700; border-color: #B4B2A9; }
+.nav-btn.active:hover { background: var(--sb-hover); color: #fff; }
+.nav-badge {
+  margin-left: auto; background: rgba(255,255,255,0.15);
+  color: #fff; font-size: 11px; font-weight: 700;
+  padding: 3px 9px; border-radius: 6px; min-width: 20px; text-align: center;
+}
+
+.sb-bottom {
+  padding: 16px 0;
+  border-top: 1.5px solid var(--sb-line);
+  display: flex; flex-direction: column; gap: 8px;
+  background: rgba(0,0,0,0.1); border-radius: 6px;
+  margin: 8px 10px;
+}
+.sb-btn-backup, .sb-btn-restore { width: 100%; padding: 11px 12px; font-size: 13px; font-weight: 700; border: 2.25px solid #B4B2A9; border-radius: 10px; cursor: pointer; transition: all 0.2s; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; color: var(--sb-text); }
+.sb-btn-backup { background: transparent; box-shadow: none; }
+.sb-btn-restore { background: transparent; box-shadow: none; }
+.sb-btn-backup:hover { background: var(--sb-hover); color: #fff; }
+.sb-btn-restore:hover { background: var(--sb-hover); color: #fff; }
+
+/* ════ MAIN ════ */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar {
+  height: 54px; flex-shrink: 0;
+  background: var(--surface); border-bottom: 1.5px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex; align-items: center; padding: 0 26px; gap: 14px;
+  position: relative; z-index: 10;
+}
+.topbar-title { font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); flex: 1; }
+.topbar-clock { font-size: 13px; color: var(--text2); }
+.btn-save-file {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 15px; border-radius: 7px;
+  background: var(--blue); color: #fff;
+  border: none; font-family: inherit; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: background 0.15s;
+}
+.btn-save-file:hover { background: var(--blue-lt); }
+
+.pages { flex: 1; overflow-y: auto; padding: 24px 28px; }
+.page { display: none; }
+.page.active { display: block; animation: fadeUp 0.25s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.page-hd { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); display: block !important; }
+.page-hd h1 { font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 24px; font-weight: 700; color: var(--text); white-space: nowrap; letter-spacing: 0.3px; }
+.page-hd p { font-size: 13px; color: var(--text3); margin-top: 3px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.stat-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-top: 3px solid var(--blue); border-radius: 10px; padding: 18px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05); display: none;
+}
+.stat-card:nth-child(2) { border-top-color: var(--red); }
+.stat-card:nth-child(3) { border-top-color: var(--green); }
+.stat-card:nth-child(4) { border-top-color: #7060a8; }
+.stat-icon { font-size: 17px; opacity: 0.55; margin-bottom: 10px; }
+.stat-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 12px; color: var(--text2); font-weight: 500; }
+
+.form-panel {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 18px 20px; margin-bottom: 16px;
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text2); }
+.f-input, .f-select {
+  padding: 9px 12px; background: var(--bg); border: 1.5px solid var(--border2);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 13px;
+  transition: border 0.18s, box-shadow 0.18s;
+}
+.f-input:focus, .f-select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-dim); }
+.btn-add {
+  padding: 9px 18px; background: var(--blue); color: #fff;
+  border: none; border-radius: 7px; font-family: inherit; font-size: 13px; font-weight: 400;
+  cursor: pointer; transition: background 0.18s; white-space: nowrap;
+}
+.btn-add:hover { background: var(--blue-lt); }
+
+.btn-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; background: var(--blue); color: #fff;
+  border: none; border-radius: 9px; font-family: inherit;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background 0.18s, transform 0.08s; white-space: nowrap;
+}
+.btn-pill:hover { background: var(--blue-lt); }
+.btn-pill:active { transform: scale(0.96); }
+.btn-pill .btn-pill-icon { font-size: 14px; font-weight: 700; line-height: 1; }
+
+.tbl-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.tbl-search { padding: 8px 13px; flex: 1; background: var(--surface); border: 1.5px solid var(--border2); border-radius: 7px; color: var(--text); font-size: 13px; }
+.tbl-search:focus { outline: none; border-color: var(--blue); }
+.tbl-count { margin-left: auto; font-size: 12px; color: var(--text3); }
+.tbl-wrap { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+table { width: 100%; border-collapse: collapse; }
+thead { background: var(--bg2); }
+th { padding: 11px 16px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); border-bottom: 1.5px solid var(--border); }
+td { padding: 11px 16px; font-size: 13px; color: var(--text); border-bottom: 1.5px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: var(--bg2); }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.ba { background: rgba(58,101,172,0.09); color: #3a65ac; border: 1.5px solid rgba(58,101,172,0.18); }
+.bc { background: rgba(176,60,60,0.09); color: #b03c3c; border: 1.5px solid rgba(176,60,60,0.18); }
+.bs { background: rgba(78,138,112,0.09); color: #3d7d62; border: 1.5px solid rgba(78,138,112,0.18); }
+.btn-del { padding: 4px 11px; background: rgba(176,60,60,0.07); border: 1.5px solid rgba(176,60,60,0.18); color: var(--red); border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+.btn-del:hover { background: rgba(176,60,60,0.16); }
+.btn-edit { padding: 4px 11px; background: rgba(58,101,172,0.07); border: 1.5px solid rgba(58,101,172,0.18); color: var(--blue); border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background 0.15s; margin-right: 4px; }
+.btn-edit:hover { background: rgba(58,101,172,0.18); }
+
+.edit-modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.25); z-index: 9100; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+.edit-modal-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; padding: 28px 30px; width: 900px; max-width: 95vw; box-shadow: 0 12px 40px rgba(0,0,0,0.16); }
+.edit-modal-title { font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 18px; }
+.edit-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 13px; }
+.edit-field label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text2); }
+.edit-input, .edit-select, .edit-textarea { padding: 9px 12px; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 7px; color: var(--text); font-family: inherit; font-size: 13px; transition: border 0.18s; width: 100%; }
+.edit-textarea { min-height: 80px; resize: vertical; }
+.edit-input:focus, .edit-select:focus, .edit-textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-dim); }
+.edit-modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+.edit-modal-btns button { flex: 1; padding: 10px 22px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1.5px solid; transition: background 0.15s; }
+.edit-m-cancel { background: var(--bg2); color: var(--text2); border-color: var(--border2); }
+.edit-m-cancel:hover { background: var(--bg3); }
+.edit-m-save { background: var(--blue); color: #fff; border-color: var(--blue); }
+.edit-m-save:hover { background: var(--blue-lt); }
+
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.22); z-index: 9000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+.modal-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; padding: 30px; width: 330px; box-shadow: 0 10px 36px rgba(0,0,0,0.14); }
+.modal-icon { font-size: 26px; margin-bottom: 10px; }
+.modal-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.modal-desc { font-size: 13px; color: var(--text2); margin-bottom: 22px; }
+.modal-btns { display: flex; gap: 8px; }
+.modal-btns button { flex: 1; padding: 10px; border-radius: 7px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1.5px solid; transition: background 0.15s; }
+.m-cancel { background: var(--bg2); color: var(--text2); border-color: var(--border2); }
+.m-cancel:hover { background: var(--bg3); }
+.m-confirm { background: var(--red); color: #fff; border-color: var(--red); }
+.m-confirm:hover { background: #963030; }
+
+#toast-wrap {
+  position: fixed; top: 20px; right: 22px; z-index: 99999;
+  display: flex; flex-direction: column; gap: 8px; pointer-events: none;
+}
+.toast { padding: 11px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 9px; min-width: 220px; pointer-events: all; border: 1.5px solid; box-shadow: 0 3px 16px rgba(0,0,0,0.12); }
+.toast.ok { background: #f0faf5; border-color: #b6dfc8; color: #2a7048; }
+.toast.err { background: #fdf2f2; border-color: #e4c0c0; color: #903030; }
+.toast.warn { background: #fffbeb; border-color: #fcd34d; color: #92400e; }
+
+/* CALENDAR */
+.cal-wrap { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+.cal-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1.5px solid var(--border); }
+.cal-nav { display: flex; gap: 6px; }
+.cal-nav-btn { width: 36px; height: 36px; border-radius: 7px; background: var(--bg2); border: 1.5px solid var(--border); color: var(--text2); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+.cal-nav-btn:hover { background: var(--blue-dim); border-color: var(--blue); color: var(--blue); }
+.cal-title { font-size: 20px; font-weight: 700; color: var(--text); }
+.btn-today { padding: 6px 13px; font-size: 12px; font-weight: 600; background: var(--bg2); border: 1.5px solid var(--border2); color: var(--text2); border-radius: 6px; cursor: pointer; transition: background 0.15s; }
+.btn-today:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+.cal-week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 5px; }
+.cal-week-lbl { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.07em; color: var(--text3); padding: 5px 0; }
+.cal-week-lbl.sun { color: #b03c3c; }
+.cal-week-lbl.sat { color: #3a65ac; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: minmax(84px, auto); gap: 5px; }
+.cal-cell { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 7px; padding: 7px 9px; overflow: hidden; cursor: default; transition: border-color 0.12s, background 0.12s; }
+.cal-cell:hover { border-color: var(--border2); background: #fff; }
+.cal-cell.today { border: 1.5px solid #ec4899; background: rgba(236, 72, 153, 0.05); }
+.cal-cell.other { opacity: 0.28; pointer-events: none; }
+.cell-num { font-size: 12px; font-weight: 700; color: var(--text2); display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.cell-num.sun { color: #b03c3c; }
+.cell-num.sat { color: #3a65ac; }
+.cell-num.today-num { color: var(--blue); }
+.today-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+.cal-ev { padding: 2px 6px; border-radius: 0; font-size: 11px; font-weight: 400; margin-top: 3px; white-space: normal; overflow: visible; line-height: 1.4; cursor: pointer; transition: all 0.2s; word-break: break-word; border-left: 4px solid; background: transparent; color: #000; }
+.cal-ev:hover { transform: scale(1.02); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.ca { background: rgba(58,101,172,0.12); color: #2e5090; }
+.cc { background: rgba(176,60,60,0.12); color: #903030; }
+.cs { background: rgba(78,138,112,0.12); color: #2e6b50; }
+.ct { background: rgba(221,107,32,0.12); color: #c05a10; }
+
+/* TROUBLE */
+.tr-stat-bar { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+.tr-stat-pill {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 20px; padding: 7px 16px; font-size: 13px;
+  color: var(--text2); box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.tr-stat-dot { width: 8px; height: 8px; border-radius: 50%; }
+.tr-cnt { font-weight: 700; font-family: 'JetBrains Mono'; font-size: 14px; color: var(--text); }
+.tr-form-panel {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+.form-section { padding: 22px 26px; border-bottom: 1.5px solid var(--border); }
+.form-section:last-child { border-bottom: none; }
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--tr-sol); margin-bottom: 16px;
+}
+.tr-grid-h4 { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.8fr; gap: 14px; }
+.tr-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.sel-wrap { position: relative; }
+.sel-wrap::after {
+  content: '▾'; position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
+  font-size: 13px; color: var(--text2); pointer-events: none;
+}
+.tr-select {
+  width: 100%; appearance: none;
+  background: var(--bg2); border: 1.5px solid var(--border2);
+  border-radius: 8px; color: var(--text); font-family: inherit; font-size: 14px;
+  padding: 10px 30px 10px 12px; outline: none; cursor: pointer;
+  transition: border-color 0.2s;
+}
+.tr-select:focus { border-color: var(--tr-sol); box-shadow: 0 0 0 3px rgba(49,130,206,0.1); }
+.tr-input, .tr-textarea {
+  width: 100%; background: var(--bg2); border: 1.5px solid var(--border2);
+  border-radius: 8px; color: var(--text); font-family: inherit; font-size: 14px;
+  padding: 10px 12px; outline: none; transition: border-color 0.2s;
+}
+.tr-textarea { min-height: 110px; resize: vertical; }
+.tr-input:focus, .tr-textarea:focus { border-color: var(--tr-sol); box-shadow: 0 0 0 3px rgba(49,130,206,0.1); }
+.tr-record-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.tr-record-top {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  padding-bottom: 12px; border-bottom: 1.5px solid var(--border);
+}
+.tr-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 400;
+  white-space: nowrap;
+}
+.badge-eq { background: rgba(221,107,32,0.12); color: #c05a10; }
+.badge-sol { background: rgba(49,130,206,0.12); color: #2e5090; }
+.badge-proc { background: rgba(56,161,105,0.12); color: #2a7048; }
+.tr-record-date { font-size: 12px; color: var(--text2); font-weight: 600; }
+.tr-record-product { font-size: 13px; color: var(--text); font-weight: 600; }
+.tr-record-unit { font-size: 12px; color: var(--text3); }
+.tr-record-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;
+}
+.tr-record-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text2); margin-bottom: 6px; }
+.tr-record-text { font-size: 13px; color: var(--text); line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+.tr-record-footer {
+  display: flex; gap: 8px; justify-content: flex-end; padding-top: 12px;
+  border-top: 1.5px solid var(--border);
+}
+.tr-action-btn {
+  padding: 6px 12px; border-radius: 6px; border: none;
+  font-family: inherit; font-size: 12px; font-weight: 400;
+  cursor: pointer; transition: all 0.15s;
+}
+.edit-btn { background: rgba(58,101,172,0.1); color: var(--blue); }
+.edit-btn:hover { background: rgba(58,101,172,0.2); }
+.del-btn { background: rgba(176,60,60,0.1); color: var(--red); }
+.del-btn:hover { background: rgba(176,60,60,0.2); }
+.tr-empty-state { padding: 48px; text-align: center; color: var(--text3); }
+.ei { font-size: 40px; margin-bottom: 10px; }
+
+.tbl-empty { padding: 48px; text-align: center; color: var(--text3); font-size: 13px; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head><body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-top">
+    <div class="sb-logo" onclick="handleLogoClick()" style="cursor: pointer;">
+      <img src="data:image/png;base64,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" style="width: 40px; height: 40px; border-radius: 10px;">
+      <div class="sb-logo-text">
+        <div class="sb-logo-title">코팅반 통합관리 시스템</div>
+        <div class="sb-logo-subtitle">Coating Management System</div>
+      </div>
+    </div>
+    <div style="border-top: 1.5px solid var(--sb-line); margin: 12px 0 8px;"></div>
+    <button class="nav-btn" onclick="switchPage('attendance')">
+      <span class="nav-icon">👬</span>
+      <span>개인 근태 등록</span>
+      <span class="nav-badge" id="badge-att">0</span>
+    </button>
+    <button class="nav-btn" onclick="switchPage('schedule')">
+      <span class="nav-icon">📅</span>
+      <span>일정 등록</span>
+      <span class="nav-badge" id="badge-sch">0</span>
+    </button>
+    <button class="nav-btn" onclick="switchPage('calendar')">
+      <span class="nav-icon">📆</span>
+      <span>근태/일정 현황 달력</span>
+    </button>
+    <button class="nav-btn active" onclick="switchPage('trouble')">
+      <span class="nav-icon">⚠️</span>
+      <span style="font-size: 11.5px;">TROUBLE 내역취합</span>
+      <span class="nav-badge" id="badge-tr">0</span>
+    </button>
+    <button class="nav-btn" id="notice-nav-btn" onclick="switchPage('notice')" style="display:none;">
+      <span class="nav-icon">📢</span>
+      <span>중요전달 사항</span>
+      <span class="nav-badge" id="badge-notice">0</span>
+    </button>
+  </div>
+  
+  <div class="sb-bottom">
+    <button class="sb-btn-backup" onclick="saveToFile()">💾 데이터 저장</button>
+    <button class="sb-btn-restore" onclick="loadFromFile()">📥 데이터 복구</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="pageTitle">⚠️ TROUBLE 내역</div>
+  </div>
+
+  <div class="pages">
+    <!-- ATTENDANCE PAGE -->
+    <div class="page" id="attendance">
+      <div class="page-hd">
+             <p>팀원의 근무 현황을 기록하고 관리합니다</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card" style="display: none;">
+          <div class="stat-icon">📊</div>
+          <div class="stat-num" id="att-total">0</div>
+          <div class="stat-label">전체 기록</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎫</div>
+          <div class="stat-num" id="att-vacation">0</div>
+          <div class="stat-label">연차</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏰</div>
+          <div class="stat-num" id="att-halfday">0</div>
+          <div class="stat-label">반차</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">❌</div>
+          <div class="stat-num" id="att-cardmiss">0</div>
+          <div class="stat-label">카드미기찰</div>
+        </div>
+      </div>
+
+      <div class="form-panel">
+        <div class="form-group" style="flex: 1; min-width: 120px;">
+          <label>이름</label>
+          <input type="text" class="f-input" id="att-name" placeholder="이름 입력">
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 120px;">
+          <label>시작날짜</label>
+          <input type="date" class="f-input" id="att-start-date">
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 120px;" id="att-end-date-group">
+          <label>종료날짜</label>
+          <input type="date" class="f-input" id="att-end-date">
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 150px;">
+          <label>근태유형</label>
+          <select class="f-select" id="att-type" onchange="toggleAttEndDate()">
+            <option value="">선택</option>
+            <option value="연차">연차</option>
+            <option value="오전반차">오전반차</option>
+            <option value="오후반차">오후반차</option>
+            <option value="시간차">시간차</option>
+            <option value="출근미기찰">출근미기찰</option>
+            <option value="퇴근미기찰">퇴근미기찰</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 2; min-width: 200px;">
+          <label>내용</label>
+          <input type="text" class="f-input" id="att-content" placeholder="비고 입력">
+        </div>
+        <button class="btn-pill" onclick="addAttendance()"><span class="btn-pill-icon">+</span> 추가</button>
+      </div>
+
+      <div class="tbl-bar">
+        <input type="text" class="tbl-search" id="att-search" placeholder="검색..." onkeyup="filterAttendance()">
+        <span class="tbl-count" id="att-count">0건</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>날짜</th>
+              <th>유형</th>
+              <th>내용</th>
+              <th>작업</th>
+            </tr>
+          </thead>
+          <tbody id="att-list"></tbody>
+        </table>
+      </div>
+      <div class="tbl-empty" id="att-empty" style="display: none;">기록 없음</div>
+    </div>
+
+    <!-- SCHEDULE PAGE -->
+    <div class="page" id="schedule">
+      <div class="page-hd">
+               <p>주요 일정과 미팅을 둥록합니다</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card" style="display: none;">
+          <div class="stat-icon">📋</div>
+          <div class="stat-num" id="sch-total">0</div>
+          <div class="stat-label">전체 일정</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-num" id="sch-edu">0</div>
+          <div class="stat-label">교육</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💬</div>
+          <div class="stat-num" id="sch-interview">0</div>
+          <div class="stat-label">면담</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📆</div>
+          <div class="stat-num" id="sch-schedule">0</div>
+          <div class="stat-label">일정</div>
+        </div>
+      </div>
+
+      <div class="form-panel">
+        <div class="form-group" style="flex: 1; min-width: 120px;">
+          <label>이름</label>
+          <input type="text" class="f-input" id="sch-name" placeholder="대상자">
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 120px;">
+          <label>날짜</label>
+          <input type="date" class="f-input" id="sch-date">
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 120px;">
+          <label>카테고리</label>
+          <select class="f-select" id="sch-category">
+            <option value="">선택</option>
+            <option value="교육">교육</option>
+            <option value="면담">면담</option>
+            <option value="일정">일정</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 2; min-width: 200px;">
+          <label>내용</label>
+          <input type="text" class="f-input" id="sch-content" placeholder="일정 내용 입력">
+        </div>
+        <button class="btn-pill" onclick="addSchedule()"><span class="btn-pill-icon">+</span> 추가</button>
+      </div>
+
+      <div class="tbl-bar">
+        <input type="text" class="tbl-search" id="sch-search" placeholder="검색..." onkeyup="filterSchedule()">
+        <span class="tbl-count" id="sch-count">0건</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>날짜</th>
+              <th>카테고리</th>
+              <th>내용</th>
+              <th>작업</th>
+            </tr>
+          </thead>
+          <tbody id="sch-list"></tbody>
+        </table>
+      </div>
+      <div class="tbl-empty" id="sch-empty" style="display: none;">기록 없음</div>
+    </div>
+
+    <!-- CALENDAR PAGE -->
+    <div class="page" id="calendar">
+      <div class="page-hd">
+      
+        <p>월별 근태 및 일정을 한눈에 확인합니다</p>
+      </div>
+      
+      <!-- 오늘의 일정 섹션 -->
+      <div id="today-schedule-section" style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
+        <div style="font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 18px;">📅</span>
+          <span id="today-date-label">오늘의 일정</span>
+        </div>
+        <div id="today-schedule-list" style="display: flex; flex-direction: column; gap: 8px; align-items: flex-start;">
+          <div style="font-size: 13px; color: var(--text3);">일정이 없습니다.</div>
+        </div>
+      </div>
+      
+      <div class="cal-wrap">
+        <div class="cal-hd">
+          <div class="cal-title" id="cal-month">2026년 6월</div>
+          <div style="display: flex; gap: 8px;">
+            <button class="cal-nav-btn" onclick="calPrev()">‹</button>
+            <button class="btn-today" onclick="calToday()">오늘</button>
+            <button class="cal-nav-btn" onclick="calNext()">›</button>
+            <button class="btn-add" style="background: #217346; padding: 6px 13px; font-size: 12px;" onclick="exportAttSchExcel()">📊 엑셀로 저장</button>
+          </div>
+        </div>
+        <div class="cal-week-row">
+          <div class="cal-week-lbl sun">일</div>
+          <div class="cal-week-lbl">월</div>
+          <div class="cal-week-lbl">화</div>
+          <div class="cal-week-lbl">수</div>
+          <div class="cal-week-lbl">목</div>
+          <div class="cal-week-lbl">금</div>
+          <div class="cal-week-lbl sat">토</div>
+        </div>
+        <div class="cal-grid" id="unified-cal"></div>
+      </div>
+    </div>
+    <div class="page active" id="trouble">      <div class="page-hd">    
+      <P>설비, 조액, 공정 관련 트러블을 기록합니다</p>
+      </div>
+
+      <div class="tr-stat-bar">
+        <div class="tr-stat-pill">
+          <div class="tr-stat-dot" style="background: #dd6b20;"></div>
+          <span>설비:</span>
+          <span class="tr-cnt" id="cnt-eq">0</span>
+        </div>
+        <div class="tr-stat-pill">
+          <div class="tr-stat-dot" style="background: #3182ce;"></div>
+          <span>조액:</span>
+          <span class="tr-cnt" id="cnt-sol">0</span>
+        </div>
+        <div class="tr-stat-pill">
+          <div class="tr-stat-dot" style="background: #38a169;"></div>
+          <span>공정:</span>
+          <span class="tr-cnt" id="cnt-proc">0</span>
+        </div>
+        <div class="tr-stat-pill">
+          <span>전체:</span>
+          <span class="tr-cnt" id="cnt-tr-total">0</span>
+        </div>
+      </div>
+
+      <button class="btn-pill" onclick="openTROUBLEForm()" style="margin-bottom: 16px;"><span class="btn-pill-icon">+</span> 신규 TROUBLE 등록</button>
+
+      <div class="form-panel" style="gap: 8px;">
+        <div class="form-group" style="flex: 1; min-width: 140px;">
+          <label>품명</label>
+          <input type="text" class="f-input" id="tr-search-product" placeholder="품명 검색" onkeyup="applyTROUBLEFilters()">
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 120px;">
+          <label>트러블 종류</label>
+          <select class="f-select" id="tr-search-type" onchange="applyTROUBLEFilters()">
+            <option value="">전체</option>
+            <option value="설비">설비</option>
+            <option value="조액">조액</option>
+            <option value="공정">공정</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 120px;">
+          <label>호기</label>
+          <select class="f-select" id="tr-search-unit" onchange="applyTROUBLEFilters()">
+            <option value="">전체</option>
+            <option value="A-0">A-0</option>
+            <option value="A-1">A-1</option>
+            <option value="A-2">A-2</option>
+            <option value="A-3">A-3</option>
+            <option value="A-4">A-4</option>
+            <option value="A-5">A-5</option>
+            <option value="A-6">A-6</option>
+            <option value="고기능성레진">고기능성레진</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 1; min-width: 140px;">
+          <label>키워드</label>
+          <input type="text" class="f-input" id="tr-search-keyword" placeholder="내용 검색" onkeyup="applyTROUBLEFilters()">
+        </div>
+        <button class="btn-add" style="align-self: flex-end; background: #4e8a70;" onclick="resetTROUBLEFilters()">🔄 초기화</button>
+        <button class="btn-add" style="align-self: flex-end; background: #217346;" onclick="exportTROUBLEExcel()">📊 엑셀로 저장</button>
+      </div>
+
+      <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <span class="tbl-count" id="tr-result-count">0건</span>
+      </div>
+
+      <div id="tr-recordList"></div>
+    </div>
+
+    <!-- NOTICE PAGE -->
+    <div class="page" id="notice">
+      <div class="page-hd">
+        <p>팀원에게 전달할 중요한 사항을 등록하고 관리합니다</p>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <button class="btn-pill" onclick="openNoticeForm()"><span class="btn-pill-icon">+</span> 전달사항 입력</button>
+      </div>
+
+      <div class="tbl-bar">
+        <input type="text" class="tbl-search" id="notice-search" placeholder="검색... (여러 키워드는 &로 구분, 예: 코팅&밸브&세척)" onkeyup="filterNotice()">
+        <span class="tbl-count" id="notice-count">0건</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>주간/야간</th>
+              <th>전달사항</th>
+              <th>작업</th>
+            </tr>
+          </thead>
+          <tbody id="notice-list"></tbody>
+        </table>
+      </div>
+      <div class="tbl-empty" id="notice-empty" style="display:none;">등록된 전달사항이 없습니다</div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTICE EDIT MODAL -->
+<div class="edit-modal-bg" id="noticeEditBg" style="display:none;" onclick="if(event.target===this)closeNoticeEdit()">
+  <div class="edit-modal-box" style="max-width: 600px;">
+    <div class="edit-modal-title">✏️ 전달사항 수정</div>
+    <div class="edit-field">
+      <label>날짜</label>
+      <input type="date" class="edit-input" id="edit-notice-date">
+    </div>
+    <div class="edit-field">
+      <label>주간/야간</label>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <input type="radio" name="edit-notice-shift" id="edit-notice-shift-day" value="주간" style="cursor:pointer;">
+        <label for="edit-notice-shift-day" style="margin: 0; font-weight: 500; cursor: pointer;">주간</label>
+        <input type="radio" name="edit-notice-shift" id="edit-notice-shift-night" value="야간" style="cursor:pointer; margin-left: 16px;">
+        <label for="edit-notice-shift-night" style="margin: 0; font-weight: 500; cursor: pointer;">야간</label>
+      </div>
+    </div>
+    <div class="edit-field">
+      <label>전달사항</label>
+      <textarea class="edit-textarea" id="edit-notice-content" style="min-height:180px; resize: vertical;"></textarea>
+    </div>
+    <div class="edit-modal-btns">
+      <button class="edit-m-cancel" onclick="closeNoticeEdit()">취소</button>
+      <button class="edit-m-save" onclick="saveNoticeEdit()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- TROUBLE FORM MODAL -->
+<div class="edit-modal-bg" id="troubleFormBg" style="display: none;" onclick="if(event.target===this)closeTROUBLEForm()">
+  <div class="edit-modal-box">
+    <div class="edit-modal-title">➕ 신규 TROUBLE 등록</div>
+    
+    <div class="tr-form-panel">
+      <div class="form-section">
+        <div class="section-label">기본 정보</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+          <div class="tr-field">
+            <label>트러블 종류</label>
+            <div class="sel-wrap">
+              <select class="tr-select" id="tr-type">
+                <option value="">선택</option>
+                <option value="설비">설비</option>
+                <option value="조액">조액</option>
+                <option value="공정">공정</option>
+              </select>
+            </div>
+          </div>
+          <div class="tr-field">
+            <label>날짜</label>
+            <input type="date" class="tr-input" id="tr-date">
+          </div>
+          <div class="tr-field">
+            <label>호기</label>
+            <div class="sel-wrap">
+              <select class="tr-select" id="tr-unit">
+                <option value="">선택</option>
+                <option value="A-0">A-0</option>
+                <option value="A-1">A-1</option>
+                <option value="A-2">A-2</option>
+                <option value="A-3">A-3</option>
+                <option value="A-4">A-4</option>
+                <option value="A-5">A-5</option>
+                <option value="A-6">A-6</option>
+                <option value="고기능성레진">고기능성레진</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="tr-field" style="margin-top: 14px;">
+          <label>품명</label>
+          <input type="text" class="tr-input" id="tr-product" placeholder="제품명">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">TROUBLE 내용</div>
+        <div class="tr-field">
+          <textarea class="tr-textarea" id="tr-trouble" placeholder="발생한 문제를 상세히 기록해주세요"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">조치 사항</div>
+        <div class="tr-field">
+          <textarea class="tr-textarea" id="tr-action" placeholder="취한 조치를 기록해주세요"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="edit-modal-btns">
+      <button class="edit-m-cancel" onclick="closeTROUBLEForm()">취소</button>
+      <button class="edit-m-save" onclick="saveTROUBLE()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODALS -->
+<div class="edit-modal-bg" id="attEditBg" style="display: none;" onclick="if(event.target===this)closeAttEdit()">
+  <div class="edit-modal-box">
+    <div class="edit-modal-title">근태 수정</div>
+    <div class="edit-field">
+      <label>이름</label>
+      <input type="text" class="edit-input" id="edit-att-name">
+    </div>
+    <div class="edit-field">
+      <label>시작날짜</label>
+      <input type="date" class="edit-input" id="edit-att-start-date">
+    </div>
+    <div class="edit-field" id="edit-att-end-date-group">
+      <label>종료날짜</label>
+      <input type="date" class="edit-input" id="edit-att-end-date">
+    </div>
+    <div class="edit-field">
+      <label>유형</label>
+      <select class="edit-select" id="edit-att-type" onchange="toggleEditAttEndDate()">
+        <option value="연차">연차</option>
+        <option value="오전반차">오전반차</option>
+        <option value="오후반차">오후반차</option>
+        <option value="시간차">시간차</option>
+        <option value="출근미기찰">출근미기찰</option>
+        <option value="퇴근미기찰">퇴근미기찰</option>
+      </select>
+    </div>
+    <div class="edit-field">
+      <label>내용</label>
+      <input type="text" class="edit-input" id="edit-att-content" placeholder="비고 입력">
+    </div>
+    <div class="edit-modal-btns">
+      <button class="edit-m-cancel" onclick="closeAttEdit()">취소</button>
+      <button class="edit-m-save" onclick="saveAttEdit()">저장</button>
+    </div>
+  </div>
+</div>
+
+<div class="edit-modal-bg" id="schEditBg" style="display: none;" onclick="if(event.target===this)closeSchEdit()">
+  <div class="edit-modal-box">
+    <div class="edit-modal-title">일정 수정</div>
+    <div class="edit-field">
+      <label>이름</label>
+      <input type="text" class="edit-input" id="edit-sch-name">
+    </div>
+    <div class="edit-field">
+      <label>날짜</label>
+      <input type="date" class="edit-input" id="edit-sch-date">
+    </div>
+    <div class="edit-field">
+      <label>카테고리</label>
+      <select class="edit-select" id="edit-sch-category">
+        <option value="교육">교육</option>
+        <option value="면담">면담</option>
+        <option value="일정">일정</option>
+        <option value="기타">기타</option>
+      </select>
+    </div>
+    <div class="edit-field">
+      <label>내용</label>
+      <textarea class="edit-textarea" id="edit-sch-content"></textarea>
+    </div>
+    <div class="edit-modal-btns">
+      <button class="edit-m-cancel" onclick="closeSchEdit()">취소</button>
+      <button class="edit-m-save" onclick="saveSchEdit()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-bg" id="deleteConfirm" style="display: none;">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title">삭제 확인</div>
+    <div class="modal-desc" id="deleteMsg"></div>
+    <div class="modal-btns">
+      <button class="m-cancel" onclick="cancelDelete()">취소</button>
+      <button class="m-confirm" onclick="confirmDelete()">삭제</button>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-bg" id="pwModal" style="display: none;">
+  <div class="modal-box">
+    <div class="modal-icon">🔐</div>
+    <div class="modal-title">비밀번호 확인</div>
+    <div class="edit-field" style="margin-bottom: 20px;">
+      <input type="password" class="edit-input" id="pwInput" placeholder="비밀번호 입력" onkeypress="if(event.key==='Enter')checkPassword()">
+    </div>
+    <div class="modal-btns">
+      <button class="m-cancel" onclick="cancelPW()">취소</button>
+      <button class="m-confirm" onclick="checkPassword()">확인</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-wrap"></div>
+
+<input type="file" id="fileInput" style="display: none;" accept=".json" onchange="handleFileUpload(event)">
+
+<!-- Firebase 연동: 모바일 버전과 동일한 데이터를 실시간으로 공유합니다 -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBbm0hy_qz_85UCSu2uLUCUN6zYhs-sAqo",
+  authDomain: "hoho-a270e.firebaseapp.com",
+  databaseURL: "https://hoho-a270e-default-rtdb.firebaseio.com",
+  projectId: "hoho-a270e",
+  storageBucket: "hoho-a270e.firebasestorage.app",
+  messagingSenderId: "240112645938",
+  appId: "1:240112645938:web:7bc00ffa220c07327ec92b"
+};
+firebase.initializeApp(firebaseConfig);
+const fbDB = firebase.database();
+const FB_PATH = '코팅반_통합관리';
+</script>
+
+<script>
+const ADMIN_PW = '2580';
+const TOGGLE_PW = '1477918';
+let logoClickCount = 0;
+let noticeMenuVisible = false;
+let attData = [];
+let schData = [];
+let trData = [];
+let noticeData = [];
+let currentPage = 'attendance';
+let editingId = null;
+let editingType = null;
+let deleteId = null;
+let deleteType = null;
+let pwCallback = null;
+// 한국 시간대 기준 현재 날짜로 초기화
+let calDate = new Date(new Date().toLocaleString('en-US', {timeZone: 'Asia/Seoul'}));
+
+// 한국 시간대 기준 현재 날짜 가져오기
+function getTodayKR(){
+  return new Intl.DateTimeFormat('en-CA', {timeZone: 'Asia/Seoul'}).format(new Date());
+}
+
+// 로고 3번 클릭으로 중요전달사항 메뉴 토글
+function handleLogoClick() {
+  logoClickCount++;
+  
+  if(logoClickCount === 3) {
+    logoClickCount = 0;
+    
+    if(noticeMenuVisible) {
+      // 메뉴가 보이는 상태 -> 숨기기
+      document.getElementById('notice-nav-btn').style.display = 'none';
+      noticeMenuVisible = false;
+      showToast('중요전달 사항 메뉴가 숨겨졌습니다', 'ok');
+    } else {
+      // 메뉴가 숨겨진 상태 -> 비번 입력 후 표시
+      pwCallback = () => {
+        document.getElementById('notice-nav-btn').style.display = 'flex';
+        noticeMenuVisible = true;
+        showToast('중요전달 사항 메뉴가 표시되었습니다', 'ok');
+      };
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwModal').style.display = 'flex';
+      document.getElementById('pwModal').setAttribute('data-mode', 'toggle');
+      document.getElementById('pwInput').focus();
+    }
+  }
+  
+  // 3초 후 클릭 카운트 초기화
+  setTimeout(() => {
+    logoClickCount = 0;
+  }, 3000);
+}
+
+function switchPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  
+  const btn = document.querySelector(`.nav-btn[onclick*="'${page}'"]`);
+  if(btn) btn.classList.add('active');
+  
+  document.getElementById(page).classList.add('active');
+  currentPage = page;
+  
+  const titles = {attendance:'👬 개인 근태 등록', schedule:'📅 일정 등록', calendar:'📆 근태/일정 현황 달력', trouble:'⚠️ TROUBLE 내역', notice:'📢 중요전달 사항'};
+  document.getElementById('pageTitle').textContent = titles[page];
+  
+  if(page==='attendance'){
+    renderAttTable(attData);
+  } else if(page==='schedule'){
+    renderSchTable(schData);
+  } else if(page==='calendar'){
+    renderUnifiedCalendar();
+  } else if(page==='trouble'){
+    applyTROUBLEFilters();
+  } else if(page==='notice'){
+    renderNoticeTable(noticeData);
+  }
+  loadData();
+}
+
+// ════ ATTENDANCE ════
+function addAttendance(){
+  const name = document.getElementById('att-name').value.trim();
+  const startDate = document.getElementById('att-start-date').value;
+  const endDate = document.getElementById('att-end-date').value;
+  const type = document.getElementById('att-type').value;
+  const content = document.getElementById('att-content').value.trim() || '';
+  
+  if(!name||!startDate||!type){
+    showToast('필수 항목을 입력해주세요','err');
+    return;
+  }
+  
+  // 연차는 종료날짜 필수, 다른 항목은 시작날짜만 필수
+  if(type === '연차' && !endDate){
+    showToast('연차는 종료날짜를 선택해주세요','err');
+    return;
+  }
+  
+  // 연차가 아니면 endDate를 startDate와 같게 설정
+  const finalEndDate = type === '연차' ? endDate : startDate;
+  
+  attData.push({id:Date.now(),name,startDate,endDate:finalEndDate,type,content});
+  clearAttForm();
+  saveDataToStorage();
+  loadData();
+  showToast('근태가 등록되었습니다','ok');
+}
+
+function clearAttForm(){
+  const today = getTodayKR();
+  document.getElementById('att-name').value='';
+  document.getElementById('att-start-date').value=today;
+  document.getElementById('att-end-date').value=today;
+  document.getElementById('att-type').value='';
+  document.getElementById('att-content').value='';
+  // 초기 상태에서 종료날짜 필드 숨김
+  document.getElementById('att-end-date-group').style.display = 'none';
+}
+
+function toggleAttEndDate(){
+  const type = document.getElementById('att-type').value;
+  const endDateGroup = document.getElementById('att-end-date-group');
+  if(type === '연차'){
+    endDateGroup.style.display = 'flex';
+  } else {
+    endDateGroup.style.display = 'none';
+  }
+}
+
+function toggleEditAttEndDate(){
+  const type = document.getElementById('edit-att-type').value;
+  const endDateGroup = document.getElementById('edit-att-end-date-group');
+  if(type === '연차'){
+    endDateGroup.style.display = 'flex';
+  } else {
+    endDateGroup.style.display = 'none';
+  }
+}
+
+function editAttendance(id){
+  askPassword(() => {
+    editingId=id; editingType='att';
+    const r=attData.find(x=>x.id===id);
+    if(!r)return;
+    document.getElementById('edit-att-name').value=r.name;
+    document.getElementById('edit-att-start-date').value=r.startDate || r.date;
+    document.getElementById('edit-att-end-date').value=r.endDate || r.date;
+    document.getElementById('edit-att-type').value=r.type;
+    document.getElementById('edit-att-content').value=r.content||'';
+    document.getElementById('attEditBg').style.display='flex';
+    toggleEditAttEndDate();
+  });
+}
+
+function saveAttEdit(){
+  const idx=attData.findIndex(x=>x.id===editingId);
+  if(idx===-1)return;
+  
+  const startDate = document.getElementById('edit-att-start-date').value;
+  const endDate = document.getElementById('edit-att-end-date').value;
+  const type = document.getElementById('edit-att-type').value;
+  
+  // 연차가 아니면 endDate를 startDate와 같게 설정
+  const finalEndDate = type === '연차' ? endDate : startDate;
+  
+  attData[idx]={...attData[idx],
+    name:document.getElementById('edit-att-name').value,
+    startDate:startDate,
+    endDate:finalEndDate,
+    type:type,
+    content:document.getElementById('edit-att-content').value
+  };
+  closeAttEdit();
+  saveDataToStorage();
+  loadData();
+  showToast('수정되었습니다','ok');
+}
+
+function closeAttEdit(){
+  document.getElementById('attEditBg').style.display='none';
+  editingId=null;
+}
+
+function deleteAttendance(id){
+  const r=attData.find(x=>x.id===id);
+  askPassword(() => {
+    if(!confirm(`${r.name} 근태 기록을 정말 삭제하시겠습니까?`))return;
+    attData=attData.filter(x=>x.id!==id);
+    saveDataToStorage();
+    loadData();
+    showToast('삭제되었습니다','ok');
+  });
+}
+
+function filterAttendance(){
+  const q=document.getElementById('att-search').value.toLowerCase();
+  const filtered=attData.filter(r=>
+    r.name.toLowerCase().includes(q) ||
+    r.type.includes(q) ||
+    (r.startDate||'').includes(q) ||
+    (r.endDate||'').includes(q) ||
+    (r.content||'').toLowerCase().includes(q)
+  );
+  renderAttTable(filtered);
+}
+
+function renderAttTable(list){
+  const el=document.getElementById('att-list');
+  const empty=document.getElementById('att-empty');
+  if(!list.length){
+    el.innerHTML='';
+    empty.style.display='block';
+  } else {
+    empty.style.display='none';
+    const sorted = [...list].sort((a, b) => {
+      const dateA = a.startDate || a.date;
+      const dateB = b.startDate || b.date;
+      return dateB.localeCompare(dateA);
+    });
+    el.innerHTML=sorted.map(r=>`
+      <tr>
+        <td>${r.name}</td>
+        <td>${r.startDate ? (r.startDate === r.endDate ? r.startDate : r.startDate + ' ~ ' + r.endDate) : r.date}</td>
+        <td><span class="badge ba">${r.type}</span></td>
+        <td>${r.content||'—'}</td>
+        <td style="text-align:right;">
+          <button class="btn-edit" onclick="editAttendance(${r.id})">✏️</button>
+          <button class="btn-del" onclick="deleteAttendance(${r.id})">🗑</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+  document.getElementById('att-count').textContent=list.length+'건';
+}
+
+// ════ SCHEDULE ════
+function addSchedule(){
+  const name=document.getElementById('sch-name').value.trim();
+  const date=document.getElementById('sch-date').value;
+  const category=document.getElementById('sch-category').value;
+  const content=document.getElementById('sch-content')?.value.trim()||'';
+  if(!name||!date||!category){
+    showToast('필수 항목을 입력해주세요','err');
+    return;
+  }
+  schData.push({id:Date.now(),name,date,category,content});
+  clearSchForm();
+  saveDataToStorage();
+  loadData();
+  showToast('일정이 등록되었습니다','ok');
+}
+
+function clearSchForm(){
+  document.getElementById('sch-name').value='';
+  document.getElementById('sch-date').value=getTodayKR();
+  document.getElementById('sch-category').value='';
+  document.getElementById('sch-content').value='';
+}
+
+function editSchedule(id){
+  askPassword(() => {
+    editingId=id; editingType='sch';
+    const r=schData.find(x=>x.id===id);
+    if(!r)return;
+    document.getElementById('edit-sch-name').value=r.name;
+    document.getElementById('edit-sch-date').value=r.date;
+    document.getElementById('edit-sch-category').value=r.category;
+    document.getElementById('edit-sch-content').value=r.content||'';
+    document.getElementById('schEditBg').style.display='flex';
+  });
+}
+
+function saveSchEdit(){
+  const idx=schData.findIndex(x=>x.id===editingId);
+  if(idx===-1)return;
+  schData[idx]={...schData[idx],
+    name:document.getElementById('edit-sch-name').value,
+    date:document.getElementById('edit-sch-date').value,
+    category:document.getElementById('edit-sch-category').value,
+    content:document.getElementById('edit-sch-content').value
+  };
+  closeSchEdit();
+  saveDataToStorage();
+  loadData();
+  showToast('수정되었습니다','ok');
+}
+
+function closeSchEdit(){
+  document.getElementById('schEditBg').style.display='none';
+  editingId=null;
+}
+
+function deleteSchedule(id){
+  const r=schData.find(x=>x.id===id);
+  askPassword(() => {
+    if(!confirm(`${r.name} 일정을 정말 삭제하시겠습니까?`))return;
+    schData=schData.filter(x=>x.id!==id);
+    saveDataToStorage();
+    loadData();
+    showToast('삭제되었습니다','ok');
+  });
+}
+
+function filterSchedule(){
+  const q=document.getElementById('sch-search').value.toLowerCase();
+  const filtered=schData.filter(r=>r.name.toLowerCase().includes(q)||r.category.includes(q)||r.date.includes(q)||r.content.toLowerCase().includes(q));
+  renderSchTable(filtered);
+}
+
+function renderSchTable(list){
+  const el=document.getElementById('sch-list');
+  const empty=document.getElementById('sch-empty');
+  if(!list.length){
+    el.innerHTML='';
+    empty.style.display='block';
+  } else {
+    empty.style.display='none';
+    const sorted = [...list].sort((a, b) => b.date.localeCompare(a.date));
+    el.innerHTML=sorted.map(r=>`
+      <tr>
+        <td>${r.name}</td>
+        <td>${r.date}</td>
+        <td><span class="badge bc">${r.category}</span></td>
+        <td>${r.content||'—'}</td>
+        <td style="text-align:right;">
+          <button class="btn-edit" onclick="editSchedule(${r.id})">✏️</button>
+          <button class="btn-del" onclick="deleteSchedule(${r.id})">🗑</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+  document.getElementById('sch-count').textContent=list.length+'건';
+}
+
+// ════ TROUBLE ════
+function openTROUBLEForm(){
+  // 신규 등록 모드: 필드 초기화
+  if(!editingId){
+    document.getElementById('tr-date').value=getTodayKR();
+    document.getElementById('tr-type').value='';
+    document.getElementById('tr-unit').value='';
+    document.getElementById('tr-product').value='';
+    document.getElementById('tr-trouble').value='';
+    document.getElementById('tr-action').value='';
+  }
+  // 수정 모드: 기존 데이터 유지 (editTROUBLE에서 이미 세팅됨)
+  document.getElementById('troubleFormBg').style.display='flex';
+}
+
+function closeTROUBLEForm(){
+  document.getElementById('troubleFormBg').style.display='none';
+}
+
+function saveTROUBLE(){
+  const type=document.getElementById('tr-type').value;
+  const date=document.getElementById('tr-date').value;
+  const unit=document.getElementById('tr-unit').value;
+  const product=document.getElementById('tr-product').value.trim();
+  const trouble=document.getElementById('tr-trouble').value.trim();
+  const action=document.getElementById('tr-action').value.trim();
+  if(!type||!date||!unit||!product||!trouble||!action){
+    showToast('필수 항목을 입력해주세요','err');
+    return;
+  }
+  if(editingId){
+    const idx=trData.findIndex(x=>x.id===editingId);
+    if(idx>=0){
+      trData[idx]={...trData[idx],type,date,unit,product,trouble,action};
+      showToast('수정되었습니다','ok');
+    }
+  } else {
+    trData.push({id:Date.now(),type,date,unit,product,trouble,action});
+    showToast('기록되었습니다','ok');
+  }
+  closeTROUBLEForm();
+  editingId=null;
+  saveDataToStorage();
+  loadData();
+}
+
+function editTROUBLE(id){
+  askPassword(() => {
+    editingId=id;
+    const r=trData.find(x=>x.id===id);
+    if(!r)return;
+    document.getElementById('tr-type').value=r.type;
+    document.getElementById('tr-date').value=r.date;
+    document.getElementById('tr-unit').value=r.unit;
+    document.getElementById('tr-product').value=r.product;
+    document.getElementById('tr-trouble').value=r.trouble;
+    document.getElementById('tr-action').value=r.action||'';
+    openTROUBLEForm();
+  });
+}
+
+function deleteTROUBLE(id){
+  const r=trData.find(x=>x.id===id);
+  askPassword(() => {
+    if(!confirm(`${r.date} ${r.type} ${r.product}을(를) 정말 삭제하시겠습니까?`))return;
+    trData=trData.filter(x=>x.id!==id);
+    saveDataToStorage();
+    applyTROUBLEFilters();
+    showToast('삭제되었습니다','ok');
+  });
+}
+
+let trCurrentFiltered = [];
+function applyTROUBLEFilters(){
+  const sp=document.getElementById('tr-search-product').value.toLowerCase();
+  const st=document.getElementById('tr-search-type').value;
+  const su=document.getElementById('tr-search-unit').value;
+  const sk=document.getElementById('tr-search-keyword').value.toLowerCase();
+  const filtered=trData.filter(r=>{
+    if(sp&&!r.product.toLowerCase().includes(sp))return false;
+    if(st&&r.type!==st)return false;
+    if(su&&r.unit!==su)return false;
+    if(sk&&!r.trouble.toLowerCase().includes(sk)&&!(r.action||'').toLowerCase().includes(sk))return false;
+    return true;
+  });
+  trCurrentFiltered=filtered;
+  renderTROUBLEList(filtered);
+  document.getElementById('tr-result-count').textContent=filtered.length===trData.length?`전체 ${trData.length}건`:`${filtered.length}건 / 전체 ${trData.length}건`;
+}
+
+function resetTROUBLEFilters(){
+  document.getElementById('tr-search-product').value='';
+  document.getElementById('tr-search-type').value='';
+  document.getElementById('tr-search-unit').value='';
+  document.getElementById('tr-search-keyword').value='';
+  applyTROUBLEFilters();
+}
+
+function exportAttSchExcel(){
+  if(!attData.length && !schData.length){
+    showToast('내보낼 근태/일정 기록이 없습니다.', 'warn');
+    return;
+  }
+  const wb = XLSX.utils.book_new();
+
+  const attRows = attData.map(r=>{
+    let days = '';
+    if(r.startDate && r.endDate){
+      const d1 = new Date(r.startDate);
+      const d2 = new Date(r.endDate);
+      days = Math.round((d2 - d1) / 86400000) + 1;
+    }
+    return {
+      '이름': r.name || '',
+      '시작일': r.startDate || '',
+      '종료일': r.endDate || '',
+      '구분': r.type || '',
+      '기간(일)': days,
+      '내용': r.content || ''
+    };
+  });
+  const wsAtt = XLSX.utils.json_to_sheet(attRows);
+  wsAtt['!cols'] = [{wch:12},{wch:12},{wch:12},{wch:12},{wch:10},{wch:40}];
+  XLSX.utils.book_append_sheet(wb, wsAtt, '개인근태');
+
+  const schRows = schData.map(r=>({
+    '이름': r.name || '',
+    '날짜': r.date || '',
+    '구분': r.category || '',
+    '내용': r.content || ''
+  }));
+  const wsSch = XLSX.utils.json_to_sheet(schRows);
+  wsSch['!cols'] = [{wch:12},{wch:12},{wch:12},{wch:45}];
+  XLSX.utils.book_append_sheet(wb, wsSch, '일정등록');
+
+  const today = new Date();
+  const ymd = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+  XLSX.writeFile(wb, `근태_일정_${ymd}.xlsx`);
+}
+
+function exportTROUBLEExcel(){
+  const list = (trCurrentFiltered && trCurrentFiltered.length) ? trCurrentFiltered : trData;
+  if(!list.length){
+    showToast('내보낼 트러블 기록이 없습니다.', 'warn');
+    return;
+  }
+  const rows = list.map(r=>({
+    '날짜': r.date || '',
+    '종류': r.type || '',
+    '호기': r.unit || '',
+    '품명': r.product || '',
+    'LOT': r.lot || '',
+    'TROUBLE 내용': r.trouble || '',
+    '조치 내용': r.action || '',
+    '비고': r.note || ''
+  }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [
+    {wch:11},{wch:8},{wch:8},{wch:22},{wch:14},{wch:45},{wch:55},{wch:18}
+  ];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'TROUBLE내역');
+  const today = new Date();
+  const ymd = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+  XLSX.writeFile(wb, `TROUBLE내역_${ymd}.xlsx`);
+}
+
+function renderTROUBLEList(list){
+  const el=document.getElementById('tr-recordList');
+  if(!list.length){
+    el.innerHTML=`<div class="tr-empty-state"><div class="ei">📭</div><p>해당하는 트러블 기록이 없습니다.</p></div>`;
+    return;
+  }
+  const icons={'설비':'⚙️','조액':'🧪','공정':'📊'};
+  const badgeClass={'설비':'badge-eq','조액':'badge-sol','공정':'badge-proc'};
+  const sorted = [...list].sort((a, b) => b.date.localeCompare(a.date));
+  el.innerHTML=sorted.map(r=>`
+    <div class="tr-record-card">
+      <div class="tr-record-top">
+        <span class="tr-badge ${badgeClass[r.type]}">${icons[r.type]} ${r.type}</span>
+        <span class="tr-record-date">${r.date}</span>
+        <span class="tr-record-product">${r.product}</span>
+        <span class="tr-record-unit">${r.unit}</span>
+      </div>
+      <div class="tr-record-cols">
+        <div>
+          <div class="tr-record-label">트러블 내용</div>
+          <div class="tr-record-text">${r.trouble}</div>
+        </div>
+        <div>
+          <div class="tr-record-label">조치 사항</div>
+          <div class="tr-record-text">${r.action||'—'}</div>
+        </div>
+      </div>
+      <div class="tr-record-footer">
+        <button class="tr-action-btn edit-btn" onclick="editTROUBLE(${r.id})">✏️ 수정</button>
+        <button class="tr-action-btn del-btn" onclick="deleteTROUBLE(${r.id})">🗑 삭제</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ════ CALENDAR ════
+function renderUnifiedCalendar(){
+  const y=calDate.getFullYear();
+  const m=calDate.getMonth();
+  document.getElementById('cal-month').textContent=`${y}년 ${m+1}월`;
+  
+  const fd=new Date(y,m,1).getDay();
+  const dm=new Date(y,m+1,0).getDate();
+  let html='';
+  
+  for(let i=0;i<fd;i++)html+='<div class="cal-cell other"></div>';
+  for(let d=1;d<=dm;d++){
+    const date=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const todayObj = new Date();
+    const today = `${todayObj.getFullYear()}-${String(todayObj.getMonth()+1).padStart(2,'0')}-${String(todayObj.getDate()).padStart(2,'0')}`;
+    const attEvents=attData.filter(r=>{
+      const start = r.startDate || r.date;
+      const end = r.endDate || r.date;
+      return date >= start && date <= end;
+    });
+    const schEvents=schData.filter(r=>r.date===date);
+    const categoryColors={'교육':'#3b82f6','면담':'#f59e0b','일정':'#22c55e','기타':'#a78bfa'};
+    
+    // 모든 이벤트 정보 생성
+    let allEventsInfo = '';
+    attEvents.forEach(e => allEventsInfo += `[근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}\n`);
+    schEvents.forEach(e => allEventsInfo += `[${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}\n`);
+    
+    let eventHtml = '';
+    eventHtml += attEvents.map(e=>`<div class="cal-ev" style="border-left-color: #ec4899;" title="[근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}">${e.name} ${e.type}${e.content ? ' (' + e.content + ')' : ''}</div>`).join('');
+    eventHtml += schEvents.map(e=>`<div class="cal-ev" style="border-left-color: ${categoryColors[e.category]||'#a78bfa'};" title="[${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}">${e.name}${e.content ? ' - ' + e.content : ''}</div>`).join('');
+    
+    html+=`<div class="cal-cell ${date===today?'today':''}" title="${allEventsInfo}">
+      <div class="cell-num ${date===today?'today-num':''}">
+        ${d}${date===today?'<span class="today-dot"></span>':''}
+      </div>
+      ${eventHtml}
+    </div>`;
+  }
+  const rd=42-(fd+dm);
+  for(let i=0;i<rd;i++)html+='<div class="cal-cell other"></div>';
+  
+  document.getElementById('unified-cal').innerHTML=html;
+  
+  // 오늘의 일정 렌더링
+  const todayObj = new Date();
+  const today = `${todayObj.getFullYear()}-${String(todayObj.getMonth()+1).padStart(2,'0')}-${String(todayObj.getDate()).padStart(2,'0')}`;
+  const d = todayObj.getDate();
+  const month = todayObj.getMonth() + 1;
+  const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+  const dayName = dayNames[todayObj.getDay()];
+  
+  const todayAttEvents = attData.filter(r => {
+    const start = r.startDate || r.date;
+    const end = r.endDate || r.date;
+    return today >= start && today <= end;
+  });
+  
+  const todaySchEvents = schData.filter(r => r.date === today);
+  const categoryColors = {'교육':'#3b82f6','면담':'#f59e0b','일정':'#22c55e','기타':'#a78bfa'};
+  
+  let todayScheduleHtml = '';
+  const dayStr = String(d).padStart(2, '0');
+  document.getElementById('today-date-label').textContent = `오늘 (${month}월 ${dayStr}일, ${dayName}요일)`;
+  
+  if (todayAttEvents.length === 0 && todaySchEvents.length === 0) {
+    todayScheduleHtml = '<div style="font-size: 13px; color: var(--text3);">일정이 없습니다.</div>';
+  } else {
+    todayAttEvents.forEach(e => {
+      todayScheduleHtml += `<div style="display: inline-block; padding: 6px 12px; background: rgba(236, 72, 153, 0.12); border-left: 3px solid #ec4899; border-radius: 5px; font-size: 12px; color: var(--text); white-space: nowrap;">
+        [근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}
+      </div>`;
+    });
+    
+    todaySchEvents.forEach(e => {
+      const color = categoryColors[e.category] || '#a78bfa';
+      const bgColor = color + '14';
+      todayScheduleHtml += `<div style="display: inline-block; padding: 6px 12px; background: ${bgColor}; border-left: 3px solid ${color}; border-radius: 5px; font-size: 12px; color: var(--text); white-space: nowrap;">
+        [${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}
+      </div>`;
+    });
+  }
+  
+  document.getElementById('today-schedule-list').innerHTML = todayScheduleHtml;
+}
+
+function calPrev(){calDate.setMonth(calDate.getMonth()-1);renderUnifiedCalendar();}
+function calNext(){calDate.setMonth(calDate.getMonth()+1);renderUnifiedCalendar();}
+function calToday(){
+  const now = new Date();
+  const kr = new Date(now.toLocaleString('en-US', {timeZone: 'Asia/Seoul'}));
+  calDate = kr;
+  renderUnifiedCalendar();
+}
+
+// ════ DATA ════
+// ════ DATA ════
+function saveDataToStorage(){
+  const data = {att: attData, sch: schData, tr: trData, notice: noticeData};
+  localStorage.setItem('코팅반_data', JSON.stringify(data)); // 오프라인 대비 로컬 캐시
+  fbDB.ref(FB_PATH).set(data).catch(e=>{
+    console.error('클라우드 저장 실패:', e);
+    showToast('클라우드 저장 실패 (로컬에는 저장됨)', 'err');
+  });
+}
+
+async function loadDataFromStorage(){
+  try{
+    const snapshot = await fbDB.ref(FB_PATH).once('value');
+    const data = snapshot.val();
+    if(data){
+      attData = data.att || [];
+      schData = data.sch || [];
+      trData = data.tr || [];
+      noticeData = data.notice || [];
+      localStorage.setItem('코팅반_data', JSON.stringify(data));
+      return true;
+    }
+  } catch(e){
+    console.error('클라우드 로드 실패, 로컬 데이터 사용:', e);
+  }
+  // 클라우드에 데이터가 없거나 접속 실패 시 로컬 캐시로 폴백
+  const stored = localStorage.getItem('코팅반_data');
+  if(stored){
+    try{
+      const data = JSON.parse(stored);
+      attData = data.att || [];
+      schData = data.sch || [];
+      trData = data.tr || [];
+      noticeData = data.notice || [];
+      return true;
+    } catch(e){
+      console.error('데이터 복원 실패:', e);
+      return false;
+    }
+  }
+  return false;
+}
+
+function loadData(){
+  document.getElementById('badge-att').textContent=attData.length;
+  document.getElementById('badge-sch').textContent=schData.length;
+  document.getElementById('badge-tr').textContent=trData.length;
+  document.getElementById('badge-notice').textContent=noticeData.length;
+  
+  document.getElementById('att-total').textContent=attData.length;
+  document.getElementById('att-vacation').textContent=attData.filter(r=>r.type==='연차').length;
+  document.getElementById('att-halfday').textContent=attData.filter(r=>r.type.includes('반차')).length;
+  document.getElementById('att-cardmiss').textContent=attData.filter(r=>r.type.includes('미기찰')).length;
+  
+  document.getElementById('sch-total').textContent=schData.length;
+  document.getElementById('sch-edu').textContent=schData.filter(r=>r.category==='교육').length;
+  document.getElementById('sch-interview').textContent=schData.filter(r=>r.category==='면담').length;
+  document.getElementById('sch-schedule').textContent=schData.filter(r=>r.category==='일정').length;
+  
+  document.getElementById('cnt-eq').textContent=trData.filter(r=>r.type==='설비').length;
+  document.getElementById('cnt-sol').textContent=trData.filter(r=>r.type==='조액').length;
+  document.getElementById('cnt-proc').textContent=trData.filter(r=>r.type==='공정').length;
+  document.getElementById('cnt-tr-total').textContent=trData.length;
+  
+  if(currentPage==='attendance'){
+    renderAttTable(attData);
+  } else if(currentPage==='schedule'){
+    renderSchTable(schData);
+  } else if(currentPage==='trouble'){
+    applyTROUBLEFilters();
+  } else if(currentPage==='notice'){
+    renderNoticeTable(noticeData);
+  }
+}
+
+function showPasswordModal(cb){
+  pwCallback=cb;
+  document.getElementById('pwInput').value='';
+  document.getElementById('pwModal').style.display='flex';
+  document.getElementById('pwInput').focus();
+}
+
+function askPassword(cb){
+  showPasswordModal(cb);
+}
+
+function checkPassword(){
+  const pw=document.getElementById('pwInput').value;
+  const modal = document.getElementById('pwModal');
+  const mode = modal.getAttribute('data-mode');
+  
+  // 토글 모드일 경우
+  if(mode === 'toggle') {
+    if(pw!==TOGGLE_PW){
+      showToast('비밀번호가 틀렸습니다','err');
+      document.getElementById('pwInput').value='';
+      return;
+    }
+  } else {
+    // 일반 모드 (기존)
+    if(pw!==ADMIN_PW){
+      showToast('비밀번호가 틀렸습니다','err');
+      document.getElementById('pwInput').value='';
+      return;
+    }
+  }
+  
+  document.getElementById('pwModal').style.display='none';
+  modal.removeAttribute('data-mode');
+  if(pwCallback)pwCallback();
+}
+
+function cancelPW(){
+  document.getElementById('pwModal').style.display='none';
+  pwCallback=null;
+}
+
+function confirmDelete(){
+  if(deleteType==='att'){
+    attData=attData.filter(x=>x.id!==deleteId);
+  } else if(deleteType==='sch'){
+    schData=schData.filter(x=>x.id!==deleteId);
+  } else if(deleteType==='tr'){
+    trData=trData.filter(x=>x.id!==deleteId);
+  }
+  document.getElementById('deleteConfirm').style.display='none';
+  loadData();
+  showToast('삭제되었습니다','ok');
+}
+
+function cancelDelete(){
+  document.getElementById('deleteConfirm').style.display='none';
+}
+
+function showToast(msg,type='ok'){
+  const wrap=document.getElementById('toast-wrap');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;
+  const icons={'ok':'✓ ','err':'✗ ','warn':'⚠ '};
+  t.textContent=(icons[type]||'ℹ ')+msg;
+  wrap.appendChild(t);
+  setTimeout(()=>{t.remove();},3000);
+}
+
+function saveToFile(){
+  const data={att:attData,sch:schData,tr:trData};
+  const json=JSON.stringify(data,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`코팅반_통합_${getTodayKR()}.json`;
+  a.click();
+  showToast('데이터가 저장되었습니다','ok');
+}
+
+function loadFromFile(){
+  document.getElementById('fileInput').click();
+}
+
+function handleFileUpload(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=evt=>{
+    try{
+      const data=JSON.parse(evt.target.result);
+      attData=data.att||[];
+      schData=data.sch||[];
+      trData=data.tr||[];
+      saveDataToStorage();
+      loadData();
+      showToast('데이터가 복구되었습니다','ok');
+    }catch(err){
+      showToast('파일 읽기 실패','err');
+    }
+  };
+  reader.readAsText(file);
+}
+
+
+// ════ EXCEL PRELOAD DATA ════
+// 엑셀에서 가져온 트러블 214건 - 자동 주입됨
+const XLSX_PRELOAD = [{"id": 1800000000002, "type": "조액", "date": "2026-05-22", "unit": "A-2", "product": "MZ-DVH-XX30-MPSS", "lot": "", "trouble": "런닝 진행 간 조액 입자뭉침 , 입자뭉침 늘어짐 다수발생", "action": "- 라인 정지 후 배관클리닝, 헤드정비\n - 점도 750 -> 700CPS 하향 후 1시간 추가 교반\n - 듀얼 필터 (#24 + #30) -> 듀얼 필터 (#24 + #32) 교체\n - 재 START 런닝 진행한바 상태 양호하여 생산 진행", "note": ""}, {"id": 1800000000003, "type": "설비", "date": "2026-05-22", "unit": "A-1", "product": "MS-PQC-1X05-Q7FD", "lot": "", "trouble": "MSPQC1X05Q7FD 생산중 원단 말기 LAMI부 소음 발생", "action": "LAMI NIP ROLL 및 베어링 교체 ( NO 405 -> 428 )", "note": ""}, {"id": 1800000000004, "type": "설비", "date": "2026-05-21", "unit": "A-1", "product": "바이오칩 런닝 진행간", "lot": "", "trouble": "A-1 RTO 퍼지댐퍼 3번 에러 발생", "action": "→ 보전팀 확인시 퍼지댐퍼개펴 솔벨브 빗물유입으로 인한 누전 발생\n→ 솔벨브 차단기OFF 발생\n→ 솔벨브 교체 및 임시 비닐보양 작업 완료 (추후 솔벨브 위치 변경예정)", "note": ""}, {"id": 1800000000005, "type": "조액", "date": "2026-05-19", "unit": "A-2", "product": "MF-SAH-7X00-RENX", "lot": "", "trouble": "1차. MFSAH7X00RENX(1차) - MG51905B02 진행간 간헐적 노코팅 및 겔 확인으로 라인정지\n2차. 조치 후 2차도포 ->런닝 300M 진행 간 간헐적 노코팅 및 겔 확인으로 라인정지", "action": "1차조치: 현장필터 청아 10um 캡슐 필터 교체 + 앱솔루트 1구 필터 1N40 추가 장착 순환 1HR 진행\n2차 조치 : 배관클리닝, Head부 정비 - 조액실 CHPL-DZE-1A-50M -> 기존 청아 20um 캡슐 필터 원.복\n 현장 필터 : 청아 10um 캡슐 + 앱솔루트 1구 필터 1N40 추가 장착 순환 1HR 진행\n 기술팀 현장 참관하여 조액 3차 도포 진행, 런닝 250M 진행 간 표면 양호 확인 -> 양산 START", "note": ""}, {"id": 1800000000006, "type": "조액", "date": "2026-05-16", "unit": "A-2", "product": "MZ-DVH-XX30-MPSS", "lot": "", "trouble": "헤드부 입자라인 다량 발생및 mp조액 경시로 인한 폭불량 발생으로 라인정지", "action": "HEAD정리및 배관크리닝, 액판 교체 재가동 / 재가동시 라미 조액밀림 현상 발생 SPEED 4.0 -> 3.0 단계적 하향\n- 4번째 배치 진행간 (-> 조액실 필터 변경 : #28메쉬필터(재고없음) -> #24메쉬필터로 변경)\n - 스타트후 150M 진행간 입자라인 3EA 발생되어 담당자 박민우 책임 연락후 \n - 1. 메쉬필터 24->30메쉬로 변경 진행/교반 상한치 45HZ 및 점도하한치 적용.\n - 조치후 170M 진행간 입자라인 4EA 발생 라인정지\n - 2. 담당자 박민우 책임 필터 듀얼 24-30 메쉬 적용 교반 45->40HZ 적용 요청\n - 런닝 100M 진행간 표면 양호하여 스타트 진행.\n - 재스타트 후 입자라인 증가로 라인정지.\n - 3. 정비진행 필터 듀얼 24-30 메쉬 적용 교반 40HZ 적용 스타트\n - 조액 말기 70KG 지점 입자 라인증가 및 조액경시 발생 라인정지후 잔량70KG 폐기\n - 입자라인 샘플 및 핵 샘플 현장 보관중 입니다.\n\n - 조액실 조액공급 시 메쉬필터 듀얼(#24 메쉬 -> #30 메쉬) 적용\n - 양산진행 중 필터막힘 발생\n -> 생산길이 약 750m에 필터막힘 발생, 필터 및 헤드부 정비 후 재스타트 진행", "note": ""}, {"id": 1800000000007, "type": "설비", "date": "2026-05-14", "unit": "A-1", "product": "MF-MAH-0X15-RDNX", "lot": "", "trouble": "MFMAH0X15RDNX 진행간 OUTFEED 텐션 헌팅및 라인SPEED 헌팅발생", "action": "HEAD I/F NIP ROLL DR베어링 마모로 인한 O/F텐션및 라인스피드 헌팅발생 (베어링 넘버 1206)", "note": ""}, {"id": 1800000000008, "type": "조액", "date": "2026-04-01", "unit": "A-4", "product": "MS-WLC-MX20-WMMM", "lot": "", "trouble": "MSWLCMX20WMMM 차수변경 시점 미세 액라인 발생", "action": "진행간 토출구 위치 조절 진행 유의차없음,라인정지\n -> 배관클리닝,조액실 & 현장 F/T 교체,재START 진행\n\n- 배관클리닝,조액실 & 현장 F/T 교체,현장 Strainer Mesh Filter 제거\n -> 표면양호,재START 진행", "note": ""}, {"id": 1800000000009, "type": "조액", "date": "2025-12-16", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MFC1605", "trouble": "노코팅, 겔", "action": "- 배관클리닝,조액실F/T교체, 현장 CSP-EP1E-1N-0.6 (7um) F/T 장착, 조액순환 1HR 진행 → 표면 양호 양산 진행", "note": ""}, {"id": 1800000000010, "type": "조액", "date": "2025-12-12", "unit": "A-2", "product": "MF-SAH-8X00-HENX", "lot": "MFC1107", "trouble": "노코팅", "action": "- 1차 조치 : 배관크리닝, 액판교체, 조액실 필터 교체 , 현장 필터교체 1구 Filter (1N-40, 15㎛) 추가 장착, 조액순환 1hr / 노코팅 유의차 없음\n\n - 2차 조치 : 배관크리닝, 액판교체, 조액실 필터 교체 , 현장 필터교체 (1E-20 캡슐필터) + 1구 필터 (1N-40, 15㎛) 추가 장착, 조액순환 1hr / 표면 양호 Start", "note": ""}, {"id": 1800000000011, "type": "조액", "date": "2025-12-12", "unit": "A-2", "product": "MF-SAH-4X00-HEFX", "lot": "MFC1107", "trouble": "조액", "action": "- 배관크리닝, 액판교체, 조액실 필터 교체 , 현장 필터교체 (1E-20 캡슐필터) + 1구 필터 (1N-40, 15㎛) 추가 장착, 조액순환 1hr / 표면 양호 Start", "note": ""}, {"id": 1800000000012, "type": "조액", "date": "2025-12-09", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFC0807", "trouble": "겔", "action": "- 배관클리닝, 조액실 Filter 교체, 현장 Filter CSM-PPZE-1E20(19um) 추가, 조액순환 0.5HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000013, "type": "조액", "date": "2025-12-05", "unit": "A-4", "product": "MF-MAH-0X25-LEHT", "lot": "MFC0502", "trouble": "노코팅", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR, 담당자 요청 공급 점도 350CPS, 양산 원자재 교체 → 유의차 없음 조액 70kg 폐기", "note": ""}, {"id": 1800000000014, "type": "조액", "date": "2025-12-05", "unit": "A-4", "product": "MF-BSH-MX25-H4MP", "lot": "MFC0503", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000015, "type": "조액", "date": "2025-12-03", "unit": "A-2", "product": "MF-SAH-7X00-HENX", "lot": "MFC0218", "trouble": "노코팅", "action": "- 배관크리닝, 액판교체, 조액실 필터 교체 , 현장 필터교체 (1E-20 캡슐필터) + 1구 필터 (1N-40, 15㎛) 추가 장착, 조액순환 1hr\n → 런닝시 표면확인 양호 Start", "note": ""}, {"id": 1800000000016, "type": "조액", "date": "2025-12-03", "unit": "A-2", "product": "MF-SAH-7X00-HENX", "lot": "MFC0218", "trouble": "노코팅", "action": "- 배관크리닝, 액판교체, 조액실 필터 교체 , 현장 필터교체 (1E-20 캡슐필터) + 1구 필터 (1N-40, 15㎛) 추가 장착, 조액순환 1hr\n → 런닝시 표면확인 양호 Start", "note": ""}, {"id": 1800000000017, "type": "조액", "date": "2025-12-03", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MFC0216", "trouble": "노코팅, 겔", "action": "- 배관클리닝,조액실F/T교체, 현장 CSP-EP1E-1N-0.6 (7um) F/T 장착, 조액순환 1HR 진행 → 표면 양호 양산 진행", "note": ""}, {"id": 1800000000018, "type": "조액", "date": "2025-12-02", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFC0103", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 현장 F/T CSM-PPZE-1E20(19um) 추가 장착 → 노코팅, 겔 유의차 없음\n - 배관클리닝, 조액실 Filter교체, 조액순환 1HR → 노코팅, 겔 유의차 없음 조액 폐기", "note": ""}, {"id": 1800000000019, "type": "조액", "date": "2025-12-01", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFC0103", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR → 표면 양호 Start", "note": ""}, {"id": 1800000000020, "type": "조액", "date": "2025-11-30", "unit": "A-2", "product": "MF-SAH-3X00-HENX", "lot": "MFB3002", "trouble": "노코팅", "action": "- 배관크리닝, 액판교체, 조액실 필터 교체 , 현장 필터교체 (1E-20 캡슐필터) + 1구 필터 (1N-40, 15㎛) 추가 장착, 조액순환 1hr\n → 런닝시 표면확인 양호 Start", "note": ""}, {"id": 1800000000021, "type": "조액", "date": "2025-11-22", "unit": "A-2", "product": "MF-SAH-3X00-HENX", "lot": "MFB2202", "trouble": "노코팅", "action": "- 주행 중 노코팅 겔 발생 → 배관크리닝, 액판교체, 필터교체(1E-20 캡슐필터) + 앱솔루트 1A-20 추가, 조액순환 1hr\n → 유의차 없음 재필터링 진행\n\n - 배관크리닝, 액판교체, 조액실 필터 교체 , 현장 필터교체 (1E-20 캡슐필터) + 1구 필터 (1N-40, 15㎛) 추가 장착, 조액순환 1hr\n → 런닝시 표면확인 양호 Start", "note": ""}, {"id": 1800000000022, "type": "조액", "date": "2025-11-19", "unit": "A-2", "product": "MF-SAH-6X00-HEFX", "lot": "MFB1813", "trouble": "노코팅, 겔", "action": "- 초기 1E-20 캡슐필터 + 앱솔루트 1A-20(청수) START 진행 → 전면 겔, 노코팅 산발적 발생 →런닝 300M 경과 유의차 없음\n → 앱솔루트 1A-20(청수)제거 후 추가 런닝 200M 진행 → 겔, 노코팅 발생 빈도 및 횟수 증가 -> 라인 정지\n → 김창우 책임 매니저 협의 후 조액 재필터링 진행 → 런닝시 표면확인 양호 Start\n\n - 주행 중 노코팅 겔 발생 → 배관크리닝, 액판교체, 필터교체(1E-20 캡슐필터) + 앱솔루트 1A-20 추가, 조액순환 1hr\n → 런닝시 표면확인 양호 진행\n\n - 주행 중 노코팅 겔 발생 → 배관크리닝, 액판교체, 필터교체(1E-20 캡슐필터) + 앱솔루트 1A-20 추가, 조액순환 1hr\n → 런닝시 표면확인 양호 진행", "note": ""}, {"id": 1800000000023, "type": "설비", "date": "2025-11-16", "unit": "A-1", "product": "MS-PQC-1X05-QGKA", "lot": "MFB1504E05", "trouble": "- 진행중 1U/W 원단교체 간 공급 펌프 On/Off시 조액실 필터압력 기준치 유지 불능", "action": "- 조액실 공급PUMP 플러그 점검 및 플러그 단자 재 체결 진행", "note": ""}, {"id": 1800000000024, "type": "조액", "date": "2025-11-12", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFB1118", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR → 표면 양호 Start", "note": ""}, {"id": 1800000000025, "type": "조액", "date": "2025-11-10", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MFB1008", "trouble": "입자", "action": "- 진행중 반짝이 입자 발생 라인정지\n → HEAD부 정비 및 배관클리닝,조액실&현장 F/T교체 / 담당자 협의 후 재필터링 진행\n - 재필터링 후 입자 빈도 증가\n → HEAD부 정비 및 배관클리닝,조액실&현장 F/T교체 → 유의차 없음 조액 150kg 폐기", "note": ""}, {"id": 1800000000026, "type": "조액", "date": "2025-11-07", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFB0703", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 교체, 현장 Filter CSM-PPZE-1E20(19um) 추가, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000027, "type": "설비", "date": "2025-11-04", "unit": "A-0", "product": "MS-BGC-MX37-G2ST", "lot": "MFB0407K04", "trouble": "- 2급지 교체 및 R/W 컷팅 작업 중 R/W 역회전 발생", "action": "- 라인 정지 HEAD, R/W 정리 후 재스타트 진행", "note": ""}, {"id": 1800000000028, "type": "공정", "date": "2025-11-02", "unit": "A-2", "product": "MF-DHH-XX25-NAOH", "lot": "MFB0202B01", "trouble": "- 2nd Batch 스타트 진행간 OP, DR 댐라인 지속 발생", "action": "- 액판 각도 조정 , 댐 각도 조정, 댐 조정 유의 차 없음\n - 배관 크리닝 , 리턴 크리닝 실시 ,HEAD부 정비 4회 진행\n - MFDHHXX25NAOH 재 스타트 실시 / OP , DR 댐라인 발생 유의 차 없음\n - 배관 크리닝 , 리턴 크리닝 HEAD부 정비 재진행\n - 런닝 PET 사용 액판 각도 재조정 , 댐 각도 조정, 댐 조정 후 양호 Start", "note": ""}, {"id": 1800000000029, "type": "조액", "date": "2025-10-31", "unit": "A-2", "product": "MZ-DVH-XX30-MPSS", "lot": "MFA3103", "trouble": "Filter 막힘", "action": "- 필터(Mesh#30)막힘 4회 발생 - 후도조건 정립 중 1회, 제품 진행 중 3회\n → 라인 정지 후 배관클리닝, 필터교체, 조액실 점도 680cps->600cps 하향, 조액 교반 1HR 진행\n - 재도포 후 후도조건 재정립, 런닝 진행 중 필터 막힘 1회 추가 발생\n → 조액 80KG 이하 잔량으로 필터 추가 교체(#30) 후 진행", "note": ""}, {"id": 1800000000030, "type": "조액", "date": "2025-10-30", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFA2914", "trouble": "겔", "action": "- 배관클리닝, 조액실 Filter 교체, 현장 Filter CSM-PPZE-1E20(19um) 추가, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000031, "type": "조액", "date": "2025-10-29", "unit": "A-2", "product": "MZ-DVH-0X40-MUND", "lot": "MFA2816", "trouble": "조액 뭉침", "action": "- 배관 Cleaning, 조액실 Filter 교체, 조액실 점도 790CPS, 조액순환 1HR", "note": ""}, {"id": 1800000000032, "type": "조액", "date": "2025-10-22", "unit": "A-4", "product": "MF-SAH-4X00-HEFX", "lot": "MFA2116", "trouble": "노코팅", "action": "- 배관클리닝, 조액실 Filter 교체, 담당자 요청 점도 650->550CPS, 조액순환 1HR → Speed 10mpm 하향 유의차 없음\n - 배관클리닝, 조액실 Filter, 현장 Filter 청수 CHPL-EP1E-1A-50 추가 장착, 조액순환 1HR → 런닝 후 양호 Start\n - 주행 중 노코팅 간헐적 발생 배관클리닝, 조액실/현장 Filter 교체, 현장 Filter 청수 CHPL-EP1E-1A-50 제거, 조액순환 1HR\n → 표면 양호 Start 약 300m 생산 후 간헐적 노코팅 생산 종료", "note": ""}, {"id": 1800000000033, "type": "조액", "date": "2025-10-21", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFA2106", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000034, "type": "조액", "date": "2025-10-16", "unit": "A-4", "product": "MF-MAH-0X25-LEHT", "lot": "MFA1603", "trouble": "노코팅", "action": "- 배관클리닝, 조액실 Filter 교체, 현장 Filter CSM-PPZE-1E20(19um) 추가, 조액순환 1HR → 유의차 없음\n - 배관클리닝, 조액실 Filter 교체, 현장 Filter CSM-PPZE-1E20(19um) 제거, 교반속도 30Hz -> 15Hz 하향 → 유의차 없음 조액 20kg 폐기", "note": ""}, {"id": 1800000000035, "type": "조액", "date": "2025-10-16", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MFA1612", "trouble": "겔", "action": "- 배관클리닝, 조액실/현장 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000036, "type": "조액", "date": "2025-10-15", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MFA1403", "trouble": "노코팅", "action": "- 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000037, "type": "조액", "date": "2025-10-14", "unit": "A-2", "product": "MZ-DHH-XX40-NMOO", "lot": "MFA1313", "trouble": "조액 뭉침", "action": "- 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000038, "type": "조액", "date": "2025-10-14", "unit": "A-4", "product": "MS-PWC-MX60-FDMM", "lot": "MFA1312", "trouble": "노코팅", "action": "- 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000039, "type": "조액", "date": "2025-10-13", "unit": "A-1", "product": "MF-MAH-1X30-RDNX", "lot": "", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000040, "type": "조액", "date": "2025-10-10", "unit": "A-1", "product": "MZ-DVH-1X05-RDMX", "lot": "", "trouble": "이물라인", "action": "- 런닝 600m 진행 양산 원자재 교체 후 이물라인 지속 발생으로 MF-DVH-0X15-RDNM 작지순서 변경 진행", "note": ""}, {"id": 1800000000041, "type": "조액", "date": "2025-09-29", "unit": "A-1", "product": "MF-MAH-1X25-RDNX", "lot": "MF92804", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000042, "type": "조액", "date": "2025-09-26", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF92519", "trouble": "입자", "action": "- 주행 중 입자 발생 → HEAD부 조액 2회 제거 진행 → 런닝 PET 200m 진행 / 양산원단 교체 런닝 200m 진행간 유의차 없음\n → 반짝이 양산 수준 불가 / 라인정지 / 샘플 확보\n → 배관클리닝,조액실 & 현장 F/T 교체,재필터링\n - 초기 반짝이 발생,런닝 약 200M 진행간 HEAD부 조액 2회 제거 → 반짝이 빈도 감소 하였으나,양산수준 불가로 추가 런닝 200M 진행\n → 1,2급지 양산 원자재 표면 확인, 유의차없음, 라인정지\n →배관클리닝, 조액실 F/T 사이즈 변경 CSM40 15um -> CSM0.6 7um, 현장 Filter 교체 → 반짝이 유의차없음,슬리팅 검증용 Sample 100M 제작\n → 100M Sample 슬리팅 확인 결과,양산수준 불가,라인정지\n\n - 3Batch(MF92519) 재필터링 4Batch(MF92603) 선진행\n → 배관클리닝,조액실 & 현장 F/T 교체,조액실 F/T CSM40 15um 원복 → 반짝이 양산 불가 수준 → 추가런닝 약 200M, 유의차없음 라인 정지\n \n - 3Batch(MF92519) 재필터링 완료 변경 진행 유의차없음, 3B/T 110KG 폐기\n - 4Batch(MF92603) 반짝이 발생 약 400M 추가 런닝, 유의차없음 4B/T 400kg 폐기", "note": ""}, {"id": 1800000000043, "type": "조액", "date": "2025-09-25", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF92417", "trouble": "입자", "action": "- 반짝이 \"약 수준으로 MZ 생산 진행 → MF92417D01 145M 슬리팅 검사 진행 → 반짝이 양산 수준 불가로 라인정지\n → 배관클리닝,조액실 & 현장 F/T 교체,재필터링 → 진행 런닝 약 180M 진행간 표면 양호,재START 진행", "note": ""}, {"id": 1800000000044, "type": "조액", "date": "2025-09-23", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF92217", "trouble": "입자", "action": "- 조액실 F/T : 청수 15um 10\"병렬 , 현장 F/T : CSM-PPZE-1E20(19um) → 런닝 PET 반짝이 확인 후 1,2급지 양산 원자재 변경 확인 진행\n → 10um,20um 코팅 표면 확인 진행,양산수준 불가 → 런닝 PET 교체 후 추가 런닝300M 진행 → 1,2급지 원자재 병경 후 10,20um 코팅성 확인 진행,유의차없음,라인정지 \n → 조액 250KG 재필터링 진행\n \n - 150KG 분할 B/T EA 6% 투입조액 공급 진행 → 담당자 요청 표면 확인 100M 양산원단 권취 / 반짝이 유의차없음,조액 50KG 폐기 진행\n\n - 배관클리닝,현장 & 조액실 F/T 교체,재필터링 완료 조액 공급 진행 → 재필터링 후 조액점도 하한치 650cps 공급진행 ( spec 800±150 ) ,점도 하향간 MEK 용매 사용\n → 런닝간 점차적으로 반짝이 빈도 감소 MZ 품번 생산 진행", "note": ""}, {"id": 1800000000045, "type": "조액", "date": "2025-09-23", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF92217", "trouble": "입자", "action": "- 1,2급지 원자재 반짝이 확인 진행 → 작일 WR 재필터링 대비 반짝이 양산 수준불가,라인정지\n → 재필터링 후 작일 WR 조치내역 동일 점도 하향간 MEK 용매 사용,점도 하한치 조절진행\n\n - 기술팀 협의 초기 점도 610CPS START 진행 ( 점도 SPEC 800±150CPS )\n - 반짝이 빈도 초기 \"약\" 수준 MZ 품번 생산 진행 → 주행간 점차적으로 빈도 감소", "note": ""}, {"id": 1800000000046, "type": "조액", "date": "2025-09-22", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF92204", "trouble": "입자", "action": "- 조액실 F/T : 청수 신규 10um 10\"병렬 , 현장 F/T : 청아 10um 적용 런닝 PET 반짝이 확인 후 1,2급지 양산 원자재 변경 확인 진행\n → 유태현 책임 딜라미 의심,요청사항으로 Lami 온도 55℃->58℃ 상향 → 300M 표면 확인용 권취 진행\n → 300M 권취 진행간 점차적으로 반짝이 빈도 증가 확인 / 슬리팅 완료 실적등록 140M 등록 진행 → 1급지 TG65R 이형 PET 원자재 변경 후 표면 검증,유의차없음\n → 조액 재필터링 및 조액 순환1hr\n\n - 조액실 F/T : 청수 신규 10um 10\" 단일 , 현장 F/T 제거 공급 동일 증상 → 현장 Filter 청아 10um 재장착 동일 증상\n \n - 조액실 F/T : 청수 신규 5um 10\" 단일 , 현장 F/T : 청아 10um 적용 재공급 진행\n → 유의차없음,런닝간 현장 F/T 제거 후 표면 확인 전면 반짝이 \"강\"수준,조액 350KG 폐기 진행", "note": ""}, {"id": 1800000000047, "type": "조액", "date": "2025-09-20", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF92001", "trouble": "입자", "action": "- 런닝간 반짝이 입자 발생 양산 원자재 교체 유의차 없음 라인정지\n → 배관클리닝, 조액실, 현장 Filter 교체, 순환 1HR 진행\n - 재도포 진행 → 런닝&양산 표면 입자 발생 유의차 없음 → SPEED 6 -> 7mpm 가변시 입자발생량 증가 라인 정지\n → 배관클리닝, 조액실, 현장 Filter 교체, 순환 1HR 진행\n - 재도포 진행 → 런닝&양산 표면 입자 발생 양산가능 수준 유태현 책임 매니저 확인 양산 진행\n → 양산 250m 생산(MF92001D01-전산미등록)후 분기 표면입자 발생 확인 라인정지\n → 배관클리닝, 조액실, 현장 Filter 교체, 순환 X → 런닝&양산 표면 입자 발생 유의차 없음\n → 기술팀 외관확인용 100M 제작(자체폐기예정) → 라인정지 조액 잔량 50KG 폐기 진행", "note": ""}, {"id": 1800000000048, "type": "조액", "date": "2025-09-19", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF91901", "trouble": "입자", "action": "- 진행중 반짝이 입자 발생 라인정지\n → 배관클리닝, 조액실, 현장 Filter 교체, 조액순환 0.5HR 양호 Start", "note": ""}, {"id": 1800000000049, "type": "조액", "date": "2025-09-19", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF91901", "trouble": "입자", "action": "- 진행중 반짝이 입자 발생 라인정지\n → 담당자 협의 후 조액실기존10um ( CHPL-DZE-1A-10M)병렬) ->(5um ( CHPL-DZE-1A-5M ) 현장 청아10㎛ -> 청아 5㎛ 필터 변경진행 및 조액 순환 30분 진행 동일 증상\n → HEAD부 정비 및 배관클리닝,조액실&현장 F/T교체 / 담당자 협의 후 재필터링 진행 -> 재필터링 후 조액 순환 30분 진행\n → WR 10㎛ 후도 변경 진행 / 표면 유의차없음 빈도 증가 / 담당자 남미래 매니저 요청\n -> 배기 #3~5번 10%상향 및 SPEED 12->10.5(건조단 조건 기본동일) 유의차 없음\n -> WR 후도 20㎛ 변경 -> 표면 양호 -> 양산 진행(전산 미등록진행 및 차주 슬리팅 검수 진행후 실적 등록 예정)\n -> 진행간 입자뭉침(반짝이) 빈도 증가로 인한 라인정지 조액 잔량 60KG 폐기 진행", "note": ""}, {"id": 1800000000050, "type": "설비", "date": "2025-09-18", "unit": "A-4", "product": "MS-PQC-MXM5-CBCM", "lot": "MF91708D04", "trouble": "- 진행중 1U/W 과텐션 발생에 의한 오븐&현장 가이드롤 오염발생", "action": "- 라인정지 및 오븐 OFF → 현장&오븐 가이드롤 청소진행 → HEAD부 정비 및 배선 후 START 진행", "note": ""}, {"id": 1800000000051, "type": "조액", "date": "2025-09-16", "unit": "A-4", "product": "MS-WLC-MX20-WMMM", "lot": "MF91608", "trouble": "입자", "action": "- 진행중 반짝이 입자 발생 라인정지\n → 배관클리닝, 조액실 인솔 15um, 현장 1E-20 Filter 교체, 조액순환 1HR 양호 Start", "note": ""}, {"id": 1800000000052, "type": "조액", "date": "2025-09-15", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF91501", "trouble": "입자", "action": "- 런닝간 바짝이 입자 발생 라인정지\n → 샘플 채취 현미경 검사 확인 불가 딜라미 의심 Lami 온도 55℃ -> 60℃ 상향 추가 런닝 120m 유의차 없음\n - 배관클리닝, 조액실 청수 7um Filter, 현장 청아 10um 교체, 재필터링 및 조액순환 0.5hr 표면 양호 담당자 확인 후 Start → 주행 중 반짝이 입자 증가 라인 정지\n - 배관클리닝, 조액실 Filter 교체, 재필터링 및 조액순환 0.5hr 표면 반짝이 입자 유의차 없음 조액 잔량 200kg 폐기", "note": ""}, {"id": 1800000000053, "type": "조액", "date": "2025-09-12", "unit": "A-4", "product": "MS-WLC-MX10-WWMT", "lot": "MF91207", "trouble": "노코팅, 겔", "action": "- 추가 런닝간 유의차 없음 조액 30kg 잔량 폐기", "note": ""}, {"id": 1800000000054, "type": "조액", "date": "2025-09-11", "unit": "A-4", "product": "MS-PWC-MX50-FDMM", "lot": "MF91020", "trouble": "노코팅, 겔", "action": "- 주행 중 노코팅 증가 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 후 표면 양호 Start", "note": ""}, {"id": 1800000000055, "type": "조액", "date": "2025-09-10", "unit": "A-4", "product": "MS-WLC-MX20-WLMM", "lot": "MF91016", "trouble": "입자", "action": "- 런닝간 전면 반짝+G77+J74", "note": ""}, {"id": 1800000000056, "type": "조액", "date": "2025-09-04", "unit": "A-2", "product": "MZ-SAH-9X00-HEFX", "lot": "MF90401", "trouble": "노코팅", "action": "- HE 진행 중PI첨단소재 G4호기 4M 검증-내층보강판 시양산 TEST) 겔, 노코팅 발생\n → 배관 Cleaning, 조액실 Filter 교체 후 양호", "note": ""}, {"id": 1800000000057, "type": "조액", "date": "2025-09-04", "unit": "A-4", "product": "MS-PWC-MX60-FDMM", "lot": "MF90316", "trouble": "노코팅, 겔", "action": "- 진행중 노코팅, 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 후 런닝간 노코팅, 겔 발생\n → 배관클리닝, 현장 Filter 교체, 조액실 CHPL-DZE-1A10M → 청아 20\" 5㎛ Filter 변경 유의차 없음 10kg 조액 폐기", "note": ""}, {"id": 1800000000058, "type": "조액", "date": "2025-09-03", "unit": "A-4", "product": "MS-WLC-MX20-WMMM", "lot": "MF90212", "trouble": "입자", "action": "- 런닝간 전면 반짝이 발생 추가 런닝 유의차 없음 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 표면 양호 Start 하였으나, 약 200m 후 동일 증상 발생 라인 정지 1st Batch(MF90212) 재필터링 진행\n \n - 2nd Batch(MF90301) 런닝간 표면 양호 Start", "note": ""}, {"id": 1800000000059, "type": "조액", "date": "2025-09-03", "unit": "A-4", "product": "MS-WLC-MX20-WMMM", "lot": "MF90212", "trouble": "입자", "action": "- 1st Batch(MF90212) 재필터링 조액 생산간 전면 입자 동일 발생 라인 정지 1st Batch(MF90212) 500kg 폐기\n\n - 3rd Batch(MF90310) 조액 런닝간 전면 입자 발생 라인정지 재필터링 진행 후 코팅성 양호 Start", "note": ""}, {"id": 1800000000060, "type": "조액", "date": "2025-09-02", "unit": "A-4", "product": "MZ-DIU-MO15-MGFO", "lot": "MF90109", "trouble": "겔", "action": "- 생산 진행간 OP엣지 조액 뭉침 및 겔발생으로 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 표면 양호 Start", "note": ""}, {"id": 1800000000061, "type": "설비", "date": "2025-08-30", "unit": "A-1", "product": "MF-MAH-0X25-RDNX", "lot": "MF82906E01", "trouble": "- MF-MAH-0X25-RDNX 생산 진행중 순간 정전 발생 LINE STOP", "action": "- RTO 비상정지 발생 → 보전팀 확인 후 복구\n - 현장설비 비상정지 발생 → 설비점검 진행 및 코터 정상 주행 확인", "note": ""}, {"id": 1800000000062, "type": "조액", "date": "2025-08-29", "unit": "A-4", "product": "MS-PQC-MXM5-CBCM", "lot": "MF82715", "trouble": "노코팅, 겔", "action": "- 런닝 주행 간 표면 노코팅 발생 라인 정지\n → 배관클리닝, 조액실/현장 Filter 교체 표면 양호 Start", "note": ""}, {"id": 1800000000063, "type": "조액", "date": "2025-08-28", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MF82717", "trouble": "겔", "action": "- 약 500m 생산 후 전면 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 표면 양호 Start", "note": ""}, {"id": 1800000000064, "type": "조액", "date": "2025-08-26", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF82604", "trouble": "입자", "action": "- 조액실 조액 제조간 KG80 필터링 후 제조\n → 런닝간 반짝이 발생으로 조건정립 진행 → Lami 온도 55->60℃ 상향,Lami 압 4->5kg 상향\n → OVEN 온도 #1~6 5℃ 하향 각 조건 별 1,2급지 양산 원자재 표면 확인간 전면 반짝이 발생\n → 재필터링 진행\n\n - 배관클리닝, 조액실 CSM-40 15um 10\" 병렬 → 청아 10um 20\" 단일구조 변경 전면 입자 유의차 없음 조액 폐기", "note": ""}, {"id": 1800000000065, "type": "공정", "date": "2025-08-26", "unit": "A-1", "product": "MS-PQC-1X10-QBNP", "lot": "MF82504E05", "trouble": "- MS-PQC-1X10-QBNP 양산 진행간 이물불량 빈도 증가", "action": "- Oven 내부 정비 및 런닝 1hr 진행", "note": ""}, {"id": 1800000000066, "type": "조액", "date": "2025-08-22", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF82109", "trouble": "입자", "action": "- 런닝간 전면 입자 발생 라인정지\n → 현미경 검사시 입자 확인 불능 딜라미 의심 Lami 압력 4kg -> 5kg , 온도 55℃ -> 60℃ 상향 / 1급지 원자재 변경 유의차 없음\n → 재필터링 진행\n\n - 재필터링 이후 반짝이 빈도 증가\n → 1,2급지 양산 원단 교체 및 SMAPLE 채취 → 런닝 PET 추가 런닝 진행,10um,20um 코팅성 유의차없음 → 유태현 책임 확인 후 조액 400kg 폐기 진행", "note": ""}, {"id": 1800000000067, "type": "조액", "date": "2025-08-21", "unit": "A-1", "product": "MS-PQC-2X10-QGFD", "lot": "MF82018", "trouble": "겔", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR, 런닝 약 200m 진행 양호", "note": ""}, {"id": 1800000000068, "type": "조액", "date": "2025-08-20", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF81914", "trouble": "입자", "action": "- 조액실 청수 10\" 10um Filter 병렬 적용, 현장 청아 10\" 10um Filter 체결 주행 중 말기 입자 발생 라인 정지 30kg 폐기", "note": ""}, {"id": 1800000000069, "type": "조액", "date": "2025-08-20", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF82004", "trouble": "노코팅", "action": "- 런닝간 전면 노코팅 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR → 런닝간 유의차 없음 30kg 폐기", "note": ""}, {"id": 1800000000070, "type": "조액", "date": "2025-08-19", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF81812", "trouble": "입자", "action": "- 진행간 C/T부 미세 입자 발생으로 라인 정지\n → 배관클리닝, 조액실 Filter / 현장 1구 앱솔루트(1N-0.6) Filter 교체 유의차 없음 → 코팅두께 10um -> 20um 변경 유의차 없음 라인 정지 MF81812 재필터링 진행", "note": ""}, {"id": 1800000000071, "type": "조액", "date": "2025-08-19", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF81901", "trouble": "입자", "action": "- 1차 조치 : 배관클리닝, 조액실 Filter / 현장 1구 앱솔루트(1N-0.6) Filter 교체 → 유의차 없음\n 2차 조치 : 배관클리닝, 조액실 Filter / 현장 1구 앱솔루트(1N-0.6) Filter 교체 → 기술팀 현미경 불량 샘플 검사 및 Lami 온도/압력 상향 유의차 없음 MF81901 재필터링 진행", "note": ""}, {"id": 1800000000072, "type": "조액", "date": "2025-08-19", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF81812", "trouble": "입자", "action": "- 배관클리닝,조액실 F/T 교체, 현장 CSM-PPZE1N-40(15㎛) 캡슐 Filter 체결 MF81812 재도포 → 입자 발생\n HEAD부 조액 제거 1회 리턴 펌프 15RPM -> 50RPM 상향 , 조액실 교반속도 55Hz상향 유의차 없음 MF81812 350kg 폐기", "note": ""}, {"id": 1800000000073, "type": "조액", "date": "2025-08-19", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF81901", "trouble": "입자", "action": "- 1차 조치 : 배관클리닝,조액실 청수 10\" 10um Filter 교체, 현장 CSM-PPZE1N-40(15㎛) 캡슐 Filter 체결 MF81901 재도포 유의차 없음\n 2차 조치 : 배관클리닝,조액실 청수 10\" 5um Filter 교체, 현장 CSP-EP1E-1N-0.6(7um) Filter체결 MF81901 재도포 유의차 없음\n 3차 조치 : 배관클리닝, 조액실 점도 하한치, 조액실 청수 10\" 10um Filter 교체, 현장 CSM-PPZE1N-40(15㎛) 캡슐 Filter 체결 MF81901 재도포 유의차 없음 230kg 폐기", "note": ""}, {"id": 1800000000074, "type": "조액", "date": "2025-08-16", "unit": "A-4", "product": "MS-PQC-MXM5-CBCM", "lot": "MF81409", "trouble": "노코팅, 겔", "action": "- 런닝 주행 간 표면 노코팅 발생 라인 정지\n → Head 정비 후 양호 Start", "note": ""}, {"id": 1800000000075, "type": "조액", "date": "2025-08-15", "unit": "A-1", "product": "MF-MAH-0X08-RDKT", "lot": "MF81412", "trouble": "조액실 필터압력 상승", "action": "- MFMAH0X08RDKT 종료 후 조액실 필터압 상승 라인정지\n → Slot-Die 세척, 배관 Cleaning, 현장+조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000076, "type": "조액", "date": "2025-08-14", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MF81410", "trouble": "겔", "action": "- 런닝간 전면 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR 표면 양호 Start", "note": ""}, {"id": 1800000000077, "type": "공정", "date": "2025-08-14", "unit": "A-1", "product": "MF-MAH-0X15-RDNX", "lot": "MF81319E17", "trouble": "- 1급지 원자재 이물로인한 HEAD부 원자재 파단 발생", "action": "- Coating Roll 및 HEAD부 Guide Roll 청소", "note": ""}, {"id": 1800000000078, "type": "조액", "date": "2025-08-12", "unit": "A-4", "product": "MS-WLC-MX20-WMMM", "lot": "MF81114", "trouble": "입자", "action": "- 진행간 C/T부 미세 입자 발생으로 라인 정지\n → 배관클리닝, 조액실 Filter / 현장 1구 앱솔루트(1N-0.6) Filter 교체, 조액순환 0.5HR 표면 양호 Start", "note": ""}, {"id": 1800000000079, "type": "설비", "date": "2025-08-12", "unit": "A-3", "product": "MF-DHH-1X11-PJNM", "lot": "MF81207C01", "trouble": "- R/W Cutting시 Bumper 상승 후 칼날 미전개 발생으로 Auto Cutting 동작불능", "action": "- 보전팀 입실후 원인 파악및 PLC프로그램 확인\n PLC 프로그램에서 Bumper Roll 동작 신호 감지 불가 프로그램 강제 리셋진행 후 R/W Auto Cutting\n 정상 작동 확인 후 재스타트 진행", "note": ""}, {"id": 1800000000080, "type": "조액", "date": "2025-08-08", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF80709", "trouble": "입자", "action": "- 배관클리닝, 조액실 Filter(청수 10\" 15um 병렬)교체 , 조액순환 1HR → 런닝간 미세 입자 발생 추가 런닝 약 300m 진행 후 양호 Start", "note": ""}, {"id": 1800000000081, "type": "조액", "date": "2025-08-08", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF80706", "trouble": "입자", "action": "- MF80706 재필터링 후 유의차 없음 350kg 폐기", "note": ""}, {"id": 1800000000082, "type": "조액", "date": "2025-08-07", "unit": "A-4", "product": "MS-WLC-MX10-WRMM", "lot": "MF80706", "trouble": "입자", "action": "- 배관클리닝, 조액실 Filter(청수 10\" 15um 병렬)교체 , 조액순환 1HR → 유의차 없음 MF80706 재필터링 진행 → 유의차 없음 → MF80706 재필터링 진행", "note": ""}, {"id": 1800000000083, "type": "공정", "date": "2025-08-05", "unit": "A-1", "product": "MZ-MAH-FX15-SONX", "lot": "MF80502E01", "trouble": "- 1급지 원자재 이물로인한 HEAD부 원자재 파단 발생", "action": "- Coating Roll 및 HEAD부 Guide Roll 청소", "note": ""}, {"id": 1800000000084, "type": "조액", "date": "2025-07-30", "unit": "A-4", "product": "MS-PWC-MX50-FDMM", "lot": "MF72914", "trouble": "노코팅", "action": "- 런닝 주행 간 표면 노코팅 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR, 현장 1구 앱솔루트(1N-0.6) Filter 추가 표면 양호 Start", "note": ""}, {"id": 1800000000085, "type": "조액", "date": "2025-07-30", "unit": "A-4", "product": "MS-WLC-MX20-WRMM", "lot": "MF73002", "trouble": "입자", "action": "- 1차 조치 : 배관클리닝, 조액실 Filter(청수 10\" 20um 단일)교체 , 조액순환 1HR → 유의차 없음\n - 2차 조치 : 배관클리닝, 조액실 Filter(청수 10\" 15um 병렬)교체 , 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000086, "type": "설비", "date": "2025-07-24", "unit": "A-3", "product": "MF-MAH-EX16-RDNT", "lot": "MF72214C13", "trouble": "- 생산 중 PARKER LAMI 통신이상 알람발생 원단처짐", "action": "- 보전팀 PARKER LAMI 모듈 교체 및,커넥터 교체", "note": ""}, {"id": 1800000000087, "type": "공정", "date": "2025-07-22", "unit": "A-3", "product": "MF-DHH-EX12-RDSH", "lot": "MF72114C08", "trouble": "- HEAD부 원단 원인미상 원단끊어짐 1회\n - PI원단 디팩트로 인한 끊어짐 1회 발생", "action": "- OVEN청소,코팅롤 청소 및 재배선 진행 / 표면 상태 확인후 양산 재스타트", "note": ""}, {"id": 1800000000088, "type": "조액", "date": "2025-07-21", "unit": "A-1", "product": "MF-MAH-0X25-RDNX", "lot": "MF72105", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000089, "type": "조액", "date": "2025-07-20", "unit": "A-1", "product": "MF-MAH-0X20-RDNX", "lot": "MF72003", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000090, "type": "공정", "date": "2025-07-17", "unit": "A-2", "product": "MF-DHH-XX25-NAOH", "lot": "MF71607B09", "trouble": "- 진행 중 순간 정전 발생", "action": "- 정전 발생으로 건조단 온도, 급.배기 자동 OFF 및 R.T.O 에러 발생\n - 라인 정지 후 HEAD부 M/C청소 및 배관클리닝, 필터교체\n - 건조단 온도 승온 및 각 공정 조건 재설정, NA공정 조건 재정립", "note": ""}, {"id": 1800000000091, "type": "공정", "date": "2025-07-08", "unit": "A-4", "product": "MS-WLC-MX10-WZME", "lot": "MF70806D01", "trouble": "- 진행간 1급지 교체후 다루미 발생으로 인한 라미 CPC 빠짐 발생", "action": "- 라인 정지 후 라미 -> R/W 가이드롤 청소 진행, 재스타트\n → 재스타트 진행간 Out Feed 텐션 14KG ->15KG 상향 후 생산 진행", "note": ""}, {"id": 1800000000092, "type": "공정", "date": "2025-07-06", "unit": "A-1", "product": "MF-MAH-0X20-RDAX", "lot": "MF70603E02", "trouble": "- 1급지 원자재 이물로인한 HEAD부 원자재 파단 발생", "action": "- Coating Roll 및 HEAD부 Guide Roll 청소", "note": ""}, {"id": 1800000000093, "type": "조액", "date": "2025-07-04", "unit": "A-4", "product": "MS-PQC-MXM5-CBCM", "lot": "MF70308", "trouble": "노코팅", "action": "- 런닝 주행 간 표면 노코팅 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR, 현장 1구 앱솔루트(1N-0.6) Filter 추가 표면 양호 Start", "note": ""}, {"id": 1800000000094, "type": "조액", "date": "2025-07-04", "unit": "A-4", "product": "MS-PQC-MXM5-CBCM", "lot": "MF70308", "trouble": "노코팅", "action": "- 런닝 주행 간 표면 노코팅 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR, 현장 1구 앱솔루트(1N-0.6) Filter 추가 표면 양호 Start", "note": ""}, {"id": 1800000000095, "type": "공정", "date": "2025-07-04", "unit": "A-3", "product": "MF-MAH-0X05-RDAT", "lot": "MF70304C17", "trouble": "- Head부 원인미상 원자재 파단", "action": "- Oven 정비 및 Coating Roll 세척 후 Start", "note": ""}, {"id": 1800000000096, "type": "조액", "date": "2025-07-03", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MF70306", "trouble": "노코팅, 겔", "action": "- 런닝 주행 간 표면 노코팅, 겔 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000097, "type": "조액", "date": "2025-07-03", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MF70306", "trouble": "노코팅, 겔", "action": "- 1차 런닝 주행 간 표면 노코팅, 겔 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝간 동일 증상 조액 잔량 10KG미만 라인정지\n - 2nd Batch MF70315 <--- 조액 대기", "note": ""}, {"id": 1800000000098, "type": "조액", "date": "2025-07-02", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF70108", "trouble": "노코팅", "action": "- 런닝 주행 간 표면 노코팅 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000099, "type": "조액", "date": "2025-07-01", "unit": "A-2", "product": "MZ-DHH-XX25-NIOH", "lot": "MF63015", "trouble": "조액 뭉침", "action": "- 배관 Cleaning, 조액실 Filter 교체, 조액실 In-Line Mixer 청소, 조액순환 1HR", "note": ""}, {"id": 1800000000100, "type": "조액", "date": "2025-07-01", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF70108", "trouble": "노코팅", "action": "- 런닝 주행 간 표면 노코팅 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000101, "type": "조액", "date": "2025-06-25", "unit": "A-4", "product": "MS-WLC-MX10-WZME", "lot": "MF62416", "trouble": "겔", "action": "- 런닝 중 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR 표면 양호 Start", "note": ""}, {"id": 1800000000102, "type": "조액", "date": "2025-06-25", "unit": "A-4", "product": "MS-WLC-MX10-WZME", "lot": "MF62504", "trouble": "겔", "action": "- 차수 변경 후 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR, 현장 1구 앱솔루트(1N-0.6) Filter 추가 표면 양호 Start", "note": ""}, {"id": 1800000000103, "type": "공정", "date": "2025-06-24", "unit": "A-1", "product": "MF-MAH-0X15-RDNT", "lot": "MF62316E08", "trouble": "- 원인 미상의 Head부 원자재 파단", "action": "- Oven 정비 후 Start", "note": ""}, {"id": 1800000000104, "type": "조액", "date": "2025-06-20", "unit": "A-1", "product": "MS-PQC-1X05-Q9FD", "lot": "MF62001", "trouble": "조액 기포", "action": "- 바디심 교체 0.25T ->0.15T 및 다이 체결간 디스크 필터 ( CPMD-S9010AS-#635 ) 제거 후 표면 양호", "note": ""}, {"id": 1800000000105, "type": "조액", "date": "2025-06-18", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF61804", "trouble": "겔", "action": "- 차수 변경 후 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 표면 양호 Start", "note": ""}, {"id": 1800000000106, "type": "조액", "date": "2025-06-18", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF61807", "trouble": "겔", "action": "- 차수 변경 후 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR 표면 양호 Start", "note": ""}, {"id": 1800000000107, "type": "조액", "date": "2025-06-18", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF61811", "trouble": "겔", "action": "- 차수 변경 후 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 0.5HR, 현장 1구 앱솔루트(1N-0.6) Filter 추가 표면 양호 Start", "note": ""}, {"id": 1800000000108, "type": "설비", "date": "2025-06-17", "unit": "A-2", "product": "MZ-DVH-0X40-MUND", "lot": "런닝", "trouble": "- Oven #4 Zone 온도 헌팅 발생", "action": "- 건조단 #4 온도센서 교체 / 온도센서 교체 후 오토튜닝 진행 / 정상작동 확인 후 양산 진행", "note": ""}, {"id": 1800000000109, "type": "조액", "date": "2025-06-16", "unit": "A-0", "product": "ML-OEW-3310-T1A7", "lot": "MF61608", "trouble": "겔, 노코팅", "action": "- 1차 조치 : 런닝 진행 중 겔, 노코팅 다량 발생 교반속도 45 → 50Hz 상향 동일 현상 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액 통순환 1HR\n\n - 2차 조치 : 약 300m 겔, 노코팅 동일 증상, 추가 런닝 중 조액실 Filter 압력 4.8kg 상승 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액 통순환 1HR 양호 Start", "note": ""}, {"id": 1800000000110, "type": "조액", "date": "2025-06-07", "unit": "A-1", "product": "MF-MAH-0X40-RDKX", "lot": "MF60511", "trouble": "겔", "action": "- MF60511E02 주행 중 겔 다량 발생\n → Slot-Die 세척, 배관 Cleaning, 현장+조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000111, "type": "조액", "date": "2025-06-05", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MF60514", "trouble": "겔", "action": "- 진행중 간헐적 미세 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 표면 양호 Start", "note": ""}, {"id": 1800000000112, "type": "조액", "date": "2025-06-04", "unit": "A-4", "product": "MS-PWC-MX50-FDMM", "lot": "MF60401", "trouble": "노코팅", "action": "- 조액실 Filter Test (1차)\n → 기존 F/T 청아 5um 20\" -> 청수 신규 20um, 고효율 필터(고유량) 10\" 적용 (전면 노코팅 발생)\n - 조액실 Filter Test (2차)\n → 청수 신규 20um, 고효율 필터(고유량) 10\" -> 청아 20\" 15um Absolute(7구) (전면 노코팅 발생)\n → 배관클리닝, 조액 재필터링 및 조액순환 1HR\n - 조액실 Filter Test (3차)\n → 조액 점도 900CPS -> 820CPS ( Spec 950±150cps ), 조액 Filter 청수 10um 10\" 적용 생산시 청아 20\" 15um Absolute(7구) 적용보다 소폭 감소하였으나 생산 불가\n → HEAD부 재정비,현장 필터 CSM-PPZE-1E20(19um) 추가 장착 후 런닝간 점차적으로 양호 Start", "note": ""}, {"id": 1800000000113, "type": "조액", "date": "2025-06-03", "unit": "A-4", "product": "MS-WLC-MX20-WLMM", "lot": "MF60302", "trouble": "입자", "action": "- 런닝 주행 간 표면 입자 발생 라인 정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000114, "type": "조액", "date": "2025-05-27", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF52617", "trouble": "겔, 노코팅", "action": "- 1차 조치 : MF52617K01 진행 중 겔, 노코팅 다량 발생 런닝Pet 교체 400m 런닝 유의차 없음 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 청아 50um → 청수 30um 변경, 조액 서브 탱크 세척, 조액 통순환 2HR 후 표면 양호 Start", "note": ""}, {"id": 1800000000115, "type": "공정", "date": "2025-05-27", "unit": "A-1", "product": "MF-MAH-0X15-RDAX", "lot": "MF52616E17", "trouble": "- 1급지 이물 추정 Head부 원자재 파단", "action": "- 코팅롤 및 HEAD부 GUIDE ROLL 정비 / 1급지 원자재 교체", "note": ""}, {"id": 1800000000116, "type": "조액", "date": "2025-05-20", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF52003", "trouble": "노코팅", "action": "- 1차 조치 : MF52003K01 진행 중 노코팅 다량 발생 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액 통순환 1HR 후 표면 양호 Start", "note": ""}, {"id": 1800000000117, "type": "조액", "date": "2025-05-20", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF52003", "trouble": "겔, 흑점, 노코팅", "action": "- 2차 조치 : MF52003K02 500m진행 중 겔, 흑점, 노코팅(2nd B/T 이송 중) 다량 발생 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액 통순환 1HR\n - 3차 조치 : 약 500m 런닝간 겔 발생 라인 정지 1st B/T 조액 잔량 140kg 폐기\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액 서브 탱크 세척, 조액 통순환 2HR 후 표면 양호 Start", "note": ""}, {"id": 1800000000118, "type": "조액", "date": "2025-05-20", "unit": "A-4", "product": "MZ-DHH-XX25-NIOH", "lot": "MF11516", "trouble": "조액 입자뭉침", "action": "- 2B/T 런닝간 간헐적 입자 뭉침 발생으로 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액실 In-Line Mixer 청소 표면 양호 Srart", "note": ""}, {"id": 1800000000119, "type": "조액", "date": "2025-05-15", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MF51510", "trouble": "겔", "action": "- 런닝간 전면 겔 발생 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR 표면 양호 Start", "note": ""}, {"id": 1800000000120, "type": "조액", "date": "2025-05-13", "unit": "A-4", "product": "MS-WLC-MX10-WSMA", "lot": "MF51305", "trouble": "조액기포", "action": "- 1차 조치 : 런닝간 표면 산발적 조액 기포 발생 액판 조액 3회 제거 동일 증상 라인 정지\n → 배관클리닝, 조액실 Filter 청수 10\" CHPL-DZE-1A-5M(5um) -> 청수 10\" CSM-PPZE-1E-06(7um) 교체, 조액순환 0.5HR 진행\n - 2차 조치 : 런닝간 표면 산발적 조액 기포 발생 액판 조액 2회 제거 동일 증상 라인 정지\n Strainer Mesh Filtr 제거 약 500m 런닝 표면 유의차 없음 라인정지\n → 배관클리닝, 조액실 Filter 교체, 조액순환 1HR \n - 3차 조치 : 런닝간 표면 유의차 없음\n 조액실 Filter 제거 후 동일 증상 조액잔량 20kg 생산 종료", "note": ""}, {"id": 1800000000121, "type": "조액", "date": "2025-05-12", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF51104", "trouble": "겔, 흑점, 노코팅", "action": "- 1차 조치 : MF51104K03 진행중 겔,흑점,노코팅 불량 발생 증가 라인정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR\n - 2차 조치 : 재도포 500M 런닝중 표면 겔, 흑점 다량 발생 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, #2 B/T 변경, 통순환 2시간 진행, #1 B/T 자체 순환 진행\n - 3차 조치 : MF51213 600m 런닝 겔 소량 발생 조액실 공급 탱크, 보조탱크 교반속도 50hz -> 60hz 변경 후 양산 Start\n - 4차 조치 : MF51213K01 진행중 겔 불량 증가 라인정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR 런닝\n - 초기 120m 불량 발생 이후 500m 까지 표면 양호 Start", "note": ""}, {"id": 1800000000122, "type": "조액", "date": "2025-05-07", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF32512", "trouble": "겔", "action": "- 1차 조치 : 초기 런닝 300M 표면 양호 스타트 진행 / 양산 150M 겔 5EA 발생 라인정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000123, "type": "조액", "date": "2025-05-07", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF32512", "trouble": "겔, 노코팅", "action": "- 2차 조치 : 재도포 800m 런닝중 표면 겔, 흑점 발생 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1.5HR\n → 보전팀 조광식 매니저 입실 -> 코팅롤 감속기 점검 ( 프로그램 확인 / 구동벨트 장력 조정 / 볼트 조정 )\n - 3차 조치 : 재도포 600m 런닝중 표면 겔, 노코팅 발생 유의차 없음, 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, #2 B/T 변경, 통순환 2시간 진행, #1 B/T 재필터링 진행\n - 2B/T MF50705 400m 지점 간헐적 겔, 노코팅 발생 추가 런닝 250m 진행후 표면 양호 Start", "note": ""}, {"id": 1800000000124, "type": "조액", "date": "2025-05-06", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF50507", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR → 약 500m 추가 런닝 후 양호 Start", "note": ""}, {"id": 1800000000125, "type": "공정", "date": "2025-05-05", "unit": "A-1", "product": "MZ-DVH-1X10-QTNA", "lot": "MF50503E02", "trouble": "- 1급지 원단 교체 양면 TAPE 구간 오븐 내부에서 파단 발생", "action": "- Oven 정비 후 Start", "note": ""}, {"id": 1800000000126, "type": "공정", "date": "2025-05-04", "unit": "A-1", "product": "MS-PQC-1X10-QCNP", "lot": "MF50311E02", "trouble": "- 생산간 오븐 이물 발생 빈도 증가", "action": "- Line Stop\n → 급기(55,55,55,55,55,55) / 배기(80,80,80,80,80,80)/RTO 55Hz 적용 런닝 진행 1시간 진행 / 진행간 표면 상태 확인", "note": ""}, {"id": 1800000000127, "type": "조액", "date": "2025-05-02", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF50110", "trouble": "겔", "action": "- 배관클리닝, 조액실 Filter 청수 10\" 5㎛, 조액순환 1HR → 유의차 없음 20kg 조액 폐기 / 2nd Batch → 3rd Batch 전환", "note": ""}, {"id": 1800000000128, "type": "조액", "date": "2025-05-02", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF50115", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR → 약 500m 추가 런닝 후 양호 Start", "note": ""}, {"id": 1800000000129, "type": "공정", "date": "2025-05-02", "unit": "A-1", "product": "MS-PQC-1X10-QCNP", "lot": "MF50209E01", "trouble": "- 생산간 오븐 이물 발생 빈도 증가", "action": "- Line Stop\n - 1차 Oven 청소 진행\n → 오븐 육안 확인시 오븐 노즐부 이물 다량 확인, #1~#6번 노즐 청소 및 노즐 AIR 작업, 노즐 장착 및 오븐 상판 QFN 작업,\n 오븐 미세 청소 및 롤 청소\n → 양산 조액으로 런닝 진행 검증용 샘플 제작 100m / Oven 이물 양산 불가 수준\n - 2차 Oven 청소 진행\n → 오븐 미세 청소 진행 후 양산 조액으로 런닝 진행\n → 양산 조액으로 런닝 진행 검증용 샘플 제작 100m / Oven 이물 양산 가능 수준 확인 Start", "note": ""}, {"id": 1800000000130, "type": "공정", "date": "2025-05-01", "unit": "A-4", "product": "MS-WLC-MX10-WWMT", "lot": "런닝", "trouble": "- 댐라인 \"강\" 수준 발생", "action": "- 진행 중 댐라인 \"강\" 수준으로 런닝 PET 교체 후 조건정립 진행 → 유의차없음\n - HEAD부 재정비 2회 진행 및 조건정립 후 재START 진행", "note": ""}, {"id": 1800000000131, "type": "조액", "date": "2025-04-29", "unit": "A-4", "product": "MS-PWC-MX60-FDMM", "lot": "MF42905", "trouble": "필터압 상승,\n노코팅, 겔", "action": "- 1차 조치 : 배관클리닝, 조액실 Filter 7구 청수 10\" 5㎛ -> 청아 20\" 10㎛ 교체 진행 → Filter 압 양호 / 노크팅, 겔 다량 발생\n 2차 조치 : 배관클리닝, 조액실 Filter 7구 청아 20\" 10㎛ -> 청수 10\" 7㎛ 교체 진행, 조액순환 1hr → 노크팅, 겔 다량 발생\n 3차 조치 : 배관클리닝, 조액실 Filter 7구 청수 10\" 7㎛ -> 청아 20\" 10㎛ 교체 진행, 조액 통순환 1hr → 노크팅, 겔 다량 발생\n 4차 조치 : 배관클리닝, 조액실 Filter 7구 청아 20\" 10㎛ -> 청수 10\" 7㎛ 교체 진행, 조액순환 1hr → 노크팅, 겔 다량 발생\n 5차 조치 : 배관클리닝, 조액실 Filter 7구 청수 10\" 7㎛ -> 청아 20\" 15㎛ 교체 진행, 조액 통순환 1hr → 유의차 없음 / 샘플 채취 후 생산 종료 50kg 조액 폐기", "note": ""}, {"id": 1800000000132, "type": "조액", "date": "2025-04-25", "unit": "A-2", "product": "MF-SAH-7X00-HENX", "lot": "MF42403", "trouble": "조액 뭉침", "action": "- 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000133, "type": "조액", "date": "2025-04-25", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF42502", "trouble": "노코팅", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR, 조액 점도 530gps → 500gps 하향", "note": ""}, {"id": 1800000000134, "type": "조액", "date": "2025-04-22", "unit": "A-1", "product": "MF-DHH-EX12-RDSH", "lot": "MF42105E", "trouble": "반짝이", "action": "- Slot-Die 세척, 배관 Cleaning, 현장+조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000135, "type": "조액", "date": "2025-04-22", "unit": "A-4", "product": "MS-PWC-MX60-FDMM", "lot": "MF42111", "trouble": "노코팅, 조액기포", "action": "- 1차 조치 : 배관클리닝, 조액실 Filter 교체, 현장 1E-20 추가 장착, 조액순환 1HR →유의차 없음\n - 2차 조치 : 배관클리닝, 조액실 조액실 청아 15um 20\" -> 청아 10um 20\" 변경, 현장 1E-20 추가 장착, 조액 200kg 재필터링\n → 유태현 책임 매니저 입실 후 미세 void 및 노코팅 정상 진행 요청으로 START 진행", "note": ""}, {"id": 1800000000136, "type": "공정", "date": "2025-04-22", "unit": "A-1", "product": "MF-DHH-EX12-RDSH", "lot": "MF42105E01", "trouble": "- HEAD부 원단 떨림에 따른 TD \"강\" 수준 발생", "action": "- HEAD부 구동 벨트 장력 조정 및 공정조건 재정립\n → HEAD부 배기 조정(60.0->40.0), RTO 용량 조정(55hz->45hz), Oven Room Door Open", "note": ""}, {"id": 1800000000137, "type": "조액", "date": "2025-04-16", "unit": "A-4", "product": "MS-PWC-MX60-FDMM", "lot": "MF41604", "trouble": "노코팅, 겔", "action": "- 1차 조치 : 배관클리닝, 조액실 Filter 교체, 조액순환 30분 → 유의차 없음\n 2차 조치 : 배관클리닝, 조액실 Filter 교체, 현장 1E-20 추가 장착, 조액순환 1HR →유의차 없음\n - 조액 잔량 40kg 폐기", "note": ""}, {"id": 1800000000138, "type": "조액", "date": "2025-04-14", "unit": "A-4", "product": "MS-WLC-MX20-WLMM", "lot": "MF41408", "trouble": "입자", "action": "- 배관클리닝, 조액실 Filter 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000139, "type": "조액", "date": "2025-04-13", "unit": "A-1", "product": "MF-MAH-0X20-RDNX", "lot": "MF41209", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000140, "type": "조액", "date": "2025-04-12", "unit": "A-1", "product": "MF-MAH-0X30-RDNX", "lot": "MF41012", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000141, "type": "공정", "date": "2025-04-12", "unit": "A-1", "product": "MF-MAH-0X20-RDNE", "lot": "런닝", "trouble": "- 런닝 진행중 O/F 원단 빠짐 / 조액펌프 지연 Off 조액실 Filter 조액 Leak 발생", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR → 표면 양호 Start", "note": ""}, {"id": 1800000000142, "type": "조액", "date": "2025-04-11", "unit": "A-1", "product": "MF-MAH-0X20-RDNX", "lot": "MF41012", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000143, "type": "조액", "date": "2025-04-11", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF41003", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 청아10㎛ 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000144, "type": "조액", "date": "2025-04-09", "unit": "A-1", "product": "MZ-DVH-0X20-RDNM", "lot": "MF40819", "trouble": "반짝이", "action": "- Slot-Die 세척, 배관 Cleaning, 현장+조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000145, "type": "공정", "date": "2025-04-08", "unit": "A-1", "product": "MZ-MAH-FX15-SONA", "lot": "MF40705E01", "trouble": "- 1급지 이물 추정 Head부 원자재 파단 2회", "action": "- Oven/현장 Roll 청소 후 Start", "note": ""}, {"id": 1800000000146, "type": "공정", "date": "2025-04-04", "unit": "A-3", "product": "MZ-DHH-0X05-PJMX", "lot": "MF40309C06", "trouble": "- Head부 원인미상 원자재 파단", "action": "- Coating Roll 세척, 재배선, 표면 상태 확인 양호 Start", "note": ""}, {"id": 1800000000147, "type": "조액", "date": "2025-04-03", "unit": "A-4", "product": "MS-PQC-MX05-CACM", "lot": "MF40305", "trouble": "겔", "action": "- 배관클리닝, 조액실 Filter 청아10㎛ 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000148, "type": "공정", "date": "2025-04-03", "unit": "A-1", "product": "MS-PQC-1X13-QCNP", "lot": "런닝", "trouble": "- CPC 동작 불능", "action": "- CPC 액츄레이터 구동 모터 교체", "note": ""}, {"id": 1800000000149, "type": "공정", "date": "2025-04-03", "unit": "A-4", "product": "MS-PQC-MXM5-CBCM", "lot": "런닝", "trouble": "- Oven 기포 다량 발생", "action": "- OVEN #1~5 10℃ 하향,급기 #3~5 10% 하향,배기 #1~6 10%하향\n SPEED 2->1.7MPM 하향 후 양호 / SPEED 2MPM 원복,START 진행 (양산 원자재 변경 후 양호)", "note": ""}, {"id": 1800000000150, "type": "조액", "date": "2025-04-02", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF40113", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 청아10㎛ 교체, 1B/T(MF40113) 잔량 30kg 폐기 2B/T(MF40116) 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000151, "type": "조액", "date": "2025-04-02", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF40116", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 청아10㎛ 교체, 현장 CSP-EP1E-1N-06(7um) 추가 장착, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000152, "type": "조액", "date": "2025-03-27", "unit": "A-1", "product": "MF-MAH-0X20-RDNX", "lot": "MF32613", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000153, "type": "조액", "date": "2025-03-27", "unit": "A-4", "product": "MS-WLC-MX10-WSMA", "lot": "MF32705", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 청아10㎛ 교체, 현장 CSP-EP1E-1N-06(7um) 추가 장착, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000154, "type": "조액", "date": "2025-03-26", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF32512", "trouble": "흑점", "action": "- Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR → 런닝 약 500m 진행 후 표면양호 양산 Start", "note": ""}, {"id": 1800000000155, "type": "조액", "date": "2025-03-26", "unit": "A-1", "product": "MF-MAH-0X25-RDNX", "lot": "MF32507", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000156, "type": "조액", "date": "2025-03-25", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF32504", "trouble": "흑점", "action": "- 1st B/T → 2nd B/T Bypass 진행간 흑점 발생\n → 런닝 Pet 교체 후 약 300m 런닝 진행 흑점 동일 발생 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR → 런닝 약 400m 진행 후 표면양호 양산 Start", "note": ""}, {"id": 1800000000157, "type": "조액", "date": "2025-03-25", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF32411", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 청아 15㎛ ->청아10㎛ 변경, 조액순환 1HR → 약 300M 런닝 후 양호 Start", "note": ""}, {"id": 1800000000158, "type": "조액", "date": "2025-03-25", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF32506", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter 청아10㎛ 교체, 조액순환 1HR → 런닝 후 양호 Start", "note": ""}, {"id": 1800000000159, "type": "조액", "date": "2025-03-24", "unit": "A-1", "product": "MF-MAH-0X20-RDNX", "lot": "MF32310", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000160, "type": "조액", "date": "2025-03-24", "unit": "A-4", "product": "MS-WLC-MX10-WSMA", "lot": "MF32407", "trouble": "기포", "action": "- 1차 조치 : 배관클리닝, 조액실 교체, 조액순환 1HR → 런닝 진행간 유의차 없음 라인 정지\n 2차 조치 : 배관클리닝, 조액실 F/T 청아 15㎛ → CSM-0.6㎛ 원복, 조액순환 1HR → 약 300m 생산 후 기포 발생 조액 잔량 20kg 생산 마무리", "note": ""}, {"id": 1800000000161, "type": "공정", "date": "2025-03-22", "unit": "A-1", "product": "MF-DVH-0X15-RDNM", "lot": "런닝", "trouble": "- LAMI NIP 코팅폭 양쪽 10mm 데미지 확인", "action": "- Lami Nip Roll No. 428 → 426 교체", "note": ""}, {"id": 1800000000162, "type": "조액", "date": "2025-03-21", "unit": "A-4", "product": "MF-BSH-MX35-H4MP", "lot": "MF32009", "trouble": "Filter 압력 상승", "action": "- 6000m 진행 중 조액실 F/T압 4.98KG 상승 라인정지\n 1차 조치 : 배관클리닝, 조액실 Filter교체 → 런닝 약 150m 진행간 조액실 Filter 압력 3.98~4.05kg 상승 라인정지\n 2차 조치 : 배관클리닝, 조액실 Filter CSW-1 -> 1E-20 19㎛ 변경, 조액 순환 1H/R → 런닝 300m 진행후 조액실 Filter 압력 1.89KG 표면 양호 Start\n - 김창우 책임매니저 입자분산 편차 확인 예정", "note": ""}, {"id": 1800000000163, "type": "설비", "date": "2025-03-20", "unit": "A-0", "product": "ML-OEB-3350-B1A7", "lot": "MF31908K05", "trouble": "- RTO FD FAN 통신에러 발생 Oven Off 발생", "action": "- RTO P/G 점검", "note": ""}, {"id": 1800000000164, "type": "조액", "date": "2025-03-19", "unit": "A-4", "product": "MS-PWC-MX50-FDMM", "lot": "MF31814", "trouble": "Filter 압력 상승\n노코팅, 겔", "action": "- 1차 조치 : Start 전 FD 조액 자체순환 진행간 조액실 Filter 압력 4kg 상승으로 조액실 Filter 교체 진행\n → 약 100m 런닝 진행 후 표면 양호 / 조액실 Filter 압력 4kg 상승 라인 정지\n 2차 조치 : 조액실 Filter 교체 → 겔, 노코팅 다량 발생 런닝 약 150M 진행 간 HEAD부 조액 2회 제거 유의차 없음 라인정지\n 3차 조치 : 배관클리닝, 조액실 Filter교체, 조액순환 1HR → 간헐적 기포 및 노코팅 조액 뭉침 발생 런닝 150m 진행간 조액실 필터압 4KG 상승 라인정지\n 4차 조치 : 배관클리닝, 조액실 청아 5㎛ -> 청아 15㎛ Filter 변경, 조액순환 1HR → C/T부 간헐적 노코팅 및 기포성 겔라인 발생\n 담당자 주재성 책임매니저 육안 식별 샘플 확보 → 양산 원자재 투입 유의차 없음 조액 폐기", "note": ""}, {"id": 1800000000165, "type": "설비", "date": "2025-03-19", "unit": "A-0", "product": "ML-OEW-3310-T1A7", "lot": "MF31812K04", "trouble": "- RTO 불꽃 미감지로 인한 RTO DOWN 라인정지 현상 발생", "action": "- RTO 압축공기 에어량 조정 / 비례벨브 전원 리셋", "note": ""}, {"id": 1800000000166, "type": "설비", "date": "2025-03-18", "unit": "A-1", "product": "MS-PQC-1X05-Q7FD", "lot": "MF31710E03", "trouble": "- 2nd U/W Under Splice Cutting 미작동", "action": "- 2nd LOWER SPLICER 로드리스 실린더 ASSEMBLY 교체\n - 통신카드(스마트IO) 사내 재고부족으로 입고후 교체예정", "note": ""}, {"id": 1800000000167, "type": "조액", "date": "2025-03-12", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF31115", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR", "note": ""}, {"id": 1800000000168, "type": "조액", "date": "2025-03-12", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF31115", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 현장 필터 CSM-PPZE-1E20(19um) 추가 장착, 조액순환 1HR", "note": ""}, {"id": 1800000000169, "type": "조액", "date": "2025-03-11", "unit": "A-1", "product": "MF-MAH-0X25-RDNX", "lot": "MF31009", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000170, "type": "조액", "date": "2025-03-11", "unit": "A-4", "product": "MS-WLC-MX10-WZME", "lot": "MF31010", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR", "note": ""}, {"id": 1800000000171, "type": "조액", "date": "2025-03-11", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF31106", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR", "note": ""}, {"id": 1800000000172, "type": "조액", "date": "2025-03-11", "unit": "A-4", "product": "MS-WLC-MX10-WWMH", "lot": "MF31106", "trouble": "노코팅, 겔", "action": "- 잔량 조액 30kg 생산 종료", "note": ""}, {"id": 1800000000173, "type": "설비", "date": "2025-03-11", "unit": "A-1", "product": "MF-MAH-0X20-RDNE", "lot": "MF31009E05", "trouble": "- Oven No.54 Guide Roll 구동 불능", "action": "- Oven No.54 Guide Roll OP부 일반베어링 교체", "note": ""}, {"id": 1800000000174, "type": "조액", "date": "2025-03-10", "unit": "A-1", "product": "MF-MAH-0X20-RDNX", "lot": "MF30907", "trouble": "조액실 필터압력 상승", "action": "- Slot-Die 세척, 현장 및 조액실 Filter 교체, 순환 1HR", "note": ""}, {"id": 1800000000175, "type": "설비", "date": "2025-03-09", "unit": "A-1", "product": "MF-MAH-EX15-RDNX", "lot": "MF30903E10", "trouble": "- Oven No.45 Guide Roll 구동 불능", "action": "- Oven No.45 Guide Roll OP부 고온베어링 교체", "note": ""}, {"id": 1800000000176, "type": "조액", "date": "2025-03-07", "unit": "A-1", "product": "MF-DHH-EX12-RDSH", "lot": "MF30705", "trouble": "반짝이", "action": "- Slot-Die 세척, 배관 Cleaning, 현장+조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000177, "type": "조액", "date": "2025-03-07", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF30615", "trouble": "노코팅, 겔", "action": "- 배관클리닝, 조액실 Filter교체, 조액순환 1HR → 런닝 약 300m 동일 증상 / 약 300M 추가 런닝 후 양호 Start", "note": ""}, {"id": 1800000000178, "type": "설비", "date": "2025-03-03", "unit": "A-1", "product": "MARS3-16 PSACVL 1차품", "lot": "런닝", "trouble": "- LEL 수치 상승 및 Oven 차압 양압으로 인한 역류", "action": "- RTO Bake Out 진행\n - Oven 급기 10% 하향 , 배기 10% 상향\n - Oven 급기 ,배기 변경 후 차압 정상 확인 후 런닝 진행", "note": ""}, {"id": 1800000000179, "type": "설비", "date": "2025-03-02", "unit": "A-1", "product": "MS-PQC-1X10-QBNP", "lot": "MF30106E05", "trouble": "- OVEN #5 Zone No.58 Guide Roll 구동 불능", "action": "- Oven No.58 Guide Roll OP, DR 고열 베어링 교체", "note": ""}, {"id": 1800000000180, "type": "조액", "date": "2025-02-27", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF22701", "trouble": "노코팅, 겔", "action": "- 1차 조치 : 배관클리닝, 조액실 Filter교체, 조액순환 1HR, 조액 점도 580->520CPS , 교반 속도 40->60HZ 상향 → 런닝 약 500m 표면 양호 Start", "note": ""}, {"id": 1800000000181, "type": "설비", "date": "2025-02-26", "unit": "A-1", "product": "MZ-DVH-1X10Q-TNP", "lot": "MF22603E04", "trouble": "- Oven #1~ #3 Zone Guide Roll 구동 불능", "action": "- Oven #2 Zone No. 41 Guide Roll 폴리 교체 \n - Oven #1~ #3 Zone 구동 벨트 장력 조절", "note": ""}, {"id": 1800000000182, "type": "공정", "date": "2025-02-26", "unit": "A-2", "product": "MZ-DVH-0X40-MUND", "lot": "MF22514B12", "trouble": "- 1차품 PET CVL 박리로 인한 원단 분리 가이드롤에 원단 말림", "action": "- M/C청소 후 재START 진행", "note": ""}, {"id": 1800000000183, "type": "조액", "date": "2025-02-24", "unit": "A-2", "product": "MF-SAH-4X00-HEFX", "lot": "MF22301", "trouble": "노코팅", "action": "- 조액 잔량 60kg 폐기진행", "note": ""}, {"id": 1800000000184, "type": "공정", "date": "2025-02-24", "unit": "A-2", "product": "MF-SAH-5X00-HENX", "lot": "MF22301B10", "trouble": "- 순간 정전", "action": "- 주행 중 순간 정전 발생, 라인정지 및 RTO OFF, 전원 원상 복구 및 RTO ON 진행 / 공정조건 확인 후 재스타트 진행", "note": ""}, {"id": 1800000000185, "type": "조액", "date": "2025-02-23", "unit": "A-2", "product": "MF-SAH-8X00-HENX", "lot": "MF22301", "trouble": "두께편차", "action": "- OP,DR MD방향 두께편차 발생 (후도 편차 2UM 발생)\n → 배관클리닝, 액판교체, Filter교체 \n → 점도 확인한바 조액실 근무자에게 600CPS로 전달 받음(스팩 800±200CPS) 점도 하향 불가\n → 추가 런닝 진행 후도편차 양호 Start", "note": ""}, {"id": 1800000000186, "type": "공정", "date": "2025-02-23", "unit": "A-2", "product": "MF-SAH-8X00-HENX", "lot": "MF22301B03", "trouble": "- OP,DR 댐라인", "action": "- 액판 조정 3회 진행, 액판 조정으로인한 헤드부 정리 3회 진행 / 댐라인 조건 정립 \n - 콤마 각도 변경 2회 진행 및 조건 정립", "note": ""}, {"id": 1800000000187, "type": "설비", "date": "2025-02-22", "unit": "A-1", "product": "MF-MAH-0X25-RDNX", "lot": "MF22108E12", "trouble": "- RTO LEL 수치 추가 상승 발생(87%)으로 RTO 가동 강제 정지", "action": "- 강제 정지 발생간 RTO 통신이상 발생확인되어 PLC 프로그램 점검 및 조치 진행 (보전팀)\n - RTO 가동 및 베이크 아웃 실시", "note": ""}, {"id": 1800000000188, "type": "설비", "date": "2025-02-20", "unit": "A-1", "product": "MF-MAH-0X20-RDNE", "lot": "MF21919E04", "trouble": "- RTO LEL 농도 수치 상한", "action": "- 라인 정지 후 RTO BAKE OUT 실시", "note": ""}, {"id": 1800000000189, "type": "조액", "date": "2025-02-18", "unit": "A-0", "product": "ML-OEB-3350-B1A8", "lot": "MF21712", "trouble": "노코팅", "action": "- MF21712K02 진행 주 노코팅 다량 발생 조치\n 1차 : 보조탱크 교반속도 45Hz → 42Hz 변경 동일\n 2차 : Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR, 보조탱크 교반속도 원복( 42Hz → 45Hz)", "note": ""}, {"id": 1800000000190, "type": "조액", "date": "2025-02-18", "unit": "A-0", "product": "ML-OEB-3350-B1A8", "lot": "MF21804", "trouble": "흑점", "action": "- 300m 런닝 중 흑점 발생 250m 추가 런닝 흑점 간헐적 발생 라인정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR\n 재도포 300m 지점 흑점 및 노코팅 간헐적 발생 런닝 200m 추가 표면 양호 양산 Start", "note": ""}, {"id": 1800000000191, "type": "공정", "date": "2025-02-18", "unit": "A-0", "product": "ML-OEB-3350-B1A8", "lot": "MF21804K01", "trouble": "- OP부 Bumper층 조액 간헐적 뜯김", "action": "- Bumper 뜯김 작업자 상주 태그 작업 진행\n → 코팅폭 이탈 77인치 진행", "note": ""}, {"id": 1800000000192, "type": "공정", "date": "2025-02-18", "unit": "A-1", "product": "MF-MAH-EX12-RDNX", "lot": "MF21713E01", "trouble": "- Oven OP , DR 원단 접힘", "action": "- Speed 35 → 30mpm 하향, Oven #4,5,6 Zone 급기 10% 하향, Oven #4,5,6 배기 10% 상향, O/F Tension 2kg 적용", "note": ""}, {"id": 1800000000193, "type": "공정", "date": "2025-02-14", "unit": "A-2", "product": "MZ-DVH-0X40-MUND", "lot": "MF21303B05", "trouble": "- 1차품 PET CVL 원단 교체 중 원단 박리 발생 부 Comma 걸림", "action": "- M/C청소 후 재START 진행", "note": ""}, {"id": 1800000000194, "type": "설비", "date": "2025-02-13", "unit": "A-1", "product": "MS-PQC-1X05-Q7FD", "lot": "MF21206E04", "trouble": "- Oven #2 Zone Guide Roll 구동 불능", "action": "- No. 35 Guide Roll 베어링 교체 및 DR 베어링 커버( 하우징 ) 교체", "note": ""}, {"id": 1800000000195, "type": "조액", "date": "2025-02-07", "unit": "A-4", "product": "MS-WLC-MX10-WWMT", "lot": "MF20615", "trouble": "겔", "action": "- 1차 조치 : 1,2급지 런닝PET 교체 후 Strainer Mesh Filter 제거 및 표면 확인 → 유의차 없음 라인 정지\n 2차 조치 : 배관클리닝, 조액실 Filter교체, 현장 Strainer Mesh Filter 재장착, 조액순환 1HR → START 후 표면 양호 Start", "note": ""}, {"id": 1800000000196, "type": "설비", "date": "2025-02-07", "unit": "A-3", "product": "MF-MAH-1X25-RDNX", "lot": "MF20514C13", "trouble": "- 2nd U/W Splice Arm 상승 불능", "action": "- 에어 콤프레셔 수분 Filter 파손으로 인한 에어 압력저하 발생\n → 에어 콤프레셔 수분 Filter 교체 후 정상작동 확인 Start", "note": ""}, {"id": 1800000000197, "type": "조액", "date": "2025-02-06", "unit": "A-2", "product": "MF-DHH-XX25-NAOH", "lot": "MF20513", "trouble": "입자라인", "action": "- 표면 입자라인 다량 발생 조치 : 배관클리닝, 액판교체, 필터교체(#32 → #32) 교반속도 40hZ→45Hz 상향 / 런닝 양호 Start", "note": ""}, {"id": 1800000000198, "type": "조액", "date": "2025-02-06", "unit": "A-2", "product": "MF-DHH-XX25-NAOH", "lot": "MF20513", "trouble": "입자라인", "action": "- 표면 입자라인 다량 발생 조치 : 배관클리닝, 액판교체, 필터교체(#32 → #32) / 런닝 양호 Start", "note": ""}, {"id": 1800000000199, "type": "조액", "date": "2025-02-06", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF20501", "trouble": "겔", "action": "- 배관클리닝, 조액실 Filter 기존 CSW-W1ZE-1N-1(7㎛) → 청아 15㎛ 교체 후 순환1HR진행 / 런닝 약 300m 표면 양호 양산 Start", "note": ""}, {"id": 1800000000200, "type": "조액", "date": "2025-02-06", "unit": "A-4", "product": "MS-PWC-MX60-FDMM", "lot": "MF20610", "trouble": "노코팅", "action": "- MF20610D02 진행중 노코팅 다량발생 조치 : 배관클리닝, 조액실 Filter교체, 조액순환1HR / 재START 후 표면 양호", "note": ""}, {"id": 1800000000201, "type": "공정", "date": "2025-02-06", "unit": "A-3", "product": "MF-MAH-1X25-RDNX", "lot": "MF20514C13", "trouble": "- Head부 원인미상 원자재 파단", "action": "- Slot-Die 세척, Oven/현장 Roll 청소 후 Start", "note": ""}, {"id": 1800000000202, "type": "조액", "date": "2025-02-05", "unit": "A-0", "product": "ML-OEB-3350-B1A8", "lot": "MF20406", "trouble": "흑점", "action": "- MF20406K01 760m 진행 중 C/T부 흑점 다량 발생 4회, 노코팅 3ea, 흑점 1ea 발생 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR\n - 조액 점도 1280cps, 보조 탱크 45hz -> 50hz, 메인 탱크 60hz\n → 초기 약 300m 노코팅, 흑점 간헐적 발생 약 200m 추가 런닝, 표면 양호 양산 스타트 진행", "note": ""}, {"id": 1800000000203, "type": "조액", "date": "2025-02-03", "unit": "A-0", "product": "ML-OEB-3350-B1A8", "lot": "MF20303", "trouble": "흑점", "action": "- 런닝 중 흑점 다량 발생 추가 런닝 300m 진행 유의차 없음 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 조액실 Filter 교체, 조액순환 1HR\n → 조액실 보조 탱크 교반속도 45hz -> 50hz 변경, 메인탱크 60hz 확인, 점도 1360cps\n → 약 500m 런닝중 흑점 다량 발생 라인 정지\n → Slot-Die 세척, 배관 교체, 배관 Cleaning, 2nd B/T(MF20312) 교체, 2HR 통순환 진행, 1st B/T(MF20303) 재필터링 진행\n - 조액 점도 1250cps, 메인탱크 60hz, 보조 탱크 50hz\n → 초기 약 200m 노코팅, 흑점 간헐적 발생 약 500m 추가 런닝, 표면 양호 양산 스타트 진행", "note": ""}, {"id": 1800000000204, "type": "설비", "date": "2025-01-25", "unit": "A-5", "product": "MZ-DVH-1X60-QRNW", "lot": "MF12409E01", "trouble": "- 런닝 START시 원인불명 설비가동 스위치 컨트롤부 (R/W, 1U/W, 2nd U/W)\n 전원 OFF->ON 반복현상 발생 (설비 조작 불가) & 오븐 온도꺼짐 발생\n (발생간격 시간 일정하지않음)", "action": "- 보전팀 일부 스마트 IO 통신연결 안됨 확인(설비 조작 불가)\n - PLC 프로그램 리셋진행 동일하게 스마트 IO 통신 연결 안됨\n - 보전팀 스마트IO 외부 통신연결 확인\n - 보전팀 드라이어 IO 카드 교체\n - 보전팀 HEAD IO 카드의 통신 커넥터 2EA 교체진행\n - Cutting Test 및 주행성 확인 후 생산 진행", "note": ""}, {"id": 1800000000205, "type": "조액", "date": "2025-01-23", "unit": "A-3", "product": "MF-DHH-EX15-RDSH", "lot": "MF12208", "trouble": "반짝이", "action": "- Slot-Die 세척, 배관 Cleaning(조액실 1HR진행), 현장+조액실 Filter 교체, 조액순환 1HR", "note": ""}, {"id": 1800000000206, "type": "조액", "date": "2025-01-22", "unit": "A-0", "product": "ML-OEB-3350-B1A8", "lot": "MF12205", "trouble": "노코팅", "action": "- 런닝 PET 교체 후 조액실 Main 탱크 60Hz → 50Hz 하향, 보조 탱크 45Hz → 40Hz 하향, 런닝 약 400m 진행 후 표면양호 양산 Start", "note": ""}, {"id": 1800000000207, "type": "설비", "date": "2025-01-21", "unit": "A-5", "product": "MS-PQC-1X10-QGKA", "lot": "MF12014E01", "trouble": "- 주행 중 Infeed Nip Roll Up/Down 동작 Error 및 비상정지 알람", "action": "- LAMI 하부 개별수동 2구 스위치 설치\n → 우선순위 하부NIP 작동 적용\n - 도포실 DIE 전, 후진작동 개별수동 2구스위치 설치\n - 설비 PLC 초기화 진행 및 설비 점검\n - PLC통신카드교체 , PLC프로그램 설치", "note": ""}, {"id": 1800000000208, "type": "공정", "date": "2025-01-20", "unit": "A-3", "product": "MF-MAH-EX16-RDNT", "lot": "MF11904C18", "trouble": "- Head부 원자재 이물걸림 파단", "action": "- Slot-Die 세척, Oven Roll 청소 후 Start", "note": ""}, {"id": 1800000000209, "type": "조액", "date": "2025-01-16", "unit": "A-4", "product": "MZ-DHH-XX25-NIOH", "lot": "MF11516", "trouble": "액라인", "action": "- OP부 액라인 발생 조치 내용 : HEAD부 정비, 배관클리닝, 조액실 Filter 교체 / 양호 양산 Start", "note": ""}, {"id": 1800000000210, "type": "설비", "date": "2025-01-16", "unit": "A-4", "product": "MZ-DHH-XX25-NIOH", "lot": "MF11516D01", "trouble": "- 도포실 Head 조작 터치판넬 조작불가", "action": "- 보전팀 입실 후 통신케이블 점검 및 단자확인 이상 無\n - 터치판넬 전원 재시작 후 통신에러 해제 및 터치판넬 정상조작됨", "note": ""}, {"id": 1800000000211, "type": "조액", "date": "2025-01-15", "unit": "A-2", "product": "MF-DHH-XX25-NAOH", "lot": "MF11417", "trouble": "입자라인", "action": "- 표면 입자라인 다량 발생 조치 : 배관클리닝, 액판교체, Filter교체(#36) / 런닝 양호 Start", "note": ""}, {"id": 1800000000212, "type": "조액", "date": "2025-01-14", "unit": "A-4", "product": "MS-BSH-MX25-TBYY", "lot": "MF11312", "trouble": "겔", "action": "- 1차 조치 : 배관클리닝, 조액실 Filter교체, 조액순환 2HR → 런닝 약 400m 및 액판 조액제거 1회 유의차 없음 라인 정지\n 2차 조치 : 배관클리닝, 조액실 Filter교체, 현장 캡슐필터 CSM-PPZE-1E-20(19UM) 체결 후 조액순환 1HR / 런닝 약 500m 후 양호 양산 Start", "note": ""}, {"id": 1800000000213, "type": "설비", "date": "2025-01-10", "unit": "A-5", "product": "MS-PQC-1X10-QCNP", "lot": "MF10907E06", "trouble": "- 주행 중 Infeed Nip Roll Up/Down 동작 Error 및 비상정지 알람", "action": "- Oven Chamber Open 오염 노즐 및 터널 세척\n - 보전팀 조광식, 유치영 매니저님 입실하여 프로그램 확인 (PLC 전원 ON/OFF 진행)\n → 통신카드 프로그램 수정\n → Nip-Roll 물리버튼 Lock 설정 / Nip Roll 동작버튼 터치스크린 설치\n → 비상정지 발생시 Slot-Die + Nip Roll Up/Down 동작 안되게 프로그램 설정\n - 이물 수준 확인 후 양산 진행", "note": ""}, {"id": 1800000000214, "type": "설비", "date": "2025-01-09", "unit": "A-5", "product": "MS-PQC-1X13-QCNP", "lot": "MF10907E01", "trouble": "- 주행 중 Infeed Nip Roll Up/Down 동작 Error 및 비상정지 알람", "action": "- Oven Chamber Open 오염 노즐 및 터널 세척\n - 주행 중 주행 중 Infeed Nip Roll Up/Down 동작 Error 및 비상정지 알람 발생시 Nip Roll Up/Down 해지\n (보전팀 유치영 매니저)", "note": ""}, {"id": 1800000000215, "type": "조액", "date": "2025-01-08", "unit": "A-3", "product": "MF-DHH-X305-PJMM", "lot": "MF10802", "trouble": "겔", "action": "- Slot-Die 세척, 배관 Cleaning, 현장+조액실 Filter 교체, 조액순환 1HR", "note": ""}];
+
+function mergeXlsxData() {
+  const existingIds = new Set(trData.map(x => x.id));
+  let added = 0;
+  XLSX_PRELOAD.forEach(r => {
+    if (!existingIds.has(r.id)) {
+      trData.push(r);
+      added++;
+    }
+  });
+  if (added > 0) {
+    trData.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  }
+  return added;
+}
+
+// ════ NOTICE (전달사항) ════
+// 팝업(모달) 대신 새 창으로 입력 폼을 띄움. 각 줄은 개별 전달사항 1건으로 등록되며,
+// 등록 시 각 내용 앞에 "날짜 + 주간/야간"이 자동으로 표기됨.
+function openNoticeForm(){
+  const today = getTodayKR();
+  const win = window.open('', 'noticeFormWindow', 'width=680,height=820,resizable=yes,scrollbars=yes');
+  if(!win){
+    alert('새 창이 차단되었습니다. 브라우저의 팝업 차단을 해제한 후 다시 시도해주세요.');
+    return;
+  }
+
+  const html = `<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전달사항 입력</title>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:'Malgun Gothic','맑은 고딕',-apple-system,sans-serif;background:#eef0f5;color:#1a2035;padding:26px;margin:0;}
+  h2{font-size:17px;margin:0 0 20px;color:#1a2035;}
+  .field{margin-bottom:18px;}
+  label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:#56617a;}
+  input[type=date]{padding:9px 10px;border:1px solid #c4c9d8;border-radius:6px;font-size:13px;width:200px;background:#fff;}
+  .shift-row{display:flex;gap:6px;align-items:center;}
+  .shift-row label{display:inline;font-weight:500;margin:0;color:#1a2035;cursor:pointer;}
+  .shift-row input{cursor:pointer;}
+  .lines-wrap{border:1px solid #dde1eb;border-radius:8px;padding:14px;background:#fff;}
+  .line-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .line-row:last-child{margin-bottom:0;}
+  .line-num{width:20px;font-size:12px;color:#98a0b8;text-align:right;flex-shrink:0;}
+  .line-input{flex:1;padding:8px 10px;border:1px solid #c4c9d8;border-radius:6px;font-size:13px;font-family:inherit;}
+  .line-input:focus{outline:none;border-color:#7060a8;}
+  .hint{font-size:11.5px;color:#98a0b8;margin-top:8px;}
+  .btns{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;}
+  button{padding:10px 22px;border-radius:6px;border:none;font-size:13px;font-weight:600;cursor:pointer;}
+  .btn-cancel{background:#e2e5ee;color:#56617a;}
+  .btn-cancel:hover{background:#d4d8e4;}
+  .btn-save{background:#7060a8;color:#fff;}
+  .btn-save:hover{background:#5f4f92;}
+</style></head><body>
+  <h2>📝 전달사항 입력</h2>
+  <div class="field">
+    <label>날짜</label>
+    <input type="date" id="nf-date" value="${today}">
+  </div>
+  <div class="field">
+    <label>주간/야간</label>
+    <div class="shift-row">
+      <input type="radio" name="nf-shift" id="nf-shift-day" value="주간" checked>
+      <label for="nf-shift-day">주간</label>
+      <input type="radio" name="nf-shift" id="nf-shift-night" value="야간" style="margin-left:14px;">
+      <label for="nf-shift-night">야간</label>
+    </div>
+  </div>
+  <div class="field">
+    <label>전달사항 (최대 10줄, 빈 줄은 무시됩니다)</label>
+    <div class="lines-wrap" id="nf-lines"></div>
+    <div class="hint">등록하면 각 줄 앞에 [날짜 주간/야간]이 자동으로 표기되어 개별 항목으로 저장됩니다.</div>
+  </div>
+  <div class="btns">
+    <button class="btn-cancel" onclick="window.close()">취소</button>
+    <button class="btn-save" onclick="submitNotice()">등록</button>
+  </div>
+<script>
+  const wrap = document.getElementById('nf-lines');
+  for(let i=1;i<=10;i++){
+    const row = document.createElement('div');
+    row.className = 'line-row';
+    const num = document.createElement('span');
+    num.className = 'line-num';
+    num.textContent = i + '.';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'line-input';
+    input.id = 'nf-line-' + i;
+    input.placeholder = '전달사항 ' + i;
+    row.appendChild(num);
+    row.appendChild(input);
+    wrap.appendChild(row);
+  }
+  document.getElementById('nf-line-1').focus();
+
+  function submitNotice(){
+    const date = document.getElementById('nf-date').value;
+    const shift = document.querySelector('input[name="nf-shift"]:checked').value;
+    const lines = [];
+    for(let i=1;i<=10;i++){
+      const v = document.getElementById('nf-line-' + i).value.trim();
+      if(v) lines.push(v);
+    }
+    if(!date || lines.length === 0){
+      alert('날짜와 전달사항을 1개 이상 입력해주세요');
+      return;
+    }
+    if(window.opener && window.opener.addNoticeEntries){
+      window.opener.addNoticeEntries(date, shift, lines);
+      window.close();
+    } else {
+      alert('원본 창을 찾을 수 없습니다. 창을 닫고 다시 시도해주세요.');
+    }
+  }
+<\/script>
+</body></html>`;
+
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
+}
+
+// 새 창에서 등록한 줄들을 개별 전달사항으로 저장. 각 내용 앞에 [날짜 주간/야간]을 표기함.
+function addNoticeEntries(date, shift, lines){
+  const baseId = Date.now();
+  lines.forEach((line, idx) => {
+    noticeData.unshift({
+      id: baseId + idx,
+      date,
+      shift,
+      content: `[${date} ${shift}] ${line}`
+    });
+  });
+  saveDataToStorage();
+  loadData();
+  showToast(`전달사항 ${lines.length}건이 등록되었습니다`, 'ok');
+}
+
+function filterNotice(){
+  const q = document.getElementById('notice-search').value.trim().toLowerCase();
+  if(!q){
+    renderNoticeTable(noticeData);
+    return;
+  }
+  
+  // &로 분리한 각 키워드를 모두 포함해야 함 (AND 검색) - 예: 코팅&밸브&세척
+  const keywords = q.split('&').map(k => k.trim()).filter(k => k.length > 0);
+  const filtered = noticeData.filter(r => {
+    const searchText = (r.date + ' ' + r.shift + ' ' + r.content).toLowerCase();
+    return keywords.every(keyword => searchText.includes(keyword));
+  });
+  renderNoticeTable(filtered);
+}
+
+function renderNoticeTable(list){
+  const el = document.getElementById('notice-list');
+  const empty = document.getElementById('notice-empty');
+  if(!list.length){
+    el.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    const sorted = [...list].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    el.innerHTML = sorted.map(r => `
+      <tr>
+        <td>${r.date}</td>
+        <td style="text-align:center; font-weight: 500;">${r.shift}</td>
+        <td style="white-space:pre-wrap; max-width:450px;">${r.content}</td>
+        <td style="text-align:right; white-space:nowrap;">
+          <button class="btn-edit" onclick="editNotice(${r.id})">✏️</button>
+          <button class="btn-del" onclick="deleteNotice(${r.id})">🗑</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+  document.getElementById('notice-count').textContent = list.length + '건';
+}
+
+let editingNoticeId = null;
+function editNotice(id){
+  askPassword(() => {
+    const r = noticeData.find(x => x.id === id);
+    if(!r) return;
+    editingNoticeId = id;
+    document.getElementById('edit-notice-date').value = r.date;
+    document.getElementById('edit-notice-shift-day').checked = (r.shift === '주간');
+    document.getElementById('edit-notice-shift-night').checked = (r.shift === '야간');
+    document.getElementById('edit-notice-content').value = r.content;
+    document.getElementById('noticeEditBg').style.display = 'flex';
+  });
+}
+
+function saveNoticeEdit(){
+  const idx = noticeData.findIndex(x => x.id === editingNoticeId);
+  if(idx === -1) return;
+  
+  const date = document.getElementById('edit-notice-date').value;
+  const shift = document.querySelector('input[name="edit-notice-shift"]:checked').value;
+  const content = document.getElementById('edit-notice-content').value.trim();
+  
+  if(!date || !content){
+    showToast('날짜와 전달사항을 모두 입력해주세요', 'err');
+    return;
+  }
+  
+  noticeData[idx] = {
+    ...noticeData[idx],
+    date,
+    shift,
+    content
+  };
+  closeNoticeEdit();
+  saveDataToStorage();
+  loadData();
+  showToast('수정되었습니다', 'ok');
+}
+
+function closeNoticeEdit(){
+  document.getElementById('noticeEditBg').style.display = 'none';
+  editingNoticeId = null;
+}
+
+function deleteNotice(id){
+  askPassword(() => {
+    const r = noticeData.find(x => x.id === id);
+    if(!r) return;
+    if(!confirm(`${r.date} / ${r.shift} - 이 전달사항을 정말 삭제하시겠습니까?`)) return;
+    noticeData = noticeData.filter(x => x.id !== id);
+    saveDataToStorage();
+    loadData();
+    showToast('삭제되었습니다', 'ok');
+  });
+}
+
+window.onload=async ()=>{
+  const today = getTodayKR();
+  document.getElementById('att-start-date').value=today;
+  document.getElementById('att-end-date').value=today;
+  document.getElementById('sch-date').value=today;
+  document.getElementById('tr-date').value=today;
+  currentPage = 'trouble';
+  
+  // 클라우드(Firebase)에서 데이터 복원, 실패 시 로컬 캐시 사용
+  const hasStoredData = await loadDataFromStorage();
+  
+  const added = mergeXlsxData();
+  loadData();
+  
+  if(hasStoredData){
+    showToast('저장된 데이터가 복원되었습니다', 'ok');
+  }
+  if (added > 0) {
+    showToast(`엑셀 데이터 ${added}건 로드됨`, 'ok');
+  }
+  
+  // 중요전달사항 메뉴 초기화 - 숨겨진 상태로 시작
+  noticeMenuVisible = false;
+  document.getElementById('notice-nav-btn').style.display = 'none';
+};
+</script>
+
+</body></html>
+<!DOCTYPE html>
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코팅반 통합 관리 시스템</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #eef0f5;
+  --bg2:       #f5f6fa;
+  --bg3:       #e2e5ee;
+  --surface:   #ffffff;
+  --border:    #dde1eb;
+  --border2:   #c4c9d8;
+  --text:      #1a2035;
+  --text2:     #56617a;
+  --text3:     #98a0b8;
+  --sb:        #1c2840;
+  --sb2:       #243252;
+  --sb-text:   #c0cade;
+  --sb-muted:  #68788e;
+  --sb-hover:  rgba(255,255,255,0.07);
+  --sb-line:   rgba(255,255,255,0.07);
+  --blue:      #3a65ac;
+  --blue-lt:   #4d7bc5;
+  --blue-dim:  rgba(58,101,172,0.10);
+  --blue-glow: rgba(58,101,172,0.22);
+  --red:       #b03c3c;
+  --green:     #4e8a70;
+  --sidebar-w: 240px;
+  --tr-eq:     #dd6b20;
+  --tr-sol:    #3182ce;
+  --tr-proc:   #38a169;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ════ SIDEBAR ════ */
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--sb);
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.sb-top {
   padding: 22px 16px 0;
   display: flex; flex-direction: column; gap: 2px;
   flex: 1;
