@@ -65,9 +65,6 @@ body {
   display: flex; align-items: center; justify-content: center; gap: 12px;
   padding: 14px 14px;
   margin: 0 0 16px;
-  background: rgba(255,255,255,0.035);
-  border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 .sb-logo-text { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
 .sb-logo-title { font-size: 14px; font-weight: 700; color: #e8edf5; letter-spacing: 0.2px; white-space: nowrap; }
@@ -85,7 +82,7 @@ body {
 .nav-btn {
   display: flex; align-items: center; gap: 12px;
   padding: 11px 13px; border-radius: 12px;
-  border: 1.5px solid transparent; background: rgba(255,255,255,0.035);
+  border: 1.25px solid transparent; background: rgba(255,255,255,0.035);
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   color: var(--sb-text);
   font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 13px; font-weight: 600;
@@ -100,7 +97,7 @@ body {
   font-size: 15px; flex-shrink: 0;
 }
 .nav-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: #fff; }
-.nav-btn.active { background: rgba(255,255,255,0.05); color: #fff; font-weight: 700; border-color: #fff; }
+.nav-btn.active { background: rgba(255,255,255,0.05); color: #fff; font-weight: 700; border-color: rgba(255,255,255,0.85); }
 .nav-btn.active .nav-icon { background: var(--blue-dim); }
 .nav-btn.active:hover { background: rgba(255,255,255,0.07); }
 .nav-badge {
@@ -115,8 +112,6 @@ body {
   border-top: 1px solid var(--sb-line);
   display: flex; flex-direction: column; gap: 8px;
 }
-.sb-btn-backup, .sb-btn-restore { width: 100%; padding: 10px 13px; font-size: 13px; font-weight: 600; border: 1.5px solid transparent; border-radius: 12px; cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; color: var(--sb-text); background: rgba(255,255,255,0.035); box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-.sb-btn-backup:hover, .sb-btn-restore:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: #fff; }
 
 /* ════ MAIN ════ */
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -383,35 +378,31 @@ tbody tr:hover td { background: var(--bg2); }
     </div>
     <div style="border-top: 1.5px solid var(--sb-line); margin: 12px 0 8px;"></div>
     <button class="nav-btn" onclick="switchPage('attendance')">
-      <span class="nav-icon">👬</span>
+      <span class="nav-icon" style="background: rgba(255,90,140,0.18);">👬</span>
       <span>개인 근태 등록</span>
       <span class="nav-badge" id="badge-att">0</span>
     </button>
     <button class="nav-btn" onclick="switchPage('schedule')">
-      <span class="nav-icon">📅</span>
+      <span class="nav-icon" style="background: rgba(80,140,255,0.18);">📅</span>
       <span>일정 등록</span>
       <span class="nav-badge" id="badge-sch">0</span>
     </button>
     <button class="nav-btn" onclick="switchPage('calendar')">
-      <span class="nav-icon">📆</span>
+      <span class="nav-icon" style="background: rgba(40,190,190,0.18);">📆</span>
       <span>근태/일정 현황 달력</span>
     </button>
     <button class="nav-btn active" onclick="switchPage('trouble')">
-      <span class="nav-icon">⚠️</span>
+      <span class="nav-icon" style="background: rgba(255,170,40,0.18);">⚠️</span>
       <span style="font-size: 11.5px; white-space: nowrap;">TROUBLE 내역취합</span>
       <span class="nav-badge" id="badge-tr">0</span>
     </button>
     <button class="nav-btn" id="notice-nav-btn" onclick="switchPage('notice')" style="display:none;">
-      <span class="nav-icon">📢</span>
+      <span class="nav-icon" style="background: rgba(170,110,255,0.18);">📢</span>
       <span>중요전달 사항</span>
       <span class="nav-badge" id="badge-notice">0</span>
     </button>
   </div>
   
-  <div class="sb-bottom">
-    <button class="sb-btn-backup" onclick="saveToFile()">💾 데이터 저장</button>
-    <button class="sb-btn-restore" onclick="loadFromFile()">📥 데이터 복구</button>
-  </div>
 </div>
 
 <!-- MAIN -->
@@ -919,7 +910,6 @@ tbody tr:hover td { background: var(--bg2); }
 
 <div id="toast-wrap"></div>
 
-<input type="file" id="fileInput" style="display: none;" accept=".json" onchange="handleFileUpload(event)">
 
 <!-- Firebase 연동: 모바일 버전과 동일한 데이터를 실시간으로 공유합니다 -->
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -941,7 +931,13 @@ const FB_PATH = '코팅반_통합관리';
 
 <script>
 const ADMIN_PW = '2580';
-const TOGGLE_PW = '1477918';
+function getTogglePW(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}${m}${day}`;
+}
 let logoClickCount = 0;
 let noticeMenuVisible = false;
 let attData = [];
@@ -1667,7 +1663,7 @@ function checkPassword(){
   
   // 토글 모드일 경우
   if(mode === 'toggle') {
-    if(pw!==TOGGLE_PW){
+    if(pw!==getTogglePW()){
       showToast('비밀번호가 틀렸습니다','err');
       document.getElementById('pwInput').value='';
       return;
@@ -1717,43 +1713,6 @@ function showToast(msg,type='ok'){
   wrap.appendChild(t);
   setTimeout(()=>{t.remove();},3000);
 }
-
-function saveToFile(){
-  const data={att:attData,sch:schData,tr:trData};
-  const json=JSON.stringify(data,null,2);
-  const blob=new Blob([json],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download=`코팅반_통합_${getTodayKR()}.json`;
-  a.click();
-  showToast('데이터가 저장되었습니다','ok');
-}
-
-function loadFromFile(){
-  document.getElementById('fileInput').click();
-}
-
-function handleFileUpload(e){
-  const file=e.target.files[0];
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=evt=>{
-    try{
-      const data=JSON.parse(evt.target.result);
-      attData=data.att||[];
-      schData=data.sch||[];
-      trData=data.tr||[];
-      saveDataToStorage();
-      loadData();
-      showToast('데이터가 복구되었습니다','ok');
-    }catch(err){
-      showToast('파일 읽기 실패','err');
-    }
-  };
-  reader.readAsText(file);
-}
-
 
 // ════ EXCEL PRELOAD DATA ════
 // 엑셀에서 가져온 트러블 214건 - 자동 주입됨
@@ -1844,11 +1803,11 @@ function openNoticeForm(){
     const num = document.createElement('span');
     num.className = 'line-num';
     num.textContent = i + '.';
-    const input = document.createElement('input');
-    input.type = 'text';
+    const input = document.createElement('textarea');
     input.className = 'line-input';
     input.id = 'nf-line-' + i;
     input.placeholder = '전달사항 ' + i;
+    input.rows = 2;
     row.appendChild(num);
     row.appendChild(input);
     wrap.appendChild(row);
@@ -1945,16 +1904,14 @@ function renderNoticeTable(list){
 
 let editingNoticeId = null;
 function editNotice(id){
-  askPassword(() => {
-    const r = noticeData.find(x => x.id === id);
-    if(!r) return;
-    editingNoticeId = id;
-    document.getElementById('edit-notice-date').value = r.date;
-    document.getElementById('edit-notice-shift-day').checked = (r.shift === '주간');
-    document.getElementById('edit-notice-shift-night').checked = (r.shift === '야간');
-    document.getElementById('edit-notice-content').value = r.content;
-    document.getElementById('noticeEditBg').style.display = 'flex';
-  });
+  const r = noticeData.find(x => x.id === id);
+  if(!r) return;
+  editingNoticeId = id;
+  document.getElementById('edit-notice-date').value = r.date;
+  document.getElementById('edit-notice-shift-day').checked = (r.shift === '주간');
+  document.getElementById('edit-notice-shift-night').checked = (r.shift === '야간');
+  document.getElementById('edit-notice-content').value = r.content;
+  document.getElementById('noticeEditBg').style.display = 'flex';
 }
 
 function saveNoticeEdit(){
