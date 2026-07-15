@@ -687,8 +687,9 @@ tbody tr:hover td { background: var(--bg2); }
         <p>팀원에게 전달할 중요한 사항을 등록하고 관리합니다</p>
       </div>
 
-      <div style="margin-bottom: 20px;">
+      <div style="margin-bottom: 20px; display:flex; gap:10px;">
         <button class="btn-pill" onclick="openNoticeForm()"><span class="btn-pill-icon">+</span> 전달사항 입력</button>
+        <button class="btn-pill" style="background:#3f7d5c;" onclick="openNoticeExcelImport()"><span class="btn-pill-icon">📋</span> 엑셀에서 붙여넣기</button>
       </div>
 
       <div class="tbl-bar">
@@ -944,6 +945,26 @@ let attData = [];
 let schData = [];
 let trData = [];
 let noticeData = [];
+// 이번주 범위(전주 토요일 ~ 이번주 금요일) 및 카드미기찰 판별 헬퍼
+function getThisWeekRange(){
+  const now=new Date();
+  const wd=now.getDay(); // 0=일 ... 6=토
+  const thisWeekSunday=new Date(now);
+  thisWeekSunday.setDate(now.getDate()-wd);
+  const thisWeekFriday=new Date(thisWeekSunday);
+  thisWeekFriday.setDate(thisWeekSunday.getDate()+5);
+  const lastWeekSaturday=new Date(thisWeekSunday);
+  lastWeekSaturday.setDate(thisWeekSunday.getDate()-1);
+  const fmt=dt=>`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+  return {start:fmt(lastWeekSaturday), end:fmt(thisWeekFriday)};
+}
+function isThisWeekCardMiss(r){
+  if(!r.type || !r.type.includes('미기찰')) return false;
+  const {start,end}=getThisWeekRange();
+  const d = r.startDate || r.date;
+  return d>=start && d<=end;
+}
+
 let currentPage = 'attendance';
 let editingId = null;
 let editingType = null;
@@ -1037,7 +1058,12 @@ function addAttendance(){
   }
   
   // 연차가 아니면 endDate를 startDate와 같게 설정
-  const finalEndDate = type === '연차' ? endDate : startDate;
+  let finalEndDate = type === '연차' ? endDate : startDate;
+  
+  // 종료일시가 시작일시보다 빠르면 시작일시와 동일하게 보정
+  if(finalEndDate < startDate){
+    finalEndDate = startDate;
+  }
   
   attData.push({id:Date.now(),name,startDate,endDate:finalEndDate,type,content});
   clearAttForm();
@@ -1101,7 +1127,12 @@ function saveAttEdit(){
   const type = document.getElementById('edit-att-type').value;
   
   // 연차가 아니면 endDate를 startDate와 같게 설정
-  const finalEndDate = type === '연차' ? endDate : startDate;
+  let finalEndDate = type === '연차' ? endDate : startDate;
+  
+  // 종료일시가 시작일시보다 빠르면 시작일시와 동일하게 보정
+  if(finalEndDate < startDate){
+    finalEndDate = startDate;
+  }
   
   attData[idx]={...attData[idx],
     name:document.getElementById('edit-att-name').value,
@@ -1157,18 +1188,22 @@ function renderAttTable(list){
       const dateB = b.startDate || b.date;
       return dateB.localeCompare(dateA);
     });
-    el.innerHTML=sorted.map(r=>`
+    el.innerHTML=sorted.map(r=>{
+      const hl = isThisWeekCardMiss(r);
+      const tdStyle = hl ? ' style="color:#dc2626;font-weight:700;"' : '';
+      return `
       <tr>
-        <td>${r.name}</td>
-        <td>${r.startDate ? (r.startDate === r.endDate ? r.startDate : r.startDate + ' ~ ' + r.endDate) : r.date}</td>
-        <td><span class="badge ba">${r.type}</span></td>
-        <td>${r.content||'—'}</td>
+        <td${tdStyle}>${r.name}</td>
+        <td${tdStyle}>${r.startDate ? (r.startDate === r.endDate ? r.startDate : r.startDate + ' ~ ' + r.endDate) : r.date}</td>
+        <td><span class="badge ba"${hl ? ' style="background:rgba(220,38,38,0.12);color:#dc2626;"' : ''}>${r.type}</span></td>
+        <td${tdStyle}>${r.content||'—'}</td>
         <td style="text-align:right;">
           <button class="btn-edit" onclick="editAttendance(${r.id})">✏️</button>
           <button class="btn-del" onclick="deleteAttendance(${r.id})">🗑</button>
         </td>
       </tr>
-    `).join('');
+    `;
+    }).join('');
   }
   document.getElementById('att-count').textContent=list.length+'건';
 }
@@ -1483,7 +1518,7 @@ function renderUnifiedCalendar(){
   const fd=new Date(y,m,1).getDay();
   const dm=new Date(y,m+1,0).getDate();
   let html='';
-  
+
   for(let i=0;i<fd;i++)html+='<div class="cal-cell other"></div>';
   for(let d=1;d<=dm;d++){
     const date=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -1503,7 +1538,12 @@ function renderUnifiedCalendar(){
     schEvents.forEach(e => allEventsInfo += `[${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}\n`);
     
     let eventHtml = '';
-    eventHtml += attEvents.map(e=>`<div class="cal-ev" style="border-left-color: #ec4899;" title="[근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}">${e.name} ${e.type}${e.content ? ' (' + e.content + ')' : ''}</div>`).join('');
+    eventHtml += attEvents.map(e=>{
+      const style = isThisWeekCardMiss(e)
+        ? 'border-left-color: #dc2626; color: #dc2626; font-weight: 700;'
+        : 'border-left-color: #ec4899;';
+      return `<div class="cal-ev" style="${style}" title="[근태] ${e.name} - ${e.type}${e.content ? ' (' + e.content + ')' : ''}">${e.name} ${e.type}${e.content ? ' (' + e.content + ')' : ''}</div>`;
+    }).join('');
     eventHtml += schEvents.map(e=>`<div class="cal-ev" style="border-left-color: ${categoryColors[e.category]||'#a78bfa'};" title="[${e.category}] ${e.name}${e.content ? ' - ' + e.content : ''}">${e.name}${e.content ? ' - ' + e.content : ''}</div>`).join('');
     
     html+=`<div class="cal-cell ${date===today?'today':''}" title="${allEventsInfo}">
@@ -1855,6 +1895,191 @@ function addNoticeEntries(date, shift, lines){
   saveDataToStorage();
   loadData();
   showToast(`전달사항 ${lines.length}건이 등록되었습니다`, 'ok');
+}
+
+// ════ NOTICE - 엑셀 붙여넣기 일괄 등록 ════
+// 인수인계 엑셀(A:날짜, B:인수인계, C:확인, D:특이사항 및 조치내용)에서 드래그로 복사한
+// 범위를 그대로 붙여넣으면 B/D 내용만 골라 날짜별 전달사항으로 자동 등록.
+function openNoticeExcelImport(){
+  const win = window.open('', 'noticeExcelImportWindow', 'width=760,height=820,resizable=yes,scrollbars=yes');
+  if(!win){
+    alert('새 창이 차단되었습니다. 브라우저의 팝업 차단을 해제한 후 다시 시도해주세요.');
+    return;
+  }
+
+  const html = `<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>엑셀에서 붙여넣기</title>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:'Malgun Gothic','맑은 고딕',-apple-system,sans-serif;background:#eef0f5;color:#1a2035;padding:26px;margin:0;}
+  h2{font-size:17px;margin:0 0 6px;color:#1a2035;}
+  .desc{font-size:12.5px;color:#67708a;margin-bottom:16px;line-height:1.5;}
+  .field{margin-bottom:16px;}
+  label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:#56617a;}
+  textarea{width:100%;padding:10px;border:1px solid #c4c9d8;border-radius:6px;font-size:12.5px;font-family:inherit;min-height:130px;resize:vertical;}
+  textarea:focus{outline:none;border-color:#3f7d5c;}
+  .btn-row{display:flex;gap:10px;margin-bottom:8px;}
+  button{padding:9px 18px;border-radius:6px;border:none;font-size:13px;font-weight:600;cursor:pointer;}
+  .btn-parse{background:#3f7d5c;color:#fff;}
+  .btn-parse:hover{background:#336249;}
+  .btn-cancel{background:#e2e5ee;color:#56617a;}
+  .btn-cancel:hover{background:#d4d8e4;}
+  .btn-save{background:#7060a8;color:#fff;}
+  .btn-save:hover{background:#5f4f92;}
+  .preview-wrap{border:1px solid #dde1eb;border-radius:8px;background:#fff;max-height:340px;overflow:auto;margin-top:6px;}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th,td{padding:7px 9px;border-bottom:1px solid #eef0f5;text-align:left;vertical-align:top;}
+  th{background:#f6f7fb;color:#56617a;position:sticky;top:0;}
+  td.date-col{white-space:nowrap;color:#3f7d5c;font-weight:600;}
+  td.shift-col{white-space:nowrap;}
+  td.content-col{white-space:pre-wrap;}
+  .empty-msg{padding:16px;color:#98a0b8;font-size:12.5px;text-align:center;}
+  .count-msg{font-size:12.5px;color:#56617a;margin:10px 0;}
+  .btns{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;}
+</style></head><body>
+  <h2>📋 엑셀에서 붙여넣기 (전달사항 일괄 등록)</h2>
+  <div class="desc">
+    인수인계 엑셀에서 <b>날짜(A열) ~ 특이사항(D열)</b> 범위를 드래그로 선택 후 복사(Ctrl+C)하여 아래에 붙여넣으세요(Ctrl+V).<br>
+    B열(인수인계)과 D열(특이사항 및 조치내용)만 사용하며, C열(확인)은 무시됩니다.<br>
+    날짜가 병합되어 있는 행은 위쪽의 날짜를 자동으로 이어받아 처리합니다.
+  </div>
+  <div class="field">
+    <label>엑셀 붙여넣기</label>
+    <textarea id="nei-paste" placeholder="여기에 엑셀 범위를 붙여넣으세요 (Ctrl+V)"></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-parse" onclick="doParse()">🔍 미리보기 생성</button>
+  </div>
+  <div class="count-msg" id="nei-count"></div>
+  <div class="preview-wrap">
+    <table>
+      <thead><tr><th style="width:100px;">날짜</th><th style="width:60px;">주간/야간</th><th>내용</th></tr></thead>
+      <tbody id="nei-preview"></tbody>
+    </table>
+  </div>
+  <div class="btns">
+    <button class="btn-cancel" onclick="window.close()">취소</button>
+    <button class="btn-save" id="nei-save-btn" onclick="doSave()" disabled>등록</button>
+  </div>
+<script>
+  let parsedEntries = [];
+
+  // Excel 클립보드(TSV, 셀 내 줄바꿈은 큰따옴표로 감싸짐)를 파싱
+  function parseExcelClipboard(text){
+    text = text.replace(/\\r\\n/g, '\\n').replace(/\\r/g, '\\n');
+    const rows = [];
+    let row = [], field = '', inQuotes = false;
+    for(let i=0;i<text.length;i++){
+      const c = text[i];
+      if(inQuotes){
+        if(c === '"'){
+          if(text[i+1] === '"'){ field += '"'; i++; }
+          else { inQuotes = false; }
+        } else {
+          field += c;
+        }
+      } else {
+        if(c === '"' && field === ''){
+          inQuotes = true;
+        } else if(c === '\\t'){
+          row.push(field); field = '';
+        } else if(c === '\\n'){
+          row.push(field); field = '';
+          rows.push(row); row = [];
+        } else {
+          field += c;
+        }
+      }
+    }
+    if(field !== '' || row.length){
+      row.push(field);
+      rows.push(row);
+    }
+    return rows;
+  }
+
+  function rowsToEntries(rows){
+    const entries = [];
+    let lastDateText = '';
+    for(const r of rows){
+      const rawA = (r[0]||'').trim();
+      const rawB = (r[1]||'').trim();
+      const rawD = (r[3]||'').trim();
+
+      if(rawA) lastDateText = rawA;
+      if(!rawB && !rawD) continue;
+
+      const dm = lastDateText.match(/(\\d{4}-\\d{2}-\\d{2})/);
+      if(!dm) continue; // 날짜를 특정할 수 없는 행(머리글 등)은 건너뜀
+      const date = dm[1];
+      const shift = /야간/.test(lastDateText) ? '야간' : '주간';
+
+      let content = rawB;
+      if(rawD) content += (content ? '\\n' : '') + rawD;
+      entries.push({date, shift, content});
+    }
+    return entries;
+  }
+
+  function doParse(){
+    const text = document.getElementById('nei-paste').value;
+    const rows = parseExcelClipboard(text);
+    parsedEntries = rowsToEntries(rows);
+    const tbody = document.getElementById('nei-preview');
+    const saveBtn = document.getElementById('nei-save-btn');
+    if(!parsedEntries.length){
+      tbody.innerHTML = '';
+      document.getElementById('nei-count').textContent = '';
+      document.querySelector('.preview-wrap').innerHTML =
+        '<div class="empty-msg">인식된 항목이 없습니다. 날짜(A열)가 포함된 범위를 붙여넣었는지 확인해주세요.</div>';
+      saveBtn.disabled = true;
+      return;
+    }
+    document.getElementById('nei-count').textContent = parsedEntries.length + '건이 인식되었습니다.';
+    tbody.innerHTML = parsedEntries.map(e => \`
+      <tr>
+        <td class="date-col">\${e.date}</td>
+        <td class="shift-col">\${e.shift}</td>
+        <td class="content-col">\${e.content.replace(/</g,'&lt;')}</td>
+      </tr>
+    \`).join('');
+    saveBtn.disabled = false;
+  }
+
+  function doSave(){
+    if(!parsedEntries.length) return;
+    if(window.opener && window.opener.addNoticeEntriesBulk){
+      window.opener.addNoticeEntriesBulk(parsedEntries);
+      window.close();
+    } else {
+      alert('원본 창을 찾을 수 없습니다. 창을 닫고 다시 시도해주세요.');
+    }
+  }
+<\/script>
+</body></html>`;
+
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
+}
+
+// 엑셀 붙여넣기로 파싱된 항목들을 일괄 등록
+function addNoticeEntriesBulk(entries){
+  if(!entries || !entries.length) return;
+  const baseId = Date.now();
+  entries.forEach((e, idx) => {
+    noticeData.unshift({
+      id: baseId + idx,
+      date: e.date,
+      shift: e.shift,
+      content: e.content
+    });
+  });
+  saveDataToStorage();
+  loadData();
+  showToast(`전달사항 ${entries.length}건이 일괄 등록되었습니다`, 'ok');
 }
 
 function resetNoticeSearch(){
